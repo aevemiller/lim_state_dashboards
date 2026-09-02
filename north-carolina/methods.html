@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>North Carolina — how these numbers were made</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#f9f9f7;color:#0b0b0b;
+     -webkit-font-smoothing:antialiased;line-height:1.6}
+.wrap{max-width:820px;margin:0 auto;padding:36px 24px 64px}
+h1{font-size:27px;letter-spacing:-0.02em;margin:0 0 6px}
+.sub{color:#52514e;font-size:14px;margin:0 0 6px}
+.stamp{color:#898781;font-size:12.5px;margin:0 0 28px}
+h2{font-size:18px;letter-spacing:-0.01em;margin:34px 0 10px;padding-top:20px;border-top:1px solid #e1e0d9}
+h2:first-of-type{border-top:none;padding-top:0}
+h3{font-size:14.5px;margin:20px 0 7px}
+p{font-size:14.5px;color:#2e2e2c;margin:0 0 12px}
+.lead{font-size:15.5px;color:#2e2e2c}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:14px 0 18px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid #e1e0d9;vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:0.04em;color:#898781;font-weight:600;
+   border-bottom:1px solid #c3c2b7}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+ul{font-size:14.5px;color:#2e2e2c;padding-left:20px;margin:0 0 14px}
+li{margin-bottom:7px}
+.box{background:#fff;border:1px solid rgba(11,11,11,.10);border-radius:10px;padding:16px 18px;margin:14px 0}
+.box.warn{border-left:3px solid #fab219}
+.box.real{border-left:3px solid #0ca30c}
+.box h3{margin-top:0}
+code{background:#f0efec;padding:1px 5px;border-radius:4px;font-size:12.5px}
+.kv{display:grid;grid-template-columns:190px 1fr;gap:5px 16px;font-size:14px;margin:12px 0 18px}
+.kv dt{color:#898781}
+.kv dd{margin:0;color:#2e2e2c}
+a{color:#3373df}
+.back{font-size:13.5px;margin-bottom:22px;display:inline-block}
+footer{margin-top:40px;padding-top:16px;border-top:1px solid #e1e0d9;font-size:12.5px;color:#898781}
+@media print{body{background:#fff}.wrap{max-width:none;padding:0}.back{display:none}}
+</style><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232a78d6'/%3E%3Cpath d='M9 8v14h9' stroke='white' stroke-width='3.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+<style id="sitenav-css">
+.sitenav{--nv-bg:#fcfcfb;--nv-line:rgba(11,11,11,0.10);--nv-txt:#0b0b0b;--nv-mut:#52514e;--nv-accent:#2a78d6;
+  background:var(--nv-bg);border-bottom:1px solid var(--nv-line);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}
+:root[data-theme="dark"] .sitenav{--nv-bg:#1a1a19;--nv-line:rgba(255,255,255,0.10);
+  --nv-txt:#fff;--nv-mut:#c3c2b7;--nv-accent:#3987e5;}
+@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])) .sitenav{
+  --nv-bg:#1a1a19;--nv-line:rgba(255,255,255,0.10);--nv-txt:#fff;--nv-mut:#c3c2b7;--nv-accent:#3987e5;}}
+.sitenav-in{max-width:1240px;margin:0 auto;padding:9px 20px;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.sitenav a{color:var(--nv-mut);text-decoration:none;font-size:12.5px;}
+.sitenav a:hover{color:var(--nv-accent);text-decoration:underline;}
+.sitenav .home{color:var(--nv-txt);font-weight:600;font-size:13px;letter-spacing:-0.01em;}
+.sitenav .grp{display:flex;gap:15px;align-items:center;}
+.sitenav .grp a.on{color:var(--nv-txt);font-weight:600;}
+@media print{.sitenav{display:none;}}
+</style>
+</head><body>
+<nav class="sitenav"><div class="sitenav-in">
+  <a class="home" href="../">&larr; Leader in Me &middot; State Dashboards</a>
+  <span class="grp"><span style="font-size:12.5px;opacity:.55">North Carolina</span>
+    <a href="index.html">Dashboard</a>
+    <a href="methods.html" class="on">Methods</a>
+  </span>
+</div></nav>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Back to the North Carolina dashboard</a>
+<h1>North Carolina: how these numbers were made</h1>
+<p class="sub">The standing analysis record for North Carolina. Every rule, source and judgement
+call behind the dashboard, written out so anyone can check the work.</p>
+<p class="stamp">Last rebuilt 2026-09-02 · covers 2014-2015 through 2024-2025 ·
+2,752 schools · skill 2026-08-19, rules 88ba249d83ae</p>
+
+<h2>What is real and what is not</h2>
+<div class="box real">
+<h3>This build runs on real data</h3>
+
+<p><strong>Real in this build:</strong> DOMO Subject Test file, North Carolina — end-of-grade and end-of-course results 2014-15 to 2024-25, Leader in Me roster and comparison-school records with SchoolDigger standard scores, MRA surveys (2021-22 through 2024-25), North Carolina School Report Card tables: chronic absence, cohort graduation, economically disadvantaged share, EVAAS growth, school performance grades, suspensions, college enrollment, ACT, ACT WorkKeys, Read to Achieve, educator qualifications, National Board certification.</p>
+</div>
+
+<h2>Where the data comes from</h2>
+<table><thead><tr><th>Source</th><th>What it provides</th><th>Coverage</th><th>Status</th></tr></thead>
+<tbody><tr><td>DOMO Subject Test file (North Carolina)</td><td>School by grade by subject results, end-of-grade grades 3-8 and end-of-course, 2014-15 to 2024-25</td><td>2,756 schools</td><td>real</td></tr><tr><td>Leader in Me roster and comparison records</td><td>Start dates, Lighthouse status, enrollment, student make-up and SchoolDigger scores</td><td>195 Leader in Me, 2,561 comparison</td><td>real</td></tr><tr><td>MRA surveys</td><td>Leadership, culture and academics composites and 34 submeasures, Leader in Me schools only</td><td>125 schools</td><td>real</td></tr><tr><td>North Carolina School Report Card tables (2024-25 release, cumulative)</td><td>Chronic absence, four-year cohort graduation, economically disadvantaged share, EVAAS growth, A-F performance grades, suspensions per 1,000, college enrollment, ACT benchmark, ACT WorkKeys certificates, Read to Achieve promotion, beginning-teacher and National Board shares, low-performing designations, Title I status</td><td>2,706 of 2,756 schools crosswalked (194 of 195 Leader in Me)</td><td>real</td></tr></tbody></table>
+
+<h2>Which schools count as Leader in Me</h2>
+<p class="lead">This is the part that makes the dashboard safe to put in front of a district. A school
+does not become a Leader in Me data point the moment it signs. These rules run on every view.</p>
+<ul><li>A school&#x27;s results only count as Leader in Me after it has finished a full school year in the process. A school that started in January 2023 first counts in 2023-24.</li><li>A Leader in Me school&#x27;s years before its own start date count in the comparison group, because that is what the school was at the time.</li><li>4 North Carolina schools on the roster carry no start date. Their exposure cannot be dated, so they count in neither group and are named on this page.</li><li>A school that leaves Leader in Me keeps the year it left when it was in the process through most of that year (an exit from January on), loses that year when it left earlier, and counts in neither group after. The roster export carries an exit-date column, but it is blank on every row and the comparison export is empty on its start-date and exit-date columns, so no North Carolina exit can be dated yet and any school that has left Leader in Me sits unlabelled in the comparison group. 70 roster schools carry a Black engagement colour; colours are retired as exit signals, so they count from their start date like every other school.</li><li>2019-20 and 2020-21 are excluded entirely and never estimated.</li><li>Science and Biology 2024-25 are excluded by name because the state introduced new science tests that year; science never enters the combined figure, which is reading and math (grades 3-8, English II, Math I and Math III) in every year. Math III 2024-25 stays in: the state treats it as a comparable year and nothing in its testing programme changed for Math III, though it rose 8.8 points statewide (see the note below).</li><li>Growth is measured only on schools with data at both ends of a window.</li><li>Combined-grade schools appear in both the primary and the secondary view with the right numbers for each, and collapse to one school-level value whenever no grade filter is applied.</li></ul>
+<h3>What that removed</h3>
+<p><strong>938</strong> of <strong>1,755</strong>
+Leader in Me school-years passed the rules and were counted.</p>
+<table><thead><tr><th>Why a school-year was dropped</th><th class="num">School-years</th></tr></thead>
+<tbody><tr><td>Testing years excluded entirely (2019-20, 2020-21)</td><td class='num'>2</td></tr><tr><td>Leader in Me schools with no start date, counted in neither group</td><td class='num'>4</td></tr><tr><td>Leader in Me exit dates on file</td><td class='num'>0</td></tr><tr><td>Leader in Me school-years dropped after a dated exit</td><td class='num'>0</td></tr><tr><td>School-year-band-subject rows dropped with them</td><td class='num'>87</td></tr><tr><td>Science 2024-25 rows excluded (new science tests in 2024-25)</td><td class='num'>2,231</td></tr><tr><td>Biology 2024-25 rows excluded (new Biology test in 2024-25)</td><td class='num'>641</td></tr><tr><td>MRA values of exactly 100.0 read as not reported</td><td class='num'>839</td></tr><tr><td>MRA empty-shell survey rows dropped</td><td class='num'>19</td></tr><tr><td>College-and-career-ready composite years excluded (2024-25, new science tests)</td><td class='num'>1</td></tr><tr><td>Suspension years left off the chart (2019-20, 2020-21, closures)</td><td class='num'>2</td></tr><tr><td>Comparison schools with no state school code (no report-card measures)</td><td class='num'>50</td></tr></tbody></table>
+
+<h3>Judgement calls we had to make</h3>
+<p>Three places the rule needed a threshold that was not specified. Each is a single named constant
+in <code>lim_rules.py</code>, so changing any of them is a one-line edit.</p>
+<dl class="kv">
+<dt>School year boundary</dt><dd>July 1. A June start belongs to the year that just ended; a July start
+belongs to the year ahead.</dd>
+<dt>"Most of the school year"</dt><dd>January 1. A school that exits in January or later carried Leader
+in Me through the bulk of that year, so the year still counts. An exit before January drops that year too.</dd>
+<dt>Exit signals</dt><dd>The per-year LIM School true/false flags. Engagement/client-health
+colours were retired as exit signals in August 2026 (teams used them inconsistently across
+states); a colour alone never excludes a school.</dd>
+</dl>
+
+<h2>What each measure means</h2>
+<table><thead><tr><th>Measure</th><th>In plain words</th><th>Direction</th></tr></thead>
+<tbody><tr><td><strong>Percent at or above grade level</strong></td><td>Students scoring level 3 or higher on North Carolina&#x27;s end-of-grade and end-of-course tests — what the state calls grade level proficient. With no subject chosen this is reading and math (grades 3-8, English II, Math I and Math III); science is available on its own.</td><td>Higher is better</td></tr><tr><td><strong>Percent below grade level</strong></td><td>Students in levels 1 and 2, what the state calls not proficient. When this falls, fewer children are behind.</td><td>Lower is better</td></tr><tr><td><strong>SchoolDigger standard score</strong></td><td>SchoolDigger&#x27;s 0-100 score, built to compare schools across different state tests.</td><td>Higher is better</td></tr><tr><td><strong>Chronic absence</strong></td><td>Share of students missing a tenth or more of their enrolled days, from the state&#x27;s report cards. Published from 2017-18.</td><td>Lower is better</td></tr><tr><td><strong>Graduation rate</strong></td><td>Four-year cohort graduation, from the state&#x27;s report cards. High schools only; the state writes any rate above 95% as 95.</td><td>Higher is better</td></tr></tbody></table>
+
+<h2>How years are made comparable</h2>
+<table><thead><tr><th>Window</th><th>What it does</th><th>What to watch</th></tr></thead>
+<tbody><tr><td><strong>Since 2021-2022</strong></td><td>The simplest comparison, and the one to start with. Every year here used the same reading and math tests, so the numbers can be read straight off the page.</td><td>Four years. Science is shown on its own through 2023-24 and left out of 2024-25, when the state changed its science tests; it never enters the reading-and-math figure. Math III rose 8.8 points statewide in 2024-25 for every kind of school; the methods page sets out what is known about that.</td></tr><tr><td><strong>Full history from 2014-15</strong></td><td>Uses every year we have. Because North Carolina changed its math tests in 2019, its reading tests in 2021 and its science tests in 2025, and testing was disrupted by COVID, each school is scored against what the rest of the state did that same year, so neither a new test nor a strange year counts for or against anyone.</td><td>2019-20 testing was cancelled and 2020-21 was heavily disrupted, so both are left out entirely. Raw percentages are never added together across a test change; this window compares each school&#x27;s standing within its own year.</td></tr></tbody></table>
+<p>Testing in 2020 and 2021 was cancelled or heavily disrupted. Those years are excluded from every trend line rather than
+smoothed over, because a missing year is honest and an interpolated one is not.</p>
+
+<h2>The comparison group</h2>
+<p class="lead">By default, Leader in Me schools are compared against every other school in the state.
+Turning on <em>Compare to similar schools only</em> switches to a matched comparison.</p>
+<p>Each Leader in Me school is paired with exactly one non-Leader in Me school matching on:</p>
+<ul><li>grade band</li><li>poverty band and continuous poverty share</li><li>student make-up</li><li>starting reading score</li></ul>
+<p>No comparison school is used twice. A Leader in Me school with no acceptable partner is dropped
+from the matched view and counted rather than paired with something that does not resemble it.
+In this build <strong>137</strong> Leader in Me school records found a partner and
+<strong>1</strong> did not (a school serving both grade bands is matched
+separately in each band, per the combined-school rule).</p>
+<p><strong>The method, named:</strong> Stratified caliper matching, not propensity scores. Schools are matched exactly on grade band, poverty band and student make-up, then to the nearest starting reading score inside a quarter of a standard deviation, with partners also required to sit within 10 points of poverty on the state&#x27;s economically-disadvantaged share. With under two hundred Leader in Me schools and a handful of traits, matching directly on the traits is sturdier than fitting a propensity model and easier to defend in a district meeting. The state&#x27;s own alternative, exceptional-children and vocational schools never enter the pool.</p><p><strong>The starting line, shown rather than asserted:</strong> partners start +0.0 points from their Leader in Me school on average (median +0.0), and 42% of partners start above. A matched design owes the reader this arithmetic; a mean near zero is what “same starting place” looks like in practice. 12% of pairs start on exactly the same score, which is why the share starting above can look low when the design is in fact tight.</p><p><strong>Pairs are built inside each grade band.</strong> Primary: 96 pairs (1 unmatched); Secondary: 41 pairs (0 unmatched).</p><p><strong>95 special-purpose schools</strong> are excluded from the matched pool (statewide residential and special-population schools, alternative and vocational centers): AdVance Academy, Alger B. Wilkins High School, Ashley Chapel Educational Center, B C Educational Technical Center, Bartram Academy, Bertie Academy, Blue Ridge High School, Bragg Street Academy, Bridges School, Cabarrus County Opportunity School, Career Readiness Academy at Mosley PLC, Carter High School, Catawba Rosenwald Education Center, Central Haywood High.</p>
+<div class="box"><h3>What matching does and does not prove</h3>
+<p>Matching removes the most common objection, that Leader in Me schools were already different.
+It does not make this a randomised trial. Schools choose Leader in Me, and whatever leads a school
+to choose it may also lead it to improve. The honest framing is that Leader in Me schools grew more
+than closely comparable schools, not that Leader in Me caused the growth.</p></div>
+
+<h2>How significance is decided</h2>
+<p>Growth is compared with a <strong>Welch two-sample t-test</strong> on the change between the first
+and last year of the window, using only schools with data at both ends. Welch is used rather than the
+standard t-test because the two groups differ in size and spread.</p>
+<h3>One school, one number</h3>
+<p>A school serving both grade bands appears separately in the primary and the secondary views,
+because a K-12 school has two stories worth seeing. It is still one school, and one school
+contributes <strong>one</strong> observation to any test. With no grade filter applied, a combined
+school's bands are averaged into a single school-level value before anything is counted, charted or
+tested, so every "N schools" label counts schools and not grade-band slices. With a grade filter
+applied the two are already the same thing.</p>
+<p>This follows the standard rule in education research: analyse at the level the thing being studied
+was assigned at. Leader in Me is adopted by a school, not by a grade band, so the school is the unit.
+Counting a combined school twice would treat two correlated measurements from the same building as
+two independent schools, which understates the standard error and makes p look better than it is.
+Averaging to the school removes that dependence outright, so no further clustering adjustment is
+applied on top.</p>
+<p>A result is called <strong>significant at p at or below 0.05</strong>. There is one significant state
+and one non-significant state, with no in-between wording, so the same number never gets two different
+verdicts on two different screens.</p>
+<h3>Reporting size separately</h3>
+<p>Significance says a difference is probably not chance. It says nothing about whether the difference
+is big. With thousands of schools a tiny gap can still be significant, so size is reported as its own
+statement rather than folded into the verdict.</p>
+<p>Size is expressed as: <em>pick one Leader in Me school and one comparison school at random; how often
+is the Leader in Me school the one that grew more?</em> That is the common-language effect size,
+computed as the normal probability of d divided by the square root of two. Fifty in a hundred means no
+difference at all.</p>
+<p>We deliberately do not convert effect sizes into "months of additional learning". That conversion is
+widely used but it has been criticised by education researchers for implying a precision the underlying
+numbers do not support, and for breaking down across grade levels and subjects.</p>
+<h3>What the four words mean</h3>
+<table><thead><tr><th>Wording</th><th class="num">Effect size</th><th>Roughly</th></tr></thead><tbody>
+<tr><td>Small</td><td class="num">under 0.20</td><td>Real, but you would not notice it in a building</td></tr>
+<tr><td>Moderate</td><td class="num">0.20 to 0.49</td><td>The kind of difference schools notice over a few years</td></tr>
+<tr><td>Large</td><td class="num">0.50 to 0.79</td><td>A difference that shows up plainly in results</td></tr>
+<tr><td>Very large</td><td class="num">0.80 and above</td><td>Rare in school-level research; check the sample first</td></tr>
+</tbody></table>
+
+<h2>Students who were behind</h2>
+<p>State files report percentages of a grade, not individual children, so no one can follow a single
+student through the data. The dashboard reports the honest version: how much smaller the
+below-standard group got, and how that compares with schools not in Leader in Me.</p>
+<p>A stronger version is possible and is not switched on yet. Comparing third grade in one year against
+fourth grade the next year, at the same school and in the same subject, follows roughly the same
+children. It needs the grade-level Subject Test file. When it is switched on it will only ever be
+reported as Leader in Me minus comparison, because each grade's test has its own cut score and part of
+any raw change is the test rather than the students.</p>
+
+<h2>Chart notes that live here, not on the charts</h2>
+<p class="lead">The dashboard's chart notes are reserved for insight about the data on screen. The
+standing caveats behind every chart live here instead.</p>
+<ul>
+<li><strong>2020 and 2021.</strong> State testing was cancelled in 2020 and heavily disrupted in 2021,
+so those years are excluded from every chart on purpose, never interpolated.</li>
+<li><strong>Small groups.</strong> A year or group is only charted when at least three schools carry
+data; the years-in-process chart drops any bucket under three schools.</li>
+<li><strong>The student estimate.</strong> The "≈ N students" figure multiplies each school's
+enrollment by its change in the lowest-level share and sums across schools with enrollment on file,
+rounded. It is an order of magnitude, not a headcount. Different students are tested each year, so it
+tracks the size of the lowest-level group, not named children; grade-by-grade cohort tracking becomes
+possible with the Subject Test file's grade detail.</li>
+<li><strong>MRA.</strong> Values are IRT scale points with no true 100 and are never drawn on a 0-100
+axis. Trends stay within the current MRA version (2022 on); groups under five schools and submeasure
+movers under ten schools are suppressed.</li>
+<li><strong>What “at or above grade level” means here.</strong> North Carolina&#x27;s levels 3, 4 and 5 taken together, the state&#x27;s grade-level-proficient share. That is exactly the export&#x27;s PercentMetStandard field: checked against the state&#x27;s own accountability file, it matches on 96.8% of rows through 2020-21 and sits within one point on 88.6% of rows from 2021-22, where the export drew on a different release of the same numbers. It is not the higher college-and-career bar (levels 4 and 5), which appears as its own measure in the report-card card.</li><li><strong>What “below grade level” means here.</strong> Levels 1 and 2, the state&#x27;s not-proficient share. The export carries the two levels separately through 2018-19 and their sum from 2021-22, so the measure is built as the sum in the early years and read straight from the file after. The export&#x27;s level columns are blank on about four rows in ten from 2015-16 to 2018-19, so this measure is thinner than proficiency before 2021-22.</li><li><strong>Two subject-years are excluded by name.</strong> North Carolina introduced new science tests in 2024-25 (grades 5 and 8 and Biology, on the 2023 standards) and says itself that the results should not be compared with earlier years: statewide science proficiency fell 68.0 to 61.0 and the college-and-career-ready share 57.9 to 40.3 in one year while reading and math rose, so Science and Biology 2024-25 are left out. Science is shown as its own subject and never enters the combined figure, which is reading and math (grades 3-8, English II, Math I and Math III) in every year.</li><li><strong>Math III rose 8.8 points statewide in 2024-25, and stays in.</strong> Grade-level proficiency on the Math III end-of-course test went from 57.6% to 66.4% (college-and-career ready 34.1% to 43.5%) in one year. It is not a change in who sat the test: the tested count rose (113,269 to 116,386), a school&#x27;s change bears no relation to its change in test-takers (r = −0.04 across 663 high schools), and level 3 held steady while levels 4 and 5 both grew, so the whole score distribution moved. House Bill 415, which would drop Math III as a graduation requirement, passed the House on May 7, 2025 and has sat in the Senate since; it changed nothing for the spring 2025 test. The test is the same edition it has been since 2018-19, its achievement levels were not reset, the State Board&#x27;s list of 2024-25 testing changes names nothing for Math III, and the state&#x27;s own report compares the two years without a caveat, as do the 2025-26 results released on September 2, 2026, which hold at about two thirds proficient. The rise was largest in schools that started lowest (+10 points in the bottom quarter, +1 in the top quarter, which sits near the ceiling). The cause is not published. Math III is treated as the state treats it, a comparable year, and it moves both groups: with Math III taken back out of the combined figure the statewide headline reads +4.0 against +4.7 (p = 0.278) instead of +4.7 against +5.7 (p = 0.103).</li><li><strong>Cohort movement: the same children, one grade later.</strong> The movement card compares a grade with the same grade the year before (different children). Cohort movement instead follows grade 3 in one year to grade 4 in the next, in the same school and subject, so it is roughly the same children a year older, and asks whether the share below grade level shrank as they moved up. Each grade&#x27;s test has its own cut score, so part of any grade-to-grade change is the test rather than the children; that part is the same for every school in the state, so the figure is only ever shown as Leader in Me minus comparison, where it cancels. ELA, 2021-22 to 2024-25 pooled: the below-grade-level share fell 2.4 points as Leader in Me cohorts moved up a grade and 2.6 in comparison schools, a difference of -0.2 (p = 0.451, 839 Leader in Me and 13,223 comparison grade-cohorts). Math, 2021-22 to 2024-25 pooled: the below-grade-level share fell -1.0 points as Leader in Me cohorts moved up a grade and -0.3 in comparison schools, a difference of -0.7 (p = 0.070, 838 Leader in Me and 13,107 comparison grade-cohorts). Reading and math, 2021-22 to 2024-25 pooled: the below-grade-level share fell 0.7 points as Leader in Me cohorts moved up a grade and 1.2 in comparison schools, a difference of -0.5 (p = 0.060, 1,677 Leader in Me and 26,330 comparison grade-cohorts).</li><li><strong>Earlier test changes are absorbed by the full-history window.</strong> Math changed in 2018-19 (Math I fell 16 points statewide), reading and English II in 2020-21, and Math III first appeared in 2018-19. All of these sit before the straight-numbers window, which starts at 2021-22; the full-history window scores each school against its own state that year.</li><li><strong>Joining North Carolina&#x27;s own tables.</strong> The DOMO subject file carries the federal school id in three parts, which rebuild it exactly, so the core needs no crosswalk: all 195 Leader in Me and all 2,561 comparison schools join on it with no overlap. The state&#x27;s report cards key on its own six-character school codes, which are crosswalked by district and name: 2,706 of 2,756 schools, including every Leader in Me school. The crosswalk was checked against a table it was not built from (the state&#x27;s average daily membership against DOMO enrollment): correlation 0.997 across 2,491 schools, half of them within 2.6% on size.</li><li><strong>Six schools carry two federal ids.</strong> Jones Senior High School (Trenton) appears under one id in the Leader in Me roster and another in the comparison file, with no overlap in the years each reports; the school changed its state and federal ids in 2020. Its two histories are folded together under the Leader in Me identity, so its earlier years are no longer counted as their own comparison school. Five comparison schools carry the same pattern (D.C. Virgo Preparatory Academy, Moss Street Elementary, South Creek Middle, Southside Ashpole Elementary), each folded into its newer id; no pair with overlapping years was found, so nothing was kept apart.</li><li><strong>Chronic absence and graduation come from the state.</strong> The DOMO records carry no chronic absence or dropout value for any North Carolina row, so chronic absence comes from the state&#x27;s report cards (2017-18 on). The DOMO graduation rate is the state&#x27;s four-year cohort rate to the decimal on 98% of the 3,330 rows both carry, so the state&#x27;s table supplies it for every year rather than 2016-17 on. The state writes any rate above 95% as 95, which flattens growth at the top for both groups.</li><li><strong>Charter schools are grouped.</strong> DOMO files each of North Carolina&#x27;s charter schools as its own district, which would put 230-odd single-school districts in the filter. Charters are grouped as “Charter schools (statewide)”, and district insights never fire on one school.</li><li><strong>Suspension counts are self-reported.</strong> Suspensions per 1,000 come from what each school reported to the state, and districts differ in how they record, so a school&#x27;s own direction over time is firmer ground than the gap between groups. The chart&#x27;s per-100 figure weights each school by the state&#x27;s own average daily membership that year. 2019-20 and 2020-21 are left off: the statewide short-term suspension rate fell from 166 to 18 per 1,000 in the remote year.</li>
+</ul>
+
+<h2>How field insights are generated</h2>
+<p class="lead">The Field insights tab turns the same cleaned data into talking points. Every card is
+produced by a named rule with a fixed threshold; nothing is hand-picked, so the same district always
+gets the same cards until the data changes.</p>
+<table><thead><tr><th>Rule</th><th>Fires when</th><th>Honesty guard</th></tr></thead><tbody>
+<tr><td>District Leader in Me growth</td><td>The district&#x27;s Leader in Me schools grew more (or less) than comparison schools statewide across the window</td><td>Called significant only at p ≤ 0.05 with three or more schools a side; smaller groups are worded as descriptive and say so on the card</td></tr><tr><td>Proficiency gap</td><td>District average sits three or more points below the state in the latest year</td><td>Needs three or more schools; the trend wording comes from the window slope</td></tr><tr><td>Short-term suspensions above the state</td><td>District suspensions per 100 students run 10 or more above the state rate and at least a quarter higher</td><td>Self-reported counts, so the card leads with the question rather than the number</td></tr><tr><td>Short-term suspensions climbing or falling</td><td>District suspension rate moves five or more per 100 students a year</td><td>The card asks whether the move is behaviour or reporting practice before anything is built on it</td></tr><tr><td>North Carolina report-card gap</td><td>Leader in Me and comparison schools differ on a state measure by more than that measure&#x27;s threshold in the latest year</td><td>Descriptive only, never tested; three or more schools a side; the two composition measures (economic disadvantage, Title I share) are set out of reach so they never produce a win or a watch</td></tr><tr><td>Statewide story</td><td>The statewide Leader in Me versus comparison growth test clears p ≤ 0.05</td><td>Shown only when significant, and the wording turns if it runs the other way</td></tr><tr><td>Compounding (retention)</td><td>Schools with seven or more full years sit above comparison schools</td><td>Needs three or more schools in that group; the count is on the card</td></tr><tr><td>Coaching moment</td><td>A district&#x27;s Leader in Me schools fell two or more points year over year</td><td>Worded as one dip, not a trend; routes to coaching, never to a sales claim</td></tr>
+</tbody></table>
+<p>Cards link to the matching topic hub in the team&#x27;s Notion space. Where a topic page does not exist yet the link points at the hub home, which is stated on the card rather than hidden.</p>
+
+<h2>Known limits</h2>
+<ul><li>No North Carolina exit is datable yet: the roster export&#x27;s exit-date column is blank on every row and the comparison export is empty on its start-date and exit-date columns, so schools that have left Leader in Me cannot be removed from the Leader in Me group. 70 of 195 roster schools carry a Black engagement colour, and in the latest year only 9% of them logged coaching days against 49% of Green schools; colours are retired as exit signals, so all of them count. If the schools that have drifted away are the ones that were struggling, this understates the Leader in Me figures. A dated exit list, even for these 70 alone, remains the single most valuable file to add to this build.</li><li>Enrollment and student make-up in the DOMO records are one snapshot repeated across every year, so they describe the school today rather than the school in 2016. The poverty measure used here comes from the state&#x27;s own tables and does vary by year.</li><li>Science has no 2024-25 value, so its own-subject view ends at 2023-24; science on the new tests starts a fresh series at the next refresh. Math III&#x27;s 2024-25 rise is in every high school&#x27;s combined figure, for both groups.</li><li>North Carolina does not publish locale in these tables, so no community filter is offered and locale is not claimed as a matching trait.</li><li>The state drops results for fewer than ten tested students and writes percentages under 5 or over 95 as 5 or 95, so suppressed cells arrive as absence and the graduation rate is capped at 95 for both groups.</li><li>Schools choose Leader in Me. This is observational data, not a randomised trial, and matching balances only the traits that were measured.</li><li>Growth is measured only on schools with data at both ends of a window, which quietly leaves out schools that opened, closed or changed configuration mid-window.</li></ul>
+
+<footer>North Carolina analysis record · rebuilt 2026-09-02 ·
+regenerated automatically each time the dashboard is rebuilt, so it never drifts from what the
+dashboard is actually doing.</footer>
+</div></body></html>
