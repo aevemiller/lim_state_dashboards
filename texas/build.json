@@ -1,0 +1,127 @@
+{
+ "state": "TX",
+ "name": "Texas",
+ "folder": "texas",
+ "built": "2026-09-04",
+ "seconds": 157,
+ "builder": "build_payload_core.py",
+ "page_kind": "full",
+ "lim_headline_n": 318,
+ "schools": 8746,
+ "years": [
+  2016,
+  2026
+ ],
+ "lim_roster_schools": 610,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-03"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-03"
+  },
+  "comparison": {
+   "file": "All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 132812308,
+   "modified": "2026-09-03"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-03"
+  }
+ },
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/national/Build/work/TX/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 587883
+  },
+  "roster": {
+   "path": "/home/claude/national/Build/work/TX/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 5674
+  },
+  "comparison": {
+   "path": "/home/claude/national/Build/work/TX/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 71233
+  },
+  "mra": {
+   "path": "/home/claude/national/Build/work/TX/data/All MRA Surveys.csv",
+   "rows": 961
+  }
+ },
+ "state_files": [],
+ "verified": true,
+ "dashboard_bytes": 8506175,
+ "audits": {
+  "levels": {
+   "rows": 521670,
+   "levels 3 and 4": 91.1,
+   "levels 2, 3 and 4": 10.4,
+   "level 4 alone": 1.8,
+   "100 minus level 1": 10.3,
+   "best": "levels 3 and 4",
+   "levels_sum_to_100_share": 100.0
+  },
+  "poverty": {
+   "lim": {
+    "schools": 610,
+    "missing": 1,
+    "at_99_or_more": 7,
+    "above_100": 0,
+    "high_poverty_share": 46.7
+   },
+   "comparison": {
+    "schools": 8201,
+    "missing": 96,
+    "at_99_or_more": 148,
+    "above_100": 34,
+    "high_poverty_share": 41.8
+   }
+  },
+  "statewide_jumps": [
+   {
+    "subject": "ELA",
+    "from": 2016,
+    "to": 2017,
+    "from_mean": 71.1,
+    "to_mean": 41.7,
+    "change": -29.4
+   },
+   {
+    "subject": "Math",
+    "from": 2016,
+    "to": 2017,
+    "from_mean": 75.8,
+    "to_mean": 46.3,
+    "change": -29.5
+   }
+  ],
+  "sensitivity": {
+   "with": {
+    "y0": 2022,
+    "y1": 2026,
+    "lim_n": 318,
+    "comp_n": 6806,
+    "lim_change": 2.22,
+    "comp_change": 2.56,
+    "p": 0.498
+   },
+   "without": {
+    "y0": 2022,
+    "y1": 2026,
+    "lim_n": 252,
+    "comp_n": 6806,
+    "lim_change": 1.9,
+    "comp_change": 2.56,
+    "p": 0.231
+   },
+   "schools": 81
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": []
+ }
+}

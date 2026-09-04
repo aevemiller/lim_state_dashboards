@@ -1,0 +1,113 @@
+{
+ "state": "MT",
+ "name": "Montana",
+ "folder": "montana",
+ "built": "2026-09-04",
+ "seconds": 25,
+ "builder": "build_payload_core.py",
+ "page_kind": "descriptive",
+ "lim_headline_n": 6,
+ "schools": 614,
+ "years": [
+  2015,
+  2025
+ ],
+ "lim_roster_schools": 7,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-03"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-03"
+  },
+  "comparison": {
+   "file": "All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 132812308,
+   "modified": "2026-09-03"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-03"
+  }
+ },
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/national/Build/work/MT/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 16746
+  },
+  "roster": {
+   "path": "/home/claude/national/Build/work/MT/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 59
+  },
+  "comparison": {
+   "path": "/home/claude/national/Build/work/MT/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 4969
+  },
+  "mra": {
+   "path": "/home/claude/national/Build/work/MT/data/All MRA Surveys.csv",
+   "rows": 15
+  }
+ },
+ "state_files": [],
+ "verified": true,
+ "dashboard_bytes": 516723,
+ "audits": {
+  "levels": {
+   "rows": 15223,
+   "levels 3 and 4": 82.5,
+   "levels 2, 3 and 4": 3.2,
+   "level 4 alone": 2.7,
+   "100 minus level 1": 1.3,
+   "best": "levels 3 and 4",
+   "levels_sum_to_100_share": 80.6
+  },
+  "poverty": {
+   "lim": {
+    "schools": 7,
+    "missing": 0,
+    "at_99_or_more": 1,
+    "above_100": 0,
+    "high_poverty_share": 42.9
+   },
+   "comparison": {
+    "schools": 830,
+    "missing": 8,
+    "at_99_or_more": 197,
+    "above_100": 10,
+    "high_poverty_share": 28.9
+   }
+  },
+  "statewide_jumps": [],
+  "sensitivity": {
+   "with": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 6,
+    "comp_n": 434,
+    "lim_change": -8.73,
+    "comp_change": 1.55,
+    "p": 0.0
+   },
+   "without": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 6,
+    "comp_n": 434,
+    "lim_change": -8.73,
+    "comp_change": 1.55,
+    "p": 0.0
+   },
+   "schools": 1
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": [
+   "Composite",
+   "STEM"
+  ]
+ }
+}

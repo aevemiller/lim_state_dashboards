@@ -1,0 +1,135 @@
+{
+ "state": "AR",
+ "name": "Arkansas",
+ "folder": "arkansas",
+ "built": "2026-09-04",
+ "seconds": 43,
+ "builder": "build_payload_core.py",
+ "page_kind": "full",
+ "lim_headline_n": 33,
+ "schools": 1137,
+ "years": [
+  2015,
+  2025
+ ],
+ "lim_roster_schools": 74,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-03"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-03"
+  },
+  "comparison": {
+   "file": "All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 132812308,
+   "modified": "2026-09-03"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-03"
+  }
+ },
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/national/Build/work/AR/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 130319
+  },
+  "roster": {
+   "path": "/home/claude/national/Build/work/AR/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 658
+  },
+  "comparison": {
+   "path": "/home/claude/national/Build/work/AR/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 8747
+  },
+  "mra": {
+   "path": "/home/claude/national/Build/work/AR/data/All MRA Surveys.csv",
+   "rows": 72
+  }
+ },
+ "state_files": [],
+ "verified": true,
+ "dashboard_bytes": 1558733,
+ "audits": {
+  "levels": {
+   "rows": 117806,
+   "levels 3 and 4": 92.6,
+   "levels 2, 3 and 4": 0.7,
+   "level 4 alone": 4.0,
+   "100 minus level 1": 0.7,
+   "best": "levels 3 and 4",
+   "levels_sum_to_100_share": 95.4
+  },
+  "poverty": {
+   "lim": {
+    "schools": 74,
+    "missing": 0,
+    "at_99_or_more": 21,
+    "above_100": 0,
+    "high_poverty_share": 51.4
+   },
+   "comparison": {
+    "schools": 1066,
+    "missing": 19,
+    "at_99_or_more": 237,
+    "above_100": 5,
+    "high_poverty_share": 41.4
+   }
+  },
+  "statewide_jumps": [
+   {
+    "subject": "ELA",
+    "from": 2015,
+    "to": 2016,
+    "from_mean": 32.0,
+    "to_mean": 52.5,
+    "change": 20.5
+   },
+   {
+    "subject": "ELA",
+    "from": 2023,
+    "to": 2024,
+    "from_mean": 49.8,
+    "to_mean": 32.8,
+    "change": -17.0
+   },
+   {
+    "subject": "Math",
+    "from": 2015,
+    "to": 2016,
+    "from_mean": 23.5,
+    "to_mean": 43.4,
+    "change": 19.9
+   }
+  ],
+  "sensitivity": {
+   "with": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 33,
+    "comp_n": 850,
+    "lim_change": -7.92,
+    "comp_change": -8.96,
+    "p": 0.497
+   },
+   "without": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 29,
+    "comp_n": 850,
+    "lim_change": -8.19,
+    "comp_change": -8.96,
+    "p": 0.624
+   },
+   "schools": 5
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": []
+ }
+}

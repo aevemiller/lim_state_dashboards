@@ -1,0 +1,120 @@
+{
+ "state": "NC",
+ "name": "North Carolina",
+ "folder": "north-carolina",
+ "built": "2026-09-04",
+ "seconds": 188,
+ "builder": "build_payload_nc.py",
+ "page_kind": "full",
+ "lim_headline_n": null,
+ "schools": 2751,
+ "years": [
+  2015,
+  2025
+ ],
+ "lim_roster_schools": 195,
+ "state_extras": true,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-03"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-03"
+  },
+  "comparison": {
+   "file": "All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 132812308,
+   "modified": "2026-09-03"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-03"
+  }
+ },
+ "subject_rows_without_school_id_dropped_nationally": 20403,
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/national/Build/work/NC/data/NC 15_25 Subjects_Tests_FINAL (8).csv",
+   "rows": 173498
+  },
+  "exit_rule": {
+   "source": "LIM Expiration Date column of the Leader in Me roster export",
+   "as_of": "2026-09-04",
+   "grace_days": 30,
+   "roster_schools": 195,
+   "schools_with_expiration": 169,
+   "exited": 51,
+   "inside_grace": 1,
+   "future": 117,
+   "no_expiration": 26,
+   "no_expiration_with_start": 25,
+   "exited_by_year": {
+    "2018": 2,
+    "2021": 5,
+    "2022": 6,
+    "2023": 10,
+    "2024": 15,
+    "2025": 9,
+    "2026": 4
+   }
+  },
+  "roster": {
+   "path": "/home/claude/national/Build/work/NC/data/NC 15_25 LIM Schools (Current_Active and Date Exited).csv",
+   "rows": 1865
+  },
+  "comparison": {
+   "path": "/home/claude/national/Build/work/NC/data/NC 15_25 All Other Schools (Non-LiM & Exited).csv",
+   "rows": 22705
+  },
+  "mra": {
+   "path": "/home/claude/national/Build/work/NC/data/NC 15_25All MRA Surveys.csv",
+   "rows": 302
+  },
+  "NC 15_25LIM Schools (Current_Active) (11).csv": {
+   "path": "/home/claude/national/Build/work/NC/data/NC 15_25LIM Schools (Current_Active) (11).csv",
+   "rows": 1865,
+   "note": "copy of NC 15_25 LIM Schools (Current_Active and Date Exited).csv"
+  }
+ },
+ "state_files": [
+  "All Other Schools (Non-LiM & Exited).csv",
+  "NC 15_25 LIM Schools (Current_Active and Date Exited) .csv",
+  "src/rcd_nbpts2.csv",
+  "src/rcd_acc_eds.csv",
+  "src/rcd_college.csv",
+  "src/rcd_location.csv",
+  "src/rcd_acc_lowperf.csv",
+  "src/rcd_acc_pc_all_students.csv.gz",
+  "src/rcd_chronic_absent.csv",
+  "src/rcd_acc_essa_desig.csv",
+  "src/rcd_acc_wk.csv",
+  "src/rcd_code_desc.csv",
+  "src/rcd_inc2.csv",
+  "src/rcd_acc_eg.csv",
+  "src/rcd_effectiveness3.csv",
+  "src/rcd_adm.csv",
+  "src/rcd_eq.csv",
+  "src/rcd_acc_spg1.csv",
+  "src/rcd_acc_rta.csv",
+  "src/rcd_acc_awa.csv",
+  "src/rcd_acc_mcr.csv",
+  "src/rcd_acc_spg2.csv",
+  "src/rcd_acc_act.csv",
+  "src/rcd_acc_cgr.csv",
+  "src/rcd_sar.csv"
+ ],
+ "scripts": [
+  "nc_crosswalk.py",
+  "nc_extras.py",
+  "audit_nc.py",
+  "build_payload_nc.py",
+  "verify_nc.py"
+ ],
+ "verified": true,
+ "dashboard_bytes": 4795613
+}

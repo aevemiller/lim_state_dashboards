@@ -1,0 +1,135 @@
+{
+ "state": "WI",
+ "name": "Wisconsin",
+ "folder": "wisconsin",
+ "built": "2026-09-04",
+ "seconds": 57,
+ "builder": "build_payload_core.py",
+ "page_kind": "full",
+ "lim_headline_n": 40,
+ "schools": 2065,
+ "years": [
+  2015,
+  2025
+ ],
+ "lim_roster_schools": 52,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-03"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-03"
+  },
+  "comparison": {
+   "file": "All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 132812308,
+   "modified": "2026-09-03"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-03"
+  }
+ },
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/national/Build/work/WI/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 146103
+  },
+  "roster": {
+   "path": "/home/claude/national/Build/work/WI/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 492
+  },
+  "comparison": {
+   "path": "/home/claude/national/Build/work/WI/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 18061
+  },
+  "mra": {
+   "path": "/home/claude/national/Build/work/WI/data/All MRA Surveys.csv",
+   "rows": 143
+  }
+ },
+ "state_files": [],
+ "verified": true,
+ "dashboard_bytes": 2635167,
+ "audits": {
+  "levels": {
+   "rows": 131587,
+   "levels 3 and 4": 100.0,
+   "levels 2, 3 and 4": 1.0,
+   "level 4 alone": 1.6,
+   "100 minus level 1": 1.0,
+   "best": "levels 3 and 4",
+   "levels_sum_to_100_share": 92.4
+  },
+  "poverty": {
+   "lim": {
+    "schools": 52,
+    "missing": 0,
+    "at_99_or_more": 0,
+    "above_100": 0,
+    "high_poverty_share": 3.8
+   },
+   "comparison": {
+    "schools": 2019,
+    "missing": 11,
+    "at_99_or_more": 7,
+    "above_100": 1,
+    "high_poverty_share": 10.8
+   }
+  },
+  "statewide_jumps": [
+   {
+    "subject": "ELA",
+    "from": 2015,
+    "to": 2016,
+    "from_mean": 52.1,
+    "to_mean": 43.5,
+    "change": -8.6
+   },
+   {
+    "subject": "ELA",
+    "from": 2023,
+    "to": 2024,
+    "from_mean": 40.4,
+    "to_mean": 51.0,
+    "change": 10.6
+   },
+   {
+    "subject": "Math",
+    "from": 2023,
+    "to": 2024,
+    "from_mean": 40.3,
+    "to_mean": 51.9,
+    "change": 11.6
+   }
+  ],
+  "sensitivity": {
+   "with": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 40,
+    "comp_n": 1730,
+    "lim_change": 8.79,
+    "comp_change": 12.68,
+    "p": 0.006
+   },
+   "without": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 37,
+    "comp_n": 1730,
+    "lim_change": 8.32,
+    "comp_change": 12.68,
+    "p": 0.003
+   },
+   "schools": 3
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": []
+ }
+}

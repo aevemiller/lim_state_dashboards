@@ -1,0 +1,114 @@
+{
+ "state": "CA",
+ "name": "California",
+ "folder": "california",
+ "built": "2026-09-04",
+ "seconds": 208,
+ "builder": "build_payload_core.py",
+ "page_kind": "full",
+ "lim_headline_n": 403,
+ "schools": 10518,
+ "years": [
+  2015,
+  2025
+ ],
+ "lim_roster_schools": 686,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-03"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-03"
+  },
+  "comparison": {
+   "file": "All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 132812308,
+   "modified": "2026-09-03"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-03"
+  }
+ },
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/national/Build/work/CA/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 732996
+  },
+  "roster": {
+   "path": "/home/claude/national/Build/work/CA/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 5901
+  },
+  "comparison": {
+   "path": "/home/claude/national/Build/work/CA/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 78491
+  },
+  "mra": {
+   "path": "/home/claude/national/Build/work/CA/data/All MRA Surveys.csv",
+   "rows": 657
+  }
+ },
+ "state_files": [],
+ "verified": true,
+ "dashboard_bytes": 10177169,
+ "audits": {
+  "levels": {
+   "rows": 713870,
+   "levels 3 and 4": 2.5,
+   "levels 2, 3 and 4": 0.7,
+   "level 4 alone": 1.8,
+   "100 minus level 1": 0.7,
+   "best": "levels 3 and 4",
+   "levels_sum_to_100_share": 97.2
+  },
+  "poverty": {
+   "lim": {
+    "schools": 686,
+    "missing": 0,
+    "at_99_or_more": 6,
+    "above_100": 0,
+    "high_poverty_share": 51.9
+   },
+   "comparison": {
+    "schools": 9929,
+    "missing": 85,
+    "at_99_or_more": 90,
+    "above_100": 19,
+    "high_poverty_share": 46.1
+   }
+  },
+  "statewide_jumps": [],
+  "sensitivity": {
+   "with": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 403,
+    "comp_n": 8324,
+    "lim_change": 3.01,
+    "comp_change": 2.65,
+    "p": 0.322
+   },
+   "without": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 357,
+    "comp_n": 8322,
+    "lim_change": 2.86,
+    "comp_change": 2.65,
+    "p": 0.582
+   },
+   "schools": 53
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": [
+   "Listening",
+   "Overall",
+   "Speaking"
+  ]
+ }
+}

@@ -1,0 +1,201 @@
+
+$ python3 /home/claude/national/Build/build_payload_core.py --state TX --core /home/claude/national/corefolder --out /home/claude/national/Build/work/TX
+reading the core for Texas ...
+[core] subjects: 587,883 school rows kept; dropped 223,571 rows with no school id and 15,292 with an id but no school record
+[core] Leader in Me roster: 5,674 rows
+[core] comparison schools: 71,233 rows
+[core] MRA surveys: 961 rows
+  subject rows 587,883 · roster rows 5,674 (610 schools) · comparison rows 71,233 (8209 schools) · MRA surveys 961
+  identity: Godley Middle (Godley): 482096022868 -> 482096006111
+  identity: Joslin Elementary (Austin): 480894000325 -> 480894014106
+  identity: Snyder J H (Snyder): 484065004602 -> 484065014034
+  identity: Parkview Elementary (Fort Worth) keeps two ids (both report in 2016-2026)
+  identity: Smith Elementary (Houston) keeps two ids (both report in 2016-2025)
+  identity: Smith Elementary (Houston) keeps two ids (both report in 2016-2026)
+  identity: Thompson Elementary (Houston) keeps two ids (both report in 2016-2026)
+  identity: Wilson Elementary (Houston) keeps two ids (both report in 2021-2022)
+[core] Leader in Me roster: 56,181 rows
+  exits: 514 of 610 roster schools carry an expiration date; 252 past it by more than 30 days (exited), 19 inside the grace window, 243 in the future, 96 undated (81 with a start date)
+  8,811 schools · 1230 districts
+  5 roster schools have comparison-export rows after their roster years (DOMO's own flag says they left): read as exited after [2017]
+applying the cleaning rules ...
+  277,231 school-year-band-subject rows · years [2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025, 2026]
+  Leader in Me school-years counted: 2303 of 5490 reviewed
+  no start date: 57 schools · dated exits: 210 (school-years after an exit with rows: 572) · aggregate 'All grades' rows used 0, skipped 0
+  proficiency = levels 3 and 4 on 91.1% of rows
+  statewide jump: ELA 2016->2017: 71.1 -> 41.7 (-29.4)
+  statewide jump: Math 2016->2017: 75.8 -> 46.3 (-29.5)
+building matched pairs, inside each band ...
+  pairs 338  by band {'Primary': {'pairs': 258, 'unmatched': 0}, 'Secondary': {'pairs': 80, 'unmatched': 0}}
+  MRA: 885 surveys · 350 schools · 2089 sentinel values · 62 shells
+  headline 2021-22 to 2025-26: {'y0': 2022, 'y1': 2026, 'lim_n': 318, 'comp_n': 6806, 'lim_change': 2.22, 'comp_change': 2.56, 'p': 0.498} · without the 81 undated schools {'y0': 2022, 'y1': 2026, 'lim_n': 252, 'comp_n': 6806, 'lim_change': 1.9, 'comp_change': 2.56, 'p': 0.231}
+  roster: 293 counted, 257 exited, 3 not counted yet, 57 not counted
+
+wrote tx_payload.json  (119.6 MB, 277,231 rows) · page kind full (318 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+
+$ python3 build2.py tx_payload.json TX_Dashboard.html TX_Methods.html
+payload 119.6 MB -> 6.20 MB gzip
+TX_Dashboard.html: 8307 KB
+TX_Methods.html: 36 KB
+
+$ python3 /home/claude/national/Build/verify_core.py --state TX --work /home/claude/national/Build/work/TX
+
+--------------------------------------------------------------------------
+Tier 0 — install and input-value audit
+--------------------------------------------------------------------------
+ok   the template in use carries the brand palette and the ink helper
+ok   the template carries the three-school floor in headline and movement
+ok   the template reads the payload's raw window on the insights tab
+ok   the template honours the composite row flag
+ok   the template carries the research pack, look-alike mode and the school list
+ok   the office helper carries the Word table builder
+ok   the subject pull is one state's (federal id state code)
+ok   the roster and comparison pulls are one state's
+ok   2019-20 rows, if the file has any, are excluded from the payload  [0 rows in the file]
+ok   no duplicate school-year-grade-subject rows
+ok   no test value above 100
+ok   negatives, if any, are sentinels under one point  [{'PercentLevel1': 0.0, 'PercentLevel2': 0.0, 'PercentLevel3': 0.0, 'PercentLevel4': 0.0, 'PercentMetStandard': 0.0}]
+ok   the Leader in Me flag never flips true->false in the roster (a snapshot)
+ok   every comparison row is LIM School = false
+ok   comparison rows for roster schools sit only in years the roster does not carry  [5 roster schools have comparison rows]
+ok   the roster's '% White' is a count, not a percentage
+ok   one expiration date per roster school
+ok   every expiration date parsed
+ok   an expiration date that precedes the school's start date is set aside as stale, and counted  [0 stale]
+ok   the exit rule's counts recompute from the roster  [252 exited, 19 in grace, 243 future]
+ok   the grace window is the 30 days Eve set
+ok   MRA exact-100 values were counted as sentinels  [156 composite cells at 100, 14 in 90-99.9]
+ok   name-and-city collisions between the two groups were handled (folded or kept apart)  [8 collisions]
+ok   no school appears in both groups in the same year
+
+--------------------------------------------------------------------------
+Tier 1 — rules and maths
+--------------------------------------------------------------------------
+ok   lim_rules.py self-tests pass
+ok   skill_version.py self-tests pass
+ok   payload carries a build stamp
+ok   years exclude both COVID years
+ok   the straight-numbers window starts in 2022 or later
+ok   the long window is scored relative to the state
+ok   no Leader in Me row counted before its full year was finished  [0 rows]
+ok   schools with no start date appear in neither group  [57 schools]
+ok   the count of undated schools is on the methods page
+ok   no row survives after a school's dated exit, in either group  [0 rows]
+ok   exited schools keep their true Leader in Me years  [236 exited schools with counted years]
+ok   the exit counts on the methods page match the rule  [257 exited (5 from DOMO's flags)]
+ok   lim_exit carries every exited school and nothing else
+ok   the roster section lists every roster school once
+ok   the roster section's exited count matches (a school with no start date stays 'not counted')  [{'counted': 293, 'exited': 257, 'not counted': 57, 'not counted yet': 3}]
+ok   an exited school's reason names its expiration and the grace rule, or DOMO's own flag
+ok   the headline sensitivity without the undated schools is on the methods page
+ok   size bands are the NCES categories in the payload's order
+ok   the poverty share rides on most rows for the look-alike caliper  [100%]
+ok   the composite flag keeps science, social studies and writing out of the no-filter view
+ok   the grade table lists tested grades in order and every school in it has a name
+ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [4442 schools]
+ok   the grade table carries no school-year the rules dropped
+ok   school names and start dates are in the payload for the pack
+ok   MRA by-school rows exist for the pack
+ok   the MRA respondent map names a group or a blend for every measure
+ok   look-alike settings are in the payload with their rationale
+ok   a Leader in Me school's pre-start years count in the comparison group  [7,348 rows]
+ok   Lighthouse schools are inside the Leader in Me family
+ok   combined-grade schools appear in both bands  [1620 schools]
+ok   the school count never exceeds the band-slice count  [7124 schools vs 7910 band slices]
+ok   pairs are built inside bands
+ok   the by-band pair counts sum to the total
+ok   no comparison school is used twice
+ok   no Leader in Me school is paired twice inside a band
+ok   the signed baseline gap recomputes to the payload's  [offline +0.017 vs payload +0.020 on 338 pairs]
+ok   the mean signed baseline gap is under one point  [+0.017]
+ok   the widest single baseline gap is inside the caliper's reach  [2.8 points]
+ok   the printed signed gap is not a negative zero  [0.02]
+ok   no MRA value of exactly 100 survives into the payload
+ok   every MRA value sits on the published scale
+ok   the MRA trend stays inside one instrument version
+ok   every promised MRA group either draws or is explained with real counts  [drawn=['all', 'early', 'established', 'lighthouse'] absent=[]]
+ok   movers are built on ten or more schools each
+  demo district: Houston Independent School District (Isd) · prospect district: Idea Public Schools
+
+--------------------------------------------------------------------------
+Tier 2 — behaviour in a real browser
+--------------------------------------------------------------------------
+ok   the page loads and the headline renders
+ok   load time is workable  [3.5s]
+ok   no console errors on load
+ok   chart c1 draws an svg or explains why
+ok   chart c2 draws an svg or explains why
+ok   the MRA card shows exactly when a trend line can be drawn
+ok   the Georgia discipline card stays hidden
+ok   the incidents card stays hidden (no state incident file)
+ok   the state extras card stays hidden (no state files)
+ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
+ok   the headline p recomputes offline  [page 0.4968 scipy 0.4968 · window 2022-2026 · LiM n=318 mean +2.22 · comparison n=6806 mean +2.56]
+ok   the headline counts schools, not band slices  [page 7124 vs offline 7124 on 2022-2026]
+ok   the page's Leader in Me count is the builder's  [318 vs 318]
+ok   the district filter re-renders the headline  [In Houston Independent School District (Isd) schools, between 2021-22 and 2025-26, Leader ]
+ok   the Primary band filter re-renders without error
+ok   the Secondary band filter re-renders without error
+ok   measure 'percent_proficient' either draws or says why
+ok   measure 'percent_below' either draws or says why
+ok   measure 'standard_score' either draws or says why
+ok   measure 'chronic_absent' either draws or says why
+ok   measure 'grad_rate' either draws or says why
+ok   the matched toggle re-renders the headline  [In Texas schools (matched to similar schools only), between 2021-22 and 2025-26, Leader in]
+ok   the matched view shrinks or equals the Leader in Me count  [177 matched]
+ok   no console errors after the filter sweep
+ok   the insights tab hides the explore view
+ok   Houston Independent School District (Isd) generates cards or says there is nothing to report  [5 cards]
+ok   the insights tab uses the same unit and window as the explore tab  [{'p': 0.4968445575448266, 'n1': 318, 'n2': 6806}]
+ok   no console errors on the insights tab
+ok   export c1.pptx downloads, opens and carries the chart image  [189,242 bytes]
+ok   the pptx export is named for the state and chart  [TX_Percent_meeting_the_standard_year_by_year_Texas_schools.pptx]
+ok   export c1.docx downloads, opens and carries the chart image  [186,966 bytes]
+ok   the docx export is named for the state and chart  [TX_Percent_meeting_the_standard_year_by_year_Texas_schools.docx]
+ok   the research pack downloads with its sections  [38,778 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'roster']]
+ok   the pack's Leader in Me count for the district is the page's  [8 vs 8]
+ok   look-alike mode rewrites the headline around the anchor district, or says nothing matched  [In Texas schools like Idea Public Schools’, between 2021-22 and 2025-26, Leader in Me schools rose 1.8% on Percent meeti]
+ok   the look-alike box reports both counts or says why not  [Schools like Idea Public Schools’: 149 Leader in Me schools and 1814 comparison schools look like Idea Public Schools’ 110 schools with results in these years (]
+ok   the matched switch is disabled while an anchor is set
+ok   no console errors in look-alike mode
+ok   the look-alike headline p recomputes offline  [p=0.2834]
+ok   the anchor's own schools are never inside the look-alike groups
+ok   the school list downloads with one row per school  [259 rows, 0 same-name pairs]
+ok   the school list carries traits and change columns
+ok   the grade filter lists the tested grades
+ok   choosing a grade re-renders the headline and names the grade  [In Texas grade 4 results, between 2021-22 and 2025-26, Leader in Me schools rose 3.3% on Percent mee]
+ok   whole-school measures switch off while a grade is chosen
+ok   dark mode re-renders without errors
+ok   no horizontal overflow at 900px  [0px]
+ok   no horizontal overflow at 700px  [0px]
+ok   the methods page loads
+ok   no console errors on the methods page
+
+--------------------------------------------------------------------------
+Tier 3 — honesty
+--------------------------------------------------------------------------
+ok   the build declares itself real, not a prototype
+ok   the banner names the Subject Test source
+ok   the banner names the roster source
+ok   the banner names the expiration source
+ok   the methods page owns the 'exit' limitation
+ok   the methods page owns the 'snapshot' limitation
+ok   the methods page owns the 'Title I' limitation
+ok   the methods page owns the 'observational' limitation
+ok   the methods page owns the 'both ends' limitation
+ok   poverty_help tells the reader which measure is on screen and its ceiling
+ok   the methods page names the matching method rather than asserting it
+ok   the level audit is on the methods page
+ok   the subject mapping is on the methods page
+ok   the poverty audit is on the methods page
+ok   the methods page carries the exit-dating box
+ok   the methods page carries the look-alike section
+ok   the undated schools are listed by name in the payload
+ok   a statewide jump is flagged on the methods page
+
+  HEADLINE (statewide, 2022-2026, no filters): Leader in Me +2.22 pts (n=318) vs comparison +2.56 pts (n=6806), p=0.4968 -> not significant
+
+==========================================================================
+136 of 136 checks pass
+==========================================================================

@@ -1,0 +1,110 @@
+{
+ "state": "ND",
+ "name": "North Dakota",
+ "folder": "north-dakota",
+ "built": "2026-09-04",
+ "seconds": 26,
+ "builder": "build_payload_core.py",
+ "page_kind": "territory",
+ "lim_headline_n": 1,
+ "schools": 418,
+ "years": [
+  2016,
+  2025
+ ],
+ "lim_roster_schools": 4,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-03"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-03"
+  },
+  "comparison": {
+   "file": "All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 132812308,
+   "modified": "2026-09-03"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-03"
+  }
+ },
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/national/Build/work/ND/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 36889
+  },
+  "roster": {
+   "path": "/home/claude/national/Build/work/ND/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 37
+  },
+  "comparison": {
+   "path": "/home/claude/national/Build/work/ND/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 3577
+  },
+  "mra": {
+   "path": "/home/claude/national/Build/work/ND/data/All MRA Surveys.csv",
+   "rows": 0
+  }
+ },
+ "state_files": [],
+ "verified": true,
+ "dashboard_bytes": 534049,
+ "audits": {
+  "levels": {
+   "rows": 29598,
+   "levels 3 and 4": 100.0,
+   "levels 2, 3 and 4": 0.0,
+   "level 4 alone": 0.0,
+   "100 minus level 1": 0.0,
+   "best": "levels 3 and 4",
+   "levels_sum_to_100_share": 15.8
+  },
+  "poverty": {
+   "lim": {
+    "schools": 4,
+    "missing": 0,
+    "at_99_or_more": 0,
+    "above_100": 0,
+    "high_poverty_share": 0.0
+   },
+   "comparison": {
+    "schools": 416,
+    "missing": 0,
+    "at_99_or_more": 14,
+    "above_100": 0,
+    "high_poverty_share": 4.8
+   }
+  },
+  "statewide_jumps": [],
+  "sensitivity": {
+   "with": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 1,
+    "comp_n": 351,
+    "lim_change": -2.46,
+    "comp_change": -1.43,
+    "p": null
+   },
+   "without": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 1,
+    "comp_n": 351,
+    "lim_change": -2.46,
+    "comp_change": -1.43,
+    "p": null
+   },
+   "schools": 0
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": []
+ }
+}

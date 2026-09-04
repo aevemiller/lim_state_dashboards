@@ -1,0 +1,95 @@
+{
+ "state": "FL",
+ "name": "Florida",
+ "folder": "florida",
+ "built": "2026-09-04",
+ "seconds": 335,
+ "builder": "build_payload_fl.py",
+ "page_kind": "full",
+ "lim_headline_n": null,
+ "schools": 3885,
+ "years": [
+  2016,
+  2026
+ ],
+ "lim_roster_schools": 327,
+ "state_extras": true,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-03"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-03"
+  },
+  "comparison": {
+   "file": "All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 132812308,
+   "modified": "2026-09-03"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-03"
+  }
+ },
+ "subject_rows_without_school_id_dropped_nationally": 28069,
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/national/Build/work/FL/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 301734
+  },
+  "roster": {
+   "path": "/home/claude/national/Build/work/FL/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 3080
+  },
+  "comparison": {
+   "path": "/home/claude/national/Build/work/FL/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 31786
+  },
+  "mra": {
+   "path": "/home/claude/national/Build/work/FL/data/All MRA Surveys.csv",
+   "rows": 450
+  }
+ },
+ "state_files": [
+  "2425ABS21Days10Comparison.xlsx",
+  "ADAADMSchl2425.xlsx",
+  "FedGradRateCategory2425.xls",
+  "SESIR2324a-h.xlsx",
+  "SESIR2324i-z.xlsx",
+  "SESIR2425a-h.xlsx",
+  "SESIR2425i-z.xlsx",
+  "SIR22.xlsx",
+  "SIR24.xlsx",
+  "SIR25.xlsx",
+  "SIR26.xlsx",
+  "SchoolGrades22.xlsx",
+  "SchoolGrades23.xlsx",
+  "SchoolGrades24.xlsx",
+  "SchoolGrades25.xlsx",
+  "SchoolGrades26.xlsx",
+  "Schools-of-Excellence25-Combo.xls",
+  "Schools-of-Excellence25-Elementary.xls",
+  "Schools-of-Excellence25-High.xls",
+  "Schools-of-Excellence25-Middle.xls",
+  "sesir2021a-h.xls",
+  "sesir2021i-z.xls",
+  "sesir2122a-h.xlsx",
+  "sesir2122i-z.xlsx",
+  "sesir2223a-h.xlsx",
+  "sesir2223i-z.xlsx"
+ ],
+ "scripts": [
+  "fl_crosswalk.py",
+  "fl_extras.py",
+  "audit_fl.py",
+  "build_payload_fl.py",
+  "verify_fl.py"
+ ],
+ "verified": true,
+ "dashboard_bytes": 4547359
+}

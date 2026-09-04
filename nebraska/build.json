@@ -1,0 +1,143 @@
+{
+ "state": "NE",
+ "name": "Nebraska",
+ "folder": "nebraska",
+ "built": "2026-09-04",
+ "seconds": 32,
+ "builder": "build_payload_core.py",
+ "page_kind": "descriptive",
+ "lim_headline_n": 4,
+ "schools": 901,
+ "years": [
+  2016,
+  2025
+ ],
+ "lim_roster_schools": 24,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-03"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-03"
+  },
+  "comparison": {
+   "file": "All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 132812308,
+   "modified": "2026-09-03"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-03"
+  }
+ },
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/national/Build/work/NE/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 44585
+  },
+  "roster": {
+   "path": "/home/claude/national/Build/work/NE/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 232
+  },
+  "comparison": {
+   "path": "/home/claude/national/Build/work/NE/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 7513
+  },
+  "mra": {
+   "path": "/home/claude/national/Build/work/NE/data/All MRA Surveys.csv",
+   "rows": 9
+  }
+ },
+ "state_files": [],
+ "verified": true,
+ "dashboard_bytes": 898761,
+ "audits": {
+  "levels": {
+   "rows": 40171,
+   "levels 3 and 4": 7.8,
+   "levels 2, 3 and 4": 88.3,
+   "level 4 alone": 0.0,
+   "100 minus level 1": 77.4,
+   "best": "levels 2, 3 and 4",
+   "levels_sum_to_100_share": 92.2
+  },
+  "poverty": {
+   "lim": {
+    "schools": 24,
+    "missing": 1,
+    "at_99_or_more": 0,
+    "above_100": 0,
+    "high_poverty_share": 0.0
+   },
+   "comparison": {
+    "schools": 909,
+    "missing": 10,
+    "at_99_or_more": 21,
+    "above_100": 19,
+    "high_poverty_share": 11.2
+   }
+  },
+  "statewide_jumps": [
+   {
+    "subject": "ELA",
+    "from": 2016,
+    "to": 2017,
+    "from_mean": 82.5,
+    "to_mean": 49.5,
+    "change": -32.9
+   },
+   {
+    "subject": "Math",
+    "from": 2016,
+    "to": 2017,
+    "from_mean": 73.6,
+    "to_mean": 65.1,
+    "change": -8.5
+   },
+   {
+    "subject": "Math",
+    "from": 2017,
+    "to": 2018,
+    "from_mean": 65.1,
+    "to_mean": 48.5,
+    "change": -16.6
+   },
+   {
+    "subject": "Math",
+    "from": 2022,
+    "to": 2023,
+    "from_mean": 44.6,
+    "to_mean": 55.4,
+    "change": 10.9
+   }
+  ],
+  "sensitivity": {
+   "with": {
+    "y0": 2022,
+    "y1": 2024,
+    "lim_n": 4,
+    "comp_n": 705,
+    "lim_change": 17.65,
+    "comp_change": 13.41,
+    "p": 0.27
+   },
+   "without": {
+    "y0": 2022,
+    "y1": 2024,
+    "lim_n": 3,
+    "comp_n": 705,
+    "lim_change": 19.85,
+    "comp_change": 13.41,
+    "p": 0.178
+   },
+   "schools": 1
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": []
+ }
+}

@@ -1,0 +1,110 @@
+{
+ "state": "CO",
+ "name": "Colorado",
+ "folder": "colorado",
+ "built": "2026-09-04",
+ "seconds": 46,
+ "builder": "build_payload_core.py",
+ "page_kind": "full",
+ "lim_headline_n": 32,
+ "schools": 1733,
+ "years": [
+  2015,
+  2025
+ ],
+ "lim_roster_schools": 62,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-03"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-03"
+  },
+  "comparison": {
+   "file": "All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 132812308,
+   "modified": "2026-09-03"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-03"
+  }
+ },
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/national/Build/work/CO/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 116523
+  },
+  "roster": {
+   "path": "/home/claude/national/Build/work/CO/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 554
+  },
+  "comparison": {
+   "path": "/home/claude/national/Build/work/CO/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 13892
+  },
+  "mra": {
+   "path": "/home/claude/national/Build/work/CO/data/All MRA Surveys.csv",
+   "rows": 81
+  }
+ },
+ "state_files": [],
+ "verified": true,
+ "dashboard_bytes": 1723117,
+ "audits": {
+  "levels": {
+   "rows": 111875,
+   "levels 3 and 4": 10.8,
+   "levels 2, 3 and 4": 1.8,
+   "level 4 alone": 0.1,
+   "100 minus level 1": 0.1,
+   "best": "levels 3 and 4",
+   "levels_sum_to_100_share": 8.8
+  },
+  "poverty": {
+   "lim": {
+    "schools": 62,
+    "missing": 0,
+    "at_99_or_more": 0,
+    "above_100": 0,
+    "high_poverty_share": 24.2
+   },
+   "comparison": {
+    "schools": 1726,
+    "missing": 29,
+    "at_99_or_more": 2,
+    "above_100": 1,
+    "high_poverty_share": 20.6
+   }
+  },
+  "statewide_jumps": [],
+  "sensitivity": {
+   "with": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 32,
+    "comp_n": 1262,
+    "lim_change": 1.67,
+    "comp_change": 1.51,
+    "p": 0.902
+   },
+   "without": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 28,
+    "comp_n": 1262,
+    "lim_change": 1.24,
+    "comp_change": 1.51,
+    "p": 0.846
+   },
+   "schools": 7
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": []
+ }
+}

@@ -1,0 +1,110 @@
+{
+ "state": "WV",
+ "name": "West Virginia",
+ "folder": "west-virginia",
+ "built": "2026-09-04",
+ "seconds": 30,
+ "builder": "build_payload_core.py",
+ "page_kind": "descriptive",
+ "lim_headline_n": 17,
+ "schools": 661,
+ "years": [
+  2015,
+  2025
+ ],
+ "lim_roster_schools": 73,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-03"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-03"
+  },
+  "comparison": {
+   "file": "All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 132812308,
+   "modified": "2026-09-03"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-03"
+  }
+ },
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/national/Build/work/WV/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 41606
+  },
+  "roster": {
+   "path": "/home/claude/national/Build/work/WV/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 711
+  },
+  "comparison": {
+   "path": "/home/claude/national/Build/work/WV/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 5358
+  },
+  "mra": {
+   "path": "/home/claude/national/Build/work/WV/data/All MRA Surveys.csv",
+   "rows": 39
+  }
+ },
+ "state_files": [],
+ "verified": true,
+ "dashboard_bytes": 814163,
+ "audits": {
+  "levels": {
+   "rows": 37536,
+   "levels 3 and 4": 63.2,
+   "levels 2, 3 and 4": 0.4,
+   "level 4 alone": 0.8,
+   "100 minus level 1": 0.1,
+   "best": "levels 3 and 4",
+   "levels_sum_to_100_share": 61.1
+  },
+  "poverty": {
+   "lim": {
+    "schools": 73,
+    "missing": 2,
+    "at_99_or_more": 0,
+    "above_100": 0,
+    "high_poverty_share": 17.8
+   },
+   "comparison": {
+    "schools": 592,
+    "missing": 15,
+    "at_99_or_more": 12,
+    "above_100": 11,
+    "high_poverty_share": 11.3
+   }
+  },
+  "statewide_jumps": [],
+  "sensitivity": {
+   "with": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 17,
+    "comp_n": 506,
+    "lim_change": 3.95,
+    "comp_change": 6.07,
+    "p": 0.411
+   },
+   "without": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 11,
+    "comp_n": 506,
+    "lim_change": 4.6,
+    "comp_change": 6.07,
+    "p": 0.597
+   },
+   "schools": 7
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": []
+ }
+}

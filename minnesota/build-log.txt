@@ -1,0 +1,183 @@
+
+$ python3 /home/claude/national/Build/build_payload_core.py --state MN --core /home/claude/national/corefolder --out /home/claude/national/Build/work/MN
+reading the core for Minnesota ...
+[core] subjects: 127,992 school rows kept; dropped 76,279 rows with no school id and 3,803 with an id but no school record
+[core] Leader in Me roster: 193 rows
+[core] comparison schools: 15,722 rows
+[core] MRA surveys: 30 rows
+  subject rows 127,992 · roster rows 193 (22 schools) · comparison rows 15,722 (1903 schools) · MRA surveys 30
+[core] Leader in Me roster: 56,181 rows
+  exits: 20 of 22 roster schools carry an expiration date; 9 past it by more than 30 days (exited), 0 inside the grace window, 11 in the future, 2 undated (2 with a start date)
+  1,925 schools · 548 districts
+applying the cleaning rules ...
+  52,556 school-year-band-subject rows · years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
+  Leader in Me school-years counted: 87 of 198 reviewed
+  no start date: 0 schools · dated exits: 6 (school-years after an exit with rows: 21) · aggregate 'All grades' rows used 10, skipped 10
+  proficiency = levels 3 and 4 on 100.0% of rows
+building matched pairs, inside each band ...
+  pairs 11  by band {'Primary': {'pairs': 8, 'unmatched': 0}, 'Secondary': {'pairs': 3, 'unmatched': 0}}
+  MRA: 24 surveys · 13 schools · 73 sentinel values · 5 shells
+  headline 2021-22 to 2024-25: {'y0': 2022, 'y1': 2025, 'lim_n': 13, 'comp_n': 1476, 'lim_change': -2.37, 'comp_change': -1.12, 'p': 0.579} · without the 2 undated schools {'y0': 2022, 'y1': 2025, 'lim_n': 11, 'comp_n': 1476, 'lim_change': -2.03, 'comp_change': -1.12, 'p': 0.731}
+  roster: 13 counted, 9 exited, 0 not counted yet, 0 not counted
+
+wrote mn_payload.json  (21.2 MB, 52,556 rows) · page kind descriptive (13 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+
+$ python3 build2.py mn_payload.json MN_Dashboard.html MN_Methods.html
+payload 21.2 MB -> 1.30 MB gzip
+MN_Dashboard.html: 1924 KB
+MN_Methods.html: 28 KB
+
+$ python3 /home/claude/national/Build/verify_core.py --state MN --work /home/claude/national/Build/work/MN
+
+--------------------------------------------------------------------------
+Tier 0 — install and input-value audit
+--------------------------------------------------------------------------
+ok   the template in use carries the brand palette and the ink helper
+ok   the template carries the three-school floor in headline and movement
+ok   the template reads the payload's raw window on the insights tab
+ok   the template honours the composite row flag
+ok   the template carries the research pack, look-alike mode and the school list
+ok   the office helper carries the Word table builder
+ok   the subject pull is one state's (federal id state code)
+ok   the roster and comparison pulls are one state's
+ok   2019-20 rows, if the file has any, are excluded from the payload  [0 rows in the file]
+ok   no duplicate school-year-grade-subject rows
+ok   no test value above 100
+ok   negatives, if any, are sentinels under one point  [{'PercentLevel1': 0.0, 'PercentLevel2': 0.0, 'PercentLevel3': 0.0, 'PercentLevel4': 0.0, 'PercentMetStandard': 0.0}]
+ok   the Leader in Me flag never flips true->false in the roster (a snapshot)
+ok   every comparison row is LIM School = false
+ok   comparison rows for roster schools sit only in years the roster does not carry  [0 roster schools have comparison rows]
+ok   the roster's '% White' is a count, not a percentage
+ok   one expiration date per roster school
+ok   every expiration date parsed
+ok   an expiration date that precedes the school's start date is set aside as stale, and counted  [0 stale]
+ok   the exit rule's counts recompute from the roster  [9 exited, 0 in grace, 11 future]
+ok   the grace window is the 30 days Eve set
+ok   MRA exact-100 values were counted as sentinels  [4 composite cells at 100, 0 in 90-99.9]
+ok   name-and-city collisions between the two groups were handled (folded or kept apart)  [0 collisions]
+ok   no school appears in both groups in the same year
+
+--------------------------------------------------------------------------
+Tier 1 — rules and maths
+--------------------------------------------------------------------------
+ok   lim_rules.py self-tests pass
+ok   skill_version.py self-tests pass
+ok   payload carries a build stamp
+ok   years exclude both COVID years
+ok   the straight-numbers window starts in 2022 or later
+ok   the long window is scored relative to the state
+ok   no Leader in Me row counted before its full year was finished  [0 rows]
+ok   schools with no start date appear in neither group  [0 schools]
+ok   the count of undated schools is on the methods page
+ok   no row survives after a school's dated exit, in either group  [0 rows]
+ok   exited schools keep their true Leader in Me years  [6 exited schools with counted years]
+ok   the exit counts on the methods page match the rule  [9 exited (0 from DOMO's flags)]
+ok   lim_exit carries every exited school and nothing else
+ok   the roster section lists every roster school once
+ok   the roster section's exited count matches (a school with no start date stays 'not counted')  [{'counted': 13, 'exited': 9}]
+ok   an exited school's reason names its expiration and the grace rule, or DOMO's own flag
+ok   the headline sensitivity without the undated schools is on the methods page
+ok   size bands are the NCES categories in the payload's order
+ok   the poverty share rides on most rows for the look-alike caliper  [99%]
+ok   the composite flag keeps science, social studies and writing out of the no-filter view
+ok   the grade table lists tested grades in order and every school in it has a name
+ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [854 schools]
+ok   the grade table carries no school-year the rules dropped
+ok   school names and start dates are in the payload for the pack
+ok   MRA by-school rows exist for the pack
+ok   the MRA respondent map names a group or a blend for every measure
+ok   look-alike settings are in the payload with their rationale
+ok   a Leader in Me school's pre-start years count in the comparison group  [288 rows]
+ok   Lighthouse schools are inside the Leader in Me family
+ok   combined-grade schools appear in both bands  [507 schools]
+ok   the school count never exceeds the band-slice count  [1489 schools vs 1757 band slices]
+ok   pairs are built inside bands
+ok   the by-band pair counts sum to the total
+ok   no comparison school is used twice
+ok   no Leader in Me school is paired twice inside a band
+ok   the signed baseline gap recomputes to the payload's  [offline -0.055 vs payload -0.070 on 11 pairs]
+ok   the mean signed baseline gap is under one point  [-0.055]
+ok   the widest single baseline gap is inside the caliper's reach  [0.8 points]
+ok   the printed signed gap is not a negative zero  [-0.07]
+ok   no MRA value of exactly 100 survives into the payload
+ok   every MRA value sits on the published scale
+ok   the MRA trend stays inside one instrument version
+ok   every promised MRA group either draws or is explained with real counts  [drawn=['all', 'early', 'established'] absent=['lighthouse']]
+ok   movers are built on ten or more schools each
+  demo district: Anoka-Hennepin School District · prospect district: Saint Paul Public Schools
+
+--------------------------------------------------------------------------
+Tier 2 — behaviour in a real browser
+--------------------------------------------------------------------------
+ok   the page loads and the headline renders
+ok   load time is workable  [0.8s]
+ok   no console errors on load
+ok   chart c1 draws an svg or explains why
+ok   chart c2 draws an svg or explains why
+ok   the MRA card shows exactly when a trend line can be drawn
+ok   the Georgia discipline card stays hidden
+ok   the incidents card stays hidden (no state incident file)
+ok   the state extras card stays hidden (no state files)
+ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
+ok   the headline p recomputes offline  [page 0.5813 scipy 0.5813 · window 2022-2025 · LiM n=13 mean -2.36 · comparison n=1476 mean -1.12]
+ok   the headline counts schools, not band slices  [page 1489 vs offline 1489 on 2022-2025]
+ok   the page's Leader in Me count is the builder's  [13 vs 13]
+ok   the district filter re-renders the headline  [In Anoka-Hennepin School District schools, between 2022-23 and 2024-25, Leader in Me schoo]
+ok   the Primary band filter re-renders without error
+ok   the Secondary band filter re-renders without error
+ok   measure 'percent_proficient' either draws or says why
+ok   measure 'percent_below' either draws or says why
+ok   measure 'standard_score' either draws or says why
+ok   measure 'chronic_absent' either draws or says why
+ok   measure 'grad_rate' either draws or says why
+ok   the matched toggle re-renders the headline  [In Minnesota schools (matched to similar schools only), between 2021-22 and 2024-25, Leade]
+ok   the matched view shrinks or equals the Leader in Me count  [8 matched]
+ok   no console errors after the filter sweep
+ok   the insights tab hides the explore view
+ok   Anoka-Hennepin School District generates cards or says there is nothing to report  [4 cards]
+ok   the insights tab uses the same unit and window as the explore tab  [{'p': 0.5812812019696527, 'n1': 13, 'n2': 1476}]
+ok   no console errors on the insights tab
+ok   export c1.pptx downloads, opens and carries the chart image  [134,445 bytes]
+ok   the pptx export is named for the state and chart  [MN_Percent_meeting_the_standard_year_by_year_Minnesota_schools.pptx]
+ok   export c1.docx downloads, opens and carries the chart image  [132,124 bytes]
+ok   the docx export is named for the state and chart  [MN_Percent_meeting_the_standard_year_by_year_Minnesota_schools.docx]
+ok   the research pack downloads with its sections  [11,459 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'roster']]
+ok   the pack's Leader in Me count for the district is the page's  [3 vs 3]
+skip look-alike mode  [no prospect district with three or more schools, or not a full page]
+ok   the grade filter lists the tested grades
+ok   choosing a grade re-renders the headline and names the grade  [In Minnesota grade 4 results, between 2021-22 and 2024-25, Leader in Me schools rose 0.0% on Percent]
+ok   whole-school measures switch off while a grade is chosen
+ok   dark mode re-renders without errors
+ok   no horizontal overflow at 900px  [0px]
+ok   no horizontal overflow at 700px  [0px]
+ok   the methods page loads
+ok   no console errors on the methods page
+
+--------------------------------------------------------------------------
+Tier 3 — honesty
+--------------------------------------------------------------------------
+ok   the build declares itself real, not a prototype
+ok   the banner names the Subject Test source
+ok   the banner names the roster source
+ok   the banner names the expiration source
+ok   the methods page owns the 'exit' limitation
+ok   the methods page owns the 'snapshot' limitation
+ok   the methods page owns the 'Title I' limitation
+ok   the methods page owns the 'observational' limitation
+ok   the methods page owns the 'both ends' limitation
+ok   poverty_help tells the reader which measure is on screen and its ceiling
+ok   the methods page names the matching method rather than asserting it
+ok   the level audit is on the methods page
+ok   the subject mapping is on the methods page
+ok   the poverty audit is on the methods page
+ok   the methods page carries the exit-dating box
+ok   the methods page carries the look-alike section
+ok   the undated schools are listed by name in the payload
+ok   a descriptive page says so on the methods page
+
+  HEADLINE (statewide, 2022-2025, no filters): Leader in Me -2.36 pts (n=13) vs comparison -1.12 pts (n=1476), p=0.5813 -> not significant
+
+==========================================================================
+128 of 128 checks pass · 1 skipped
+==========================================================================

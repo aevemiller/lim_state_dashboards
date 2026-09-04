@@ -1,0 +1,188 @@
+
+$ python3 /home/claude/national/Build/build_payload_core.py --state NE --core /home/claude/national/corefolder --out /home/claude/national/Build/work/NE
+reading the core for Nebraska ...
+[core] subjects: 44,585 school rows kept; dropped 27,271 rows with no school id and 1,530 with an id but no school record
+[core] Leader in Me roster: 232 rows
+[core] comparison schools: 7,513 rows
+[core] MRA surveys: 9 rows
+  subject rows 44,585 · roster rows 232 (24 schools) · comparison rows 7,513 (909 schools) · MRA surveys 9
+[core] Leader in Me roster: 56,181 rows
+  exits: 23 of 24 roster schools carry an expiration date; 2 past it by more than 30 days (exited), 0 inside the grace window, 21 in the future, 1 undated (1 with a start date)
+  933 schools · 246 districts
+applying the cleaning rules ...
+  22,928 school-year-band-subject rows · years [2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
+  Leader in Me school-years counted: 20 of 192 reviewed
+  no start date: 8 schools · dated exits: 1 (school-years after an exit with rows: 4) · aggregate 'All grades' rows used 8, skipped 5
+  proficiency = levels 2, 3 and 4 on 88.3% of rows
+  statewide jump: ELA 2016->2017: 82.5 -> 49.5 (-32.9)
+  statewide jump: Math 2016->2017: 73.6 -> 65.1 (-8.5)
+  statewide jump: Math 2017->2018: 65.1 -> 48.5 (-16.6)
+  statewide jump: Math 2022->2023: 44.6 -> 55.4 (+10.9)
+building matched pairs, inside each band ...
+  pairs 4  by band {'Primary': {'pairs': 2, 'unmatched': 0}, 'Secondary': {'pairs': 2, 'unmatched': 1}}
+  MRA: 9 surveys · 3 schools · 40 sentinel values · 0 shells
+  headline 2021-22 to 2023-24: {'y0': 2022, 'y1': 2024, 'lim_n': 4, 'comp_n': 705, 'lim_change': 17.65, 'comp_change': 13.41, 'p': 0.27} · without the 1 undated schools {'y0': 2022, 'y1': 2024, 'lim_n': 3, 'comp_n': 705, 'lim_change': 19.85, 'comp_change': 13.41, 'p': 0.178}
+  roster: 4 counted, 1 exited, 11 not counted yet, 8 not counted
+
+wrote ne_payload.json  (9.2 MB, 22,928 rows) · page kind descriptive (4 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+
+$ python3 build2.py ne_payload.json NE_Dashboard.html NE_Methods.html
+payload 9.2 MB -> 0.49 MB gzip
+NE_Dashboard.html: 878 KB
+NE_Methods.html: 28 KB
+
+$ python3 /home/claude/national/Build/verify_core.py --state NE --work /home/claude/national/Build/work/NE
+
+--------------------------------------------------------------------------
+Tier 0 — install and input-value audit
+--------------------------------------------------------------------------
+ok   the template in use carries the brand palette and the ink helper
+ok   the template carries the three-school floor in headline and movement
+ok   the template reads the payload's raw window on the insights tab
+ok   the template honours the composite row flag
+ok   the template carries the research pack, look-alike mode and the school list
+ok   the office helper carries the Word table builder
+ok   the subject pull is one state's (federal id state code)
+ok   the roster and comparison pulls are one state's
+ok   2019-20 rows, if the file has any, are excluded from the payload  [0 rows in the file]
+ok   no duplicate school-year-grade-subject rows
+ok   no test value above 100
+ok   negatives, if any, are sentinels under one point  [{'PercentLevel1': -1.0, 'PercentLevel2': 0.0, 'PercentLevel3': -1.0, 'PercentLevel4': nan, 'PercentMetStandard': 0.0}]
+ok   the Leader in Me flag never flips true->false in the roster (a snapshot)
+ok   every comparison row is LIM School = false
+ok   comparison rows for roster schools sit only in years the roster does not carry  [0 roster schools have comparison rows]
+ok   the roster's '% White' is a count, not a percentage
+ok   one expiration date per roster school
+ok   every expiration date parsed
+ok   an expiration date that precedes the school's start date is set aside as stale, and counted  [0 stale]
+ok   the exit rule's counts recompute from the roster  [2 exited, 0 in grace, 21 future]
+ok   the grace window is the 30 days Eve set
+ok   MRA exact-100 values were counted as sentinels  [5 composite cells at 100, 0 in 90-99.9]
+ok   name-and-city collisions between the two groups were handled (folded or kept apart)  [0 collisions]
+ok   no school appears in both groups in the same year
+
+--------------------------------------------------------------------------
+Tier 1 — rules and maths
+--------------------------------------------------------------------------
+ok   lim_rules.py self-tests pass
+ok   skill_version.py self-tests pass
+ok   payload carries a build stamp
+ok   years exclude both COVID years
+ok   the straight-numbers window starts in 2022 or later
+ok   the long window is scored relative to the state
+ok   no Leader in Me row counted before its full year was finished  [0 rows]
+ok   schools with no start date appear in neither group  [8 schools]
+ok   the count of undated schools is on the methods page
+ok   no row survives after a school's dated exit, in either group  [0 rows]
+ok   exited schools keep their true Leader in Me years  [0 exited schools with counted years]
+ok   the exit counts on the methods page match the rule  [2 exited (0 from DOMO's flags)]
+ok   lim_exit carries every exited school and nothing else
+ok   the roster section lists every roster school once
+ok   the roster section's exited count matches (a school with no start date stays 'not counted')  [{'not counted yet': 11, 'not counted': 8, 'counted': 4, 'exited': 1}]
+ok   an exited school's reason names its expiration and the grace rule, or DOMO's own flag
+ok   the headline sensitivity without the undated schools is on the methods page
+ok   size bands are the NCES categories in the payload's order
+ok   the poverty share rides on most rows for the look-alike caliper  [100%]
+ok   the composite flag keeps science, social studies and writing out of the no-filter view
+ok   the grade table lists tested grades in order and every school in it has a name
+ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [249 schools]
+ok   the grade table carries no school-year the rules dropped
+ok   school names and start dates are in the payload for the pack
+ok   MRA by-school rows exist for the pack
+ok   the MRA respondent map names a group or a blend for every measure
+ok   look-alike settings are in the payload with their rationale
+ok   a Leader in Me school's pre-start years count in the comparison group  [333 rows]
+ok   Lighthouse schools are inside the Leader in Me family
+ok   combined-grade schools appear in both bands  [304 schools]
+ok   the school count never exceeds the band-slice count  [520 schools vs 618 band slices]
+ok   pairs are built inside bands
+ok   the by-band pair counts sum to the total
+ok   no comparison school is used twice
+ok   no Leader in Me school is paired twice inside a band
+ok   the signed baseline gap recomputes to the payload's  [offline -0.125 vs payload -0.120 on 4 pairs]
+skip mean signed gap under one point  [only 4 pairs; the gap is -0.12]
+ok   the widest single baseline gap is inside the caliper's reach  [0.5 points]
+ok   the printed signed gap is not a negative zero  [-0.12]
+ok   no MRA value of exactly 100 survives into the payload
+ok   every MRA value sits on the published scale
+ok   the MRA trend stays inside one instrument version
+ok   every promised MRA group either draws or is explained with real counts  [drawn=['all', 'lighthouse'] absent=['early', 'established']]
+ok   movers are built on ten or more schools each
+  demo district: Omaha Public Schools · prospect district: Lincoln Public Schools
+
+--------------------------------------------------------------------------
+Tier 2 — behaviour in a real browser
+--------------------------------------------------------------------------
+ok   the page loads and the headline renders
+ok   load time is workable  [0.4s]
+ok   no console errors on load
+ok   chart c1 draws an svg or explains why
+ok   chart c2 draws an svg or explains why
+ok   the MRA card shows exactly when a trend line can be drawn
+ok   the Georgia discipline card stays hidden
+ok   the incidents card stays hidden (no state incident file)
+ok   the state extras card stays hidden (no state files)
+ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
+ok   the headline p recomputes offline  [page 0.2674 scipy 0.2674 · window 2022-2024 · LiM n=4 mean +17.67 · comparison n=705 mean +13.41]
+ok   the headline counts schools, not band slices  [page 709 vs offline 709 on 2022-2024]
+ok   the page's Leader in Me count is the builder's  [4 vs 4]
+ok   the district filter re-renders the headline  [Not enough schools match these filters to compare anything yet. Remove a filter on the lef]
+ok   the Primary band filter re-renders without error
+ok   the Secondary band filter re-renders without error
+ok   measure 'percent_proficient' either draws or says why
+ok   measure 'percent_below' either draws or says why
+ok   measure 'standard_score' either draws or says why
+ok   measure 'chronic_absent' either draws or says why
+ok   measure 'grad_rate' either draws or says why
+ok   the matched toggle re-renders the headline  [In Nebraska schools (matched to similar schools only), between 2021-22 and 2023-24, Leader]
+ok   the matched view shrinks or equals the Leader in Me count  [3 matched]
+ok   no console errors after the filter sweep
+ok   the insights tab hides the explore view
+ok   Omaha Public Schools generates cards or says there is nothing to report  [4 cards]
+ok   the insights tab uses the same unit and window as the explore tab  [{'p': 0.26739500113591813, 'n1': 4, 'n2': 705}]
+ok   no console errors on the insights tab
+ok   export c1.pptx downloads, opens and carries the chart image  [162,393 bytes]
+ok   the pptx export is named for the state and chart  [NE_Percent_meeting_the_standard_year_by_year_Nebraska_schools.pptx]
+ok   export c1.docx downloads, opens and carries the chart image  [160,072 bytes]
+ok   the docx export is named for the state and chart  [NE_Percent_meeting_the_standard_year_by_year_Nebraska_schools.docx]
+ok   the research pack downloads with its sections  [10,804 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'report_card', 'roster', 'school']]
+skip pack count against the page  [no district with three Leader in Me and three comparison schools in the end year]
+skip look-alike mode  [no prospect district with three or more schools, or not a full page]
+ok   the grade filter lists the tested grades
+ok   choosing a grade re-renders the headline and names the grade  [Not enough schools match these filters to compare anything yet. Remove a filter on the left and it w]
+ok   whole-school measures switch off while a grade is chosen
+ok   dark mode re-renders without errors
+ok   no horizontal overflow at 900px  [0px]
+ok   no horizontal overflow at 700px  [0px]
+ok   the methods page loads
+ok   no console errors on the methods page
+
+--------------------------------------------------------------------------
+Tier 3 — honesty
+--------------------------------------------------------------------------
+ok   the build declares itself real, not a prototype
+ok   the banner names the Subject Test source
+ok   the banner names the roster source
+ok   the banner names the expiration source
+ok   the methods page owns the 'exit' limitation
+ok   the methods page owns the 'snapshot' limitation
+ok   the methods page owns the 'Title I' limitation
+ok   the methods page owns the 'observational' limitation
+ok   the methods page owns the 'both ends' limitation
+ok   poverty_help tells the reader which measure is on screen and its ceiling
+ok   the methods page names the matching method rather than asserting it
+ok   the level audit is on the methods page
+ok   the subject mapping is on the methods page
+ok   the poverty audit is on the methods page
+ok   the methods page carries the exit-dating box
+ok   the methods page carries the look-alike section
+ok   the undated schools are listed by name in the payload
+ok   a statewide jump is flagged on the methods page
+ok   a descriptive page says so on the methods page
+
+  HEADLINE (statewide, 2022-2024, no filters): Leader in Me +17.67 pts (n=4) vs comparison +13.41 pts (n=705), p=0.2674 -> not significant
+
+==========================================================================
+127 of 127 checks pass · 3 skipped
+==========================================================================

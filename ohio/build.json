@@ -1,0 +1,115 @@
+{
+ "state": "OH",
+ "name": "Ohio",
+ "folder": "ohio",
+ "built": "2026-09-04",
+ "seconds": 73,
+ "builder": "build_payload_core.py",
+ "page_kind": "full",
+ "lim_headline_n": 148,
+ "schools": 3320,
+ "years": [
+  2015,
+  2025
+ ],
+ "lim_roster_schools": 266,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-03"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-03"
+  },
+  "comparison": {
+   "file": "All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 132812308,
+   "modified": "2026-09-03"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-03"
+  }
+ },
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/national/Build/work/OH/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 257256
+  },
+  "roster": {
+   "path": "/home/claude/national/Build/work/OH/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 2523
+  },
+  "comparison": {
+   "path": "/home/claude/national/Build/work/OH/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 27381
+  },
+  "mra": {
+   "path": "/home/claude/national/Build/work/OH/data/All MRA Surveys.csv",
+   "rows": 371
+  }
+ },
+ "state_files": [],
+ "verified": true,
+ "dashboard_bytes": 3176177,
+ "audits": {
+  "levels": {
+   "rows": 233846,
+   "no_levels": true,
+   "best": "the reported PercentMetStandard alone (the file carries no level percentages)"
+  },
+  "poverty": {
+   "lim": {
+    "schools": 266,
+    "missing": 31,
+    "at_99_or_more": 3,
+    "above_100": 0,
+    "high_poverty_share": 25.2
+   },
+   "comparison": {
+    "schools": 3085,
+    "missing": 137,
+    "at_99_or_more": 414,
+    "above_100": 379,
+    "high_poverty_share": 26.2
+   }
+  },
+  "statewide_jumps": [
+   {
+    "subject": "ELA",
+    "from": 2015,
+    "to": 2016,
+    "from_mean": 74.0,
+    "to_mean": 57.0,
+    "change": -17.0
+   }
+  ],
+  "sensitivity": {
+   "with": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 148,
+    "comp_n": 2615,
+    "lim_change": 3.8,
+    "comp_change": 3.37,
+    "p": 0.455
+   },
+   "without": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 121,
+    "comp_n": 2615,
+    "lim_change": 3.32,
+    "comp_change": 3.37,
+    "p": 0.936
+   },
+   "schools": 32
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": []
+ }
+}

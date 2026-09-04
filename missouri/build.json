@@ -1,0 +1,119 @@
+{
+ "state": "MO",
+ "name": "Missouri",
+ "folder": "missouri",
+ "built": "2026-09-04",
+ "seconds": 47,
+ "builder": "build_payload_core.py",
+ "page_kind": "full",
+ "lim_headline_n": 158,
+ "schools": 2053,
+ "years": [
+  2015,
+  2025
+ ],
+ "lim_roster_schools": 232,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-03"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-03"
+  },
+  "comparison": {
+   "file": "All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 132812308,
+   "modified": "2026-09-03"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-03"
+  }
+ },
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/national/Build/work/MO/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 106874
+  },
+  "roster": {
+   "path": "/home/claude/national/Build/work/MO/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 2184
+  },
+  "comparison": {
+   "path": "/home/claude/national/Build/work/MO/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 15057
+  },
+  "mra": {
+   "path": "/home/claude/national/Build/work/MO/data/All MRA Surveys.csv",
+   "rows": 414
+  }
+ },
+ "state_files": [],
+ "verified": true,
+ "dashboard_bytes": 2051181,
+ "audits": {
+  "levels": {
+   "rows": 97580,
+   "levels 3 and 4": 86.9,
+   "levels 2, 3 and 4": 3.8,
+   "level 4 alone": 0.5,
+   "100 minus level 1": 0.4,
+   "best": "levels 3 and 4",
+   "levels_sum_to_100_share": 83.7
+  },
+  "poverty": {
+   "lim": {
+    "schools": 232,
+    "missing": 1,
+    "at_99_or_more": 15,
+    "above_100": 0,
+    "high_poverty_share": 12.9
+   },
+   "comparison": {
+    "schools": 1824,
+    "missing": 12,
+    "at_99_or_more": 362,
+    "above_100": 2,
+    "high_poverty_share": 24.9
+   }
+  },
+  "statewide_jumps": [
+   {
+    "subject": "ELA",
+    "from": 2017,
+    "to": 2018,
+    "from_mean": 60.6,
+    "to_mean": 48.8,
+    "change": -11.8
+   }
+  ],
+  "sensitivity": {
+   "with": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 158,
+    "comp_n": 1296,
+    "lim_change": 0.69,
+    "comp_change": 1.73,
+    "p": 0.152
+   },
+   "without": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 135,
+    "comp_n": 1296,
+    "lim_change": 0.59,
+    "comp_change": 1.73,
+    "p": 0.146
+   },
+   "schools": 28
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": []
+ }
+}

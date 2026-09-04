@@ -1,0 +1,110 @@
+{
+ "state": "RI",
+ "name": "Rhode Island",
+ "folder": "rhode-island",
+ "built": "2026-09-04",
+ "seconds": 24,
+ "builder": "build_payload_core.py",
+ "page_kind": "territory",
+ "lim_headline_n": 0,
+ "schools": 311,
+ "years": [
+  2015,
+  2025
+ ],
+ "lim_roster_schools": 0,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-03"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-03"
+  },
+  "comparison": {
+   "file": "All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 132812308,
+   "modified": "2026-09-03"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-03"
+  }
+ },
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/national/Build/work/RI/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 19917
+  },
+  "roster": {
+   "path": "/home/claude/national/Build/work/RI/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 0
+  },
+  "comparison": {
+   "path": "/home/claude/national/Build/work/RI/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 2761
+  },
+  "mra": {
+   "path": "/home/claude/national/Build/work/RI/data/All MRA Surveys.csv",
+   "rows": 0
+  }
+ },
+ "state_files": [],
+ "verified": true,
+ "dashboard_bytes": 518313,
+ "audits": {
+  "levels": {
+   "rows": 17885,
+   "levels 3 and 4": 69.9,
+   "levels 2, 3 and 4": 0.1,
+   "level 4 alone": 10.1,
+   "100 minus level 1": 0.1,
+   "best": "levels 3 and 4",
+   "levels_sum_to_100_share": 80.3
+  },
+  "poverty": {
+   "lim": {
+    "schools": 0,
+    "missing": 0,
+    "at_99_or_more": 0,
+    "above_100": 0,
+    "high_poverty_share": null
+   },
+   "comparison": {
+    "schools": 311,
+    "missing": 0,
+    "at_99_or_more": 3,
+    "above_100": 0,
+    "high_poverty_share": 28.9
+   }
+  },
+  "statewide_jumps": [],
+  "sensitivity": {
+   "with": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 0,
+    "comp_n": 269,
+    "lim_change": null,
+    "comp_change": 2.18,
+    "p": null
+   },
+   "without": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 0,
+    "comp_n": 269,
+    "lim_change": null,
+    "comp_change": 2.18,
+    "p": null
+   },
+   "schools": 0
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": []
+ }
+}

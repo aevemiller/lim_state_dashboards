@@ -1,0 +1,114 @@
+{
+ "state": "VA",
+ "name": "Virginia",
+ "folder": "virginia",
+ "built": "2026-09-04",
+ "seconds": 56,
+ "builder": "build_payload_core.py",
+ "page_kind": "full",
+ "lim_headline_n": 23,
+ "schools": 1827,
+ "years": [
+  2015,
+  2025
+ ],
+ "lim_roster_schools": 34,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-03"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-03"
+  },
+  "comparison": {
+   "file": "All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 132812308,
+   "modified": "2026-09-03"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-03"
+  }
+ },
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/national/Build/work/VA/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 162844
+  },
+  "roster": {
+   "path": "/home/claude/national/Build/work/VA/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 330
+  },
+  "comparison": {
+   "path": "/home/claude/national/Build/work/VA/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 17258
+  },
+  "mra": {
+   "path": "/home/claude/national/Build/work/VA/data/All MRA Surveys.csv",
+   "rows": 45
+  }
+ },
+ "state_files": [],
+ "verified": true,
+ "dashboard_bytes": 2302089,
+ "audits": {
+  "levels": {
+   "rows": 149533,
+   "levels 3 and 4": 0.2,
+   "levels 2, 3 and 4": 100.0,
+   "level 4 alone": 0.1,
+   "100 minus level 1": 100.0,
+   "best": "levels 2, 3 and 4",
+   "levels_sum_to_100_share": 100.0
+  },
+  "poverty": {
+   "lim": {
+    "schools": 34,
+    "missing": 0,
+    "at_99_or_more": 4,
+    "above_100": 0,
+    "high_poverty_share": 55.9
+   },
+   "comparison": {
+    "schools": 1796,
+    "missing": 22,
+    "at_99_or_more": 234,
+    "above_100": 135,
+    "high_poverty_share": 46.4
+   }
+  },
+  "statewide_jumps": [],
+  "sensitivity": {
+   "with": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 23,
+    "comp_n": 1709,
+    "lim_change": 2.27,
+    "comp_change": 1.67,
+    "p": 0.734
+   },
+   "without": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 13,
+    "comp_n": 1709,
+    "lim_change": 1.25,
+    "comp_change": 1.67,
+    "p": 0.785
+   },
+   "schools": 11
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": [
+   "History (Alternate)",
+   "Mathematics (Alternate)",
+   "Science (Alternate)"
+  ]
+ }
+}

@@ -1,0 +1,484 @@
+
+$ python3 nc_crosswalk.py
+========================================================================
+NORTH CAROLINA CROSSWALK  (NC DPI agency code  <->  NCES id)
+========================================================================
+DOMO subject-file schools      :   2762   (LiM 195, comparison 2567)
+SRC location-table schools     :   3105
+Crosswalked                    :   2712   (LiM 195/195, comparison 2517/2567)
+    via district+name             :   2537
+    via district+name contains    :    103
+    via district+loose name       :     28
+    via city+name contains (charter):     16
+    via city+loose name           :     15
+    via district+name, years disambiguated:     12
+    via truncated charter name    :      1
+Comparison schools not matched :     50
+LiM schools not matched        :      0
+DOMO districts with no state match (39): ['ALA CHARLOTTE', 'APPALACHIAN STATE U ACADEMY MIDDLE FORK', 'APPRENTICE ACADEMY HIGH NC', 'BREVARD ACADEMY', 'BRIDGES ACADEMY', 'CARDINAL CHARTER', 'CASA ESPERANZA MONTESSORI', 'COLLEGE PREPARATORY AND LEADERSHIP A', 'COMMUNITY DIGITAL AND VISUAL A', 'CORNERSTONE CHARTER ACADEMY', 'DAVIDSON CHARTER ACADEMY', 'DILLARD ACADEMY']
+------------------------------------------------------------------------
+INDEPENDENT AUDIT — state average daily membership (rcd_adm 2025) vs DOMO student count
+  schools compared        : 2491
+  correlation             : 0.9972
+  median size difference  : 2.63%
+  within 25% of each other: 99.2% of schools
+  more than 50% apart     : 4  (worst: STAR Academy (Harnett County Schools): state ADM 76 vs DOMO 31)
+========================================================================
+
+$ python3 audit_nc.py
+
+==============================================================================
+1. DOMO subject test file
+==============================================================================
+rows 173,498 · schools 2,762 · years [np.int64(2015), np.int64(2016), np.int64(2017), np.int64(2018), np.int64(2019), np.int64(2021), np.int64(2022), np.int64(2023), np.int64(2024), np.int64(2025)]
+subjects: {'Reading': 65536, 'Mathematics': 65059, 'Science': 21417, 'Math I': 6628, 'English II': 5719, 'Biology': 5613, 'Math III': 3526}
+grades: {'5th Grade': 42869, '4th Grade': 29190, '3rd Grade': 28838, '8th Grade': 21605, 'End of course': 21486, '6th Grade': 14940, '7th Grade': 14570}
+duplicate school-year-subject-grade rows: 0
+2020 absent: True · 2021 trough: True  -> TestYear is the SPRING of the school year
+  >> Year labels are the spring of the school year: no 2020 (spring 2020 testing cancelled) and the 2021 trough is 11-12 points below 2019 on reading and math
+LIM Exit Date populated: 0 rows
+schools whose LIM School flag flips across years: 0
+  >> No exit is datable: LIM Exit Date is empty on every row and no school's LIM School flag ever flips, so the roster is a current-active snapshot stamped onto every year
+
+DOMO rows joined to the state's rcd_acc_pc: 170,501 of 170,999
+PercentMetStandard == state GLP (levels 3+4+5): 96.8% exact through 2021; from 2022 61.0% exact, 88.6% within 1.0 pt, 97.6% within 2.5 pts (mean signed difference +0.08)
+PercentMetStandard == state CCR (levels 4+5): 1.0%  -> it is NOT the college-and-career bar
+  >> PercentMetStandard is the state's grade-level-proficient share (levels 3, 4 and 5): exact on 96.8% of rows through 2021 (the rest are the state's <5/>95 masking written as 4/96), and within 1 point on 88.6% of rows from 2022, where DOMO drew on a different release of the same numbers
+PercentLevel1 == state L1 where the state publishes L1 (through 2019): 98.0%
+PercentLevel3 == state L3: 81.8%   (DOMO carries four of the five levels; level 5 is absent)
+PercentLevel1 == state Not Proficient (levels 1+2) from 2022: 89.4% within 1 pt
+sum of DOMO's four levels: median 86.2, mean 69.7 (never 100: level 5 is missing)
+  >> DOMO's PercentLevel1 changes meaning: through 2019 it is the state's Level 1 alone (Level 2 is in PercentLevel2), from 2022 it is the state's Not Proficient share (levels 1 and 2 together) and PercentLevel2 is zero. The lowest-level measure is therefore built as Level 1 + Level 2 through 2019 and PercentLevel1 from 2022, which is one definition (below grade level) throughout
+PercentLevel1 null share by year (%): {2015: 11.0, 2016: 44.0, 2017: 40.0, 2018: 41.0, 2019: 44.0, 2021: 100.0, 2022: 0.0, 2023: 0.0, 2024: 0.0, 2025: 0.0}
+  >> DOMO's level columns are blank on 40-44% of 2016-2019 rows and on every 2021 row, so the lowest-level measure is thinner before 2022 than proficiency is
+
+statewide grade-level-proficient share, official (NC-SEA):
+year     2014  2015  2016  2017  2018  2019  2021  2022  2023  2024  2025
+subject                                                                  
+EOG      55.7  56.3  58.2  58.8  58.8  60.4  45.6  51.9  53.9  54.6  55.5
+MA       51.0  52.2  54.7  55.4  56.1  58.6  40.0  49.8  53.0  54.6  56.7
+RD       56.3  56.3  56.9  57.5  57.3  57.2  45.5  48.4  50.2  50.1  52.5
+SC       67.8  68.8  72.7  72.8  72.1  75.5  62.2  68.3  67.7  68.0  61.0
+science 2024 -> 2025: 68.0 -> 61.0; biology: ? -> ?
+  >> North Carolina replaced its science tests in 2024-25 (grade 5, grade 8 and Biology, on the 2023 science standards): statewide science proficiency fell 68.0 to 61.0 and the college-and-career-ready share 57.9 to 40.3 in one year while reading and math rose. Science and Biology 2025 are excluded by name, and science is kept out of the all-subjects composite so the missing year cannot read as a drop
+  >> Earlier test changes (math 2018-19, reading and English II 2020-21, Math III new in 2018-19) all sit before the straight-numbers window, which starts at 2021-22; the full-history window scores each school against its state that year, which absorbs them
+
+==============================================================================
+2. Leader in Me roster (current-active)
+==============================================================================
+rows 1,865 · schools 195 · years [np.int64(2015), np.int64(2016), np.int64(2017), np.int64(2018), np.int64(2019), np.int64(2021), np.int64(2022), np.int64(2023), np.int64(2024), np.int64(2025)]
+LIM School: {True: 1865}
+LiM Year Calc range: -9.0 to 16.0
+schools with no start date anywhere: 4: ['A H Snipes Academy of Arts/Des', 'Doral Academy of North Carolina', 'East McDowell Middle School', 'West McDowell Middle School']
+  >> 4 roster schools carry no start date and count in neither group
+start year: {2010.0: 5, 2011.0: 1, 2012.0: 3, 2013.0: 11, 2014.0: 29, 2015.0: 10, 2016.0: 15, 2017.0: 15, 2018.0: 9, 2019.0: 16, 2020.0: 6, 2021.0: 10, 2022.0: 7, 2023.0: 28, 2024.0: 25, 2025.0: 1}
+start month: {1.0: 6, 3.0: 3, 4.0: 3, 5.0: 15, 6.0: 89, 7.0: 25, 8.0: 38, 9.0: 1, 10.0: 7, 11.0: 1, 12.0: 3}
+Lighthouse schools: 49 (status is one value stamped across all years)
+engagement colour per school: {('Green',): 111, ('Black',): 70, ('Yellow',): 8, ('Gray',): 3, (): 2, ('Red',): 1}
+latest-year activity by colour (% of schools with any coaching / workshop days):
+                  schools  coaching  workshop
+Engagement Color                             
+Black                  68       9.0       1.0
+Gray                    2      50.0       0.0
+Green                 110      49.0      23.0
+Red                     1       0.0       0.0
+Yellow                  8      62.0      12.0
+  >> 70 of 195 roster schools carry a Black engagement colour on every year. Colours are retired as exit signals, so all of them count as Leader in Me from their start date, but with no exit date anywhere a Black school that has in fact left stays in the Leader in Me group. A dated exit list is the single most valuable file to add
+
+FRL %: missing 0% of rows · over 100: 0 rows · latest-year median 98.62
+'% White' vs Student Count: median ratio 0.49; share of rows where % White > 100: 81%  -> a COUNT, as in Florida
+comparison FRL/Student Count: missing 0% · over 100%: 42 rows · median 98.7
+
+==============================================================================
+3. Poverty: DOMO free/reduced lunch vs the state's economically disadvantaged share
+==============================================================================
+state economically-disadvantaged share by year: rows {2017: 2738, 2018: 2761, 2019: 2770, 2020: 2778, 2021: 2801, 2022: 2839, 2023: 2839, 2024: 2839, 2025: 2857}
+state EDS masking codes: {nan: 24709, '2': 265, '3': 179, '1': 69}
+state EDS at exactly 100: 0 of 25043 · 95-99.99: 71 · distinct values in 95-99.99: 1
+
+2025, schools with both: 2,481 · correlation 0.65 · DOMO median 98.7 vs state median 55.2
+  Leader in Me: high-poverty (75%+) share DOMO 69% vs state 9%  (n=191)
+  comparison: high-poverty (75%+) share DOMO 70% vs state 11%  (n=2290)
+  DOMO minus state: mean +26.2, median +30.3
+
+==============================================================================
+4. MRA survey file
+==============================================================================
+rows 302 · schools 129 · years [np.int64(2021), np.int64(2022), np.int64(2023), np.int64(2024), np.int64(2025)]
+filled cells 9,044 · exactly 100.0: 839 (9.3%) · 90-99.9: 44 (0.5%) · between 99 and 100: 0 · highest real value 96.0
+  >> MRA exact-100 sentinel, fifth state: 839 of 9,044 filled cells (9.3%) sit on exactly 100.0 against 44 (0.5%) anywhere in 90-99.9, nothing between 99 and 100, highest real value 96.0. Treated as not reported, as in every other state
+empty-shell rows (no students, no composites): 19
+school-years with more than one survey: 0
+surveys per year: {2021: 8, 2022: 59, 2023: 71, 2024: 69, 2025: 95}
+surveys whose ax_id is on the roster: 299 of 302 (1 schools not on the roster)
+'/' markers: 0
+
+==============================================================================
+5. Chronic absence, graduation and dropout in the DOMO records
+==============================================================================
+Chronic Absence: rows with a value by year {2015: 0, 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2021: 0, 2022: 0, 2023: 0, 2024: 0, 2025: 0} · max nan · at exactly 100: 0 · at 0: 0
+Grad Rate: rows with a value by year {2015: 0, 2016: 0, 2017: 373, 2018: 392, 2019: 412, 2021: 424, 2022: 441, 2023: 458, 2024: 454, 2025: 455} · max 95.0 · at exactly 100: 0 · at 0: 0
+Dropout Rate: rows with a value by year {2015: 0, 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2021: 0, 2022: 0, 2023: 0, 2024: 0, 2025: 0} · max nan · at exactly 100: 0 · at 0: 0
+  >> Chronic absence in the DOMO pull covers 2018 to 2024 only, and graduation and dropout cover a few years each; each measure is reported through its own last real year and never carried forward
+
+==============================================================================
+6. State report-card tables: coverage, masking and shape
+==============================================================================
+chronic absence        years 2018-2025 · school rows 22,379 · crosswalked schools 2,674 · pct masked/blank 0%
+   masking codes: {nan: 20403, '2': 1815, '1': 161} · pct at 5 or 95: 0
+incidents per 1,000    years 2018-2025 · school rows 22,083 · crosswalked schools 2,674 · sts_per1000 masked/blank 0%
+   masking codes (sts): {'0': 22173, '3': 15, '4': 4}
+   statewide mean short-term suspension per 1,000 by year: {'2018': 171.4, '2019': 165.6, '2020': 120.3, '2021': 18.4, '2022': 159.7, '2023': 178.1, '2024': 183.5, '2025': 163.3}
+EVAAS growth (all)     years 2018-2025 · school rows 15,457 · crosswalked schools 2,649 · eg_index masked/blank 0%
+   eg_status by year: {'2018': {'Exceeded': 677, 'Met': 1165, 'NotMet': 692}, '2019': {'Exceeded': 703, 'Met': 1164, 'NotMet': 681}, '2022': {'Exceeded': 740, 'Met': 1065, 'NotMet': 792}, '2023': {'Exceeded': 728, 'Met': 1151, 'NotMet': 716}, '2024': {'Exceeded': 734, 'Met': 1146, 'NotMet': 713}, '2025': {'Exceeded': 716, 'Met': 1111, 'NotMet': 763}}
+   eg_index statewide mean by year: {'2018': -0.1, '2019': -0.0, '2022': -0.1, '2023': 0.0, '2024': 0.0, '2025': -0.1} · eg_score mean: {'2018': 77.0, '2019': 77.1, '2022': 76.6, '2023': 77.1, '2024': 77.2, '2025': 76.8}
+school performance grade years 2018-2025 · school rows 16,093 · crosswalked schools 2,675 · spg_score masked/blank 4%
+   grade shares by year: {'2018': {'A': 0.07, 'B': 0.28, 'C': 0.42, 'D': 0.19, 'F': 0.04}, '2019': {'A': 0.08, 'B': 0.29, 'C': 0.41, 'D': 0.18, 'F': 0.04}, '2022': {'A': 0.06, 'B': 0.17, 'C': 0.35, 'D': 0.32, 'F': 0.1}, '2023': {'A': 0.07, 'B': 0.2, 'C': 0.38, 'D': 0.27, 'F': 0.08}, '2024': {'A': 0.07, 'B': 0.2, 'C': 0.39, 'D': 0.27, 'F': 0.06}, '2025': {'A': 0.08, 'B': 0.21, 'C': 0.4, 'D': 0.26, 'F': 0.05}}
+   cgr_type: {'STD': 13646, 'EXT': 12775}
+cohort graduation rate years 2006-2025 · school rows 13,646 · crosswalked schools 704 · pct masked/blank 0%
+   college Status values: {'NOENRO': 88098, 'ENROLL': 88071, 'NO': 479}
+college enrollment     years 2013-2018 · school rows 8,220 · crosswalked schools 599 · pct masked/blank 36%
+educator qualifications years 2019-2025 · school rows 22,084 · crosswalked schools 2,653 · pct_beg_teachers masked/blank 2%
+   poverty values: {'NEITHER': 10168, 'LOW': 5416, 'HIGH': 5324, nan: 1176}
+teacher effectiveness  years 2019-2025 · school rows 13,770 · crosswalked schools 2,668 · he_pct masked/blank 5%
+National Board share   years 2021-2025 · school rows 12,400 · crosswalked schools 2,385 · nbpts_pct masked/blank 18%
+ACT composite benchmark years 2013-2025 · school rows 9,022 · crosswalked schools 709 · pct masked/blank 0%
+math course rigor      years 2013-2025 · school rows 7,867 · crosswalked schools 696 · pct masked/blank 0%
+   Read to Achieve metrics: {'passed_eog': 17859, 'passed_rta': 17859, 'passed_laa': 17859, 'gce_els': 17859, 'gce_swd': 17859, 'gce_rpf': 17859, 'gce_prm': 17859, 'gce_all': 17859, 'promoted': 17859, 'retained': 17859}
+   low-performing flags by year: {'2018': 479, '2019': 488, '2020': 479, '2021': 477, '2022': 864, '2023': 804, '2024': 735, '2025': 685}
+   class-size grade_eoc values: {'04': 29763, '05': 29660, '02': 29513, '01': 29463, '00': 29425, '03': 29352, 'Math I': 19188, 'English II': 17580, 'Biology': 17414, '06': 17249, '08': 16875, '07': 16687}
+
+==============================================================================
+FINDINGS FOR THE DELIVERY NOTE
+==============================================================================
+ 1. Year labels are the spring of the school year: no 2020 (spring 2020 testing cancelled) and the 2021 trough is 11-12 points below 2019 on reading and math
+ 2. No exit is datable: LIM Exit Date is empty on every row and no school's LIM School flag ever flips, so the roster is a current-active snapshot stamped onto every year
+ 3. PercentMetStandard is the state's grade-level-proficient share (levels 3, 4 and 5): exact on 96.8% of rows through 2021 (the rest are the state's <5/>95 masking written as 4/96), and within 1 point on 88.6% of rows from 2022, where DOMO drew on a different release of the same numbers
+ 4. DOMO's PercentLevel1 changes meaning: through 2019 it is the state's Level 1 alone (Level 2 is in PercentLevel2), from 2022 it is the state's Not Proficient share (levels 1 and 2 together) and PercentLevel2 is zero. The lowest-level measure is therefore built as Level 1 + Level 2 through 2019 and PercentLevel1 from 2022, which is one definition (below grade level) throughout
+ 5. DOMO's level columns are blank on 40-44% of 2016-2019 rows and on every 2021 row, so the lowest-level measure is thinner before 2022 than proficiency is
+ 6. North Carolina replaced its science tests in 2024-25 (grade 5, grade 8 and Biology, on the 2023 science standards): statewide science proficiency fell 68.0 to 61.0 and the college-and-career-ready share 57.9 to 40.3 in one year while reading and math rose. Science and Biology 2025 are excluded by name, and science is kept out of the all-subjects composite so the missing year cannot read as a drop
+ 7. Earlier test changes (math 2018-19, reading and English II 2020-21, Math III new in 2018-19) all sit before the straight-numbers window, which starts at 2021-22; the full-history window scores each school against its state that year, which absorbs them
+ 8. 4 roster schools carry no start date and count in neither group
+ 9. 70 of 195 roster schools carry a Black engagement colour on every year. Colours are retired as exit signals, so all of them count as Leader in Me from their start date, but with no exit date anywhere a Black school that has in fact left stays in the Leader in Me group. A dated exit list is the single most valuable file to add
+10. MRA exact-100 sentinel, fifth state: 839 of 9,044 filled cells (9.3%) sit on exactly 100.0 against 44 (0.5%) anywhere in 90-99.9, nothing between 99 and 100, highest real value 96.0. Treated as not reported, as in every other state
+11. Chronic absence in the DOMO pull covers 2018 to 2024 only, and graduation and dropout cover a few years each; each measure is reported through its own last real year and never carried forward
+
+$ python3 build_payload_nc.py
+reading core files ...
+  roster: NC 15_25 LIM Schools (Current_Active and Date Exited).csv
+  identity: Jones Senior High (Trenton): 370240001035 -> 370240003496 [roster], years 2015-2019
+  identity: D.C. Virgo Preparatory Academy (Wilmington): 370333003253 -> 370042903455 [comparison], years 2015-2018
+  identity: Moss Street Elementary (Reidsville): 370399001540 -> 370399003447 [comparison], years 2015-2018
+  identity: South Creek Middle (Robersonville): 370288001166 -> 370288003576 [comparison], years 2015-2018
+  identity: Southside Ashpole Elementary (Rowland): 370044203484 -> 370393003484 [comparison], years 2019-2022
+  identity: Southside Ashpole Elementary (Rowland): 370393001588 -> 370393003484 [comparison], years 2015-2018
+  2,756 schools · 115 districts (charters grouped) · 224 charters · 96 special-type schools
+  state chronic absence / graduation: 26,028 school-years · economically disadvantaged: 22,877 school-years for 2,682 schools
+applying the cleaning rules ...
+  72,579 school-year-band-subject rows · years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
+  Leader in Me school-years counted: 855 of 1755 reviewed · no start date: 4 schools
+  excluded by name: 2231 Science 2024-25 rows excluded (new science tests in 2024-25)
+  excluded by name: 641 Biology 2024-25 rows excluded (new Biology test in 2024-25)
+building matched pairs, inside each band ...
+  pairs 131  by band {'Primary': {'pairs': 93, 'unmatched': 1}, 'Secondary': {'pairs': 38, 'unmatched': 0}}
+  signed baseline gap (partner minus Leader in Me): mean -0.01, median +0.00, 41% of partners start above, 12% exact ties
+building the MRA section ...
+  275 surveys · 125 schools · 839 sentinel values nulled · 19 empty shells dropped · groups drawn: ['all', 'early', 'established', 'lighthouse', 'spring']
+building North Carolina's own report-card extras ...
+  per-school report-card values: 15,362 school-years
+  student-group rows: 105,674 · counts: 27,838 · published agency-years: 2300 for 114 districts
+  roster: 172 counted, 23 not; state schools with no DOMO record in 2024-25: 154
+  15 report-card measures · 12 suspension points · 668 district rows
+  sensitivity all_roster_schools: {'lim_n': 136, 'comp_n': 2299, 'lim_change': 4.99, 'comp_change': 5.67, 'difference': -0.68, 'p_value': 0.32, 'effect_size': -0.084}
+  sensitivity without_black_colour_schools: {'lim_n': 101, 'comp_n': 2299, 'lim_change': 5.1, 'comp_change': 5.67, 'difference': -0.57, 'p_value': 0.502, 'effect_size': -0.07}
+  sensitivity composite_without_math3: {'lim_n': 136, 'comp_n': 2298, 'lim_change': 4.4, 'comp_change': 4.72, 'difference': -0.32, 'p_value': 0.631, 'effect_size': -0.039}
+  sensitivity secondary_only_with_math3: {'lim_n': 48, 'comp_n': 1226, 'lim_change': 5.16, 'comp_change': 5.36, 'difference': -0.19, 'p_value': 0.877, 'effect_size': -0.022}
+  sensitivity secondary_only_without_math3: {'lim_n': 48, 'comp_n': 1225, 'lim_change': 3.29, 'comp_change': 3.48, 'difference': -0.19, 'p_value': 0.861, 'effect_size': -0.022}
+  cohort movement ELA: LiM +2.17 vs comparison +2.61 pts of below-grade-level share moved, difference -0.44 (p=0.215, 705 vs 13218 grade-cohorts)
+  cohort movement Math: LiM -0.79 vs comparison -0.29 pts of below-grade-level share moved, difference -0.50 (p=0.263, 704 vs 13102 grade-cohorts)
+  cohort movement all: LiM +0.69 vs comparison +1.17 pts of below-grade-level share moved, difference -0.48 (p=0.099, 1409 vs 26320 grade-cohorts)
+  exit dates on file: 51 · former Leader in Me schools in the comparison export: 0 · school-years dropped after an exit: 83
+
+wrote nc_payload.json  (37.1 MB, 72,579 rows)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_nc.py', 'builder_sha': '361b71010cd3'}
+
+$ python3 build2.py nc_payload.json NC_Dashboard.html NC_Methods.html
+payload 37.1 MB -> 3.41 MB gzip
+NC_Dashboard.html: 4683 KB
+NC_Methods.html: 35 KB
+
+$ python3 verify_nc.py
+
+--------------------------------------------------------------------------
+Tier 0 — install and input-value audit
+--------------------------------------------------------------------------
+ok   the template in use carries the brand palette and the ink helper (not the broken Aug-19 base)
+ok   the template carries the three-school floor in headline and movement
+ok   the template reads the payload's raw window on the insights tab (2026-08-19d fix)
+ok   the template honours the composite row flag
+ok   subject file is North Carolina only
+ok   no 2019-20 rows exist in the subject file
+ok   2020-21 rows exist and were excluded from the payload
+ok   no duplicate school-year-grade-subject rows
+ok   DOMO's four levels never reach 100: the fifth level is missing from the export  [median 86.2]
+ok   met standard is the state's grade-level-proficient share (levels 3+4+5), proved against rcd_acc_pc  [96.8% exact through 2021, 88.6% within 1 pt from 2022 on 170,501 rows]
+ok   met standard is NOT the college-and-career bar (levels 4+5)  [1.0% exact]
+ok   from 2022 DOMO's PercentLevel1 is the state's not-proficient share (levels 1+2)
+ok   through 2019 DOMO's PercentLevel1 is the state's Level 1 alone
+ok   statewide science proficiency dropped sharply in 2024-25 (new tests)  [68.0 -> 61.0]
+ok   statewide Biology dropped in 2024-25  [53.4 -> 48.3]
+ok   statewide Math III jumped in 2024-25 while reading and math moved little  [M3 57.6 -> 66.4, RD 50.1 -> 52.5]
+ok   the Leader in Me flag never flips true->false: a snapshot, not a history  [195 flagged schools]
+ok   no exit date anywhere in the subject file
+ok   no exit or start date anywhere in the comparison file
+ok   the Sept 2 roster carries the exit-date column as its last column
+ok   the payload's exit-date count matches the roster (the column is read, not ignored)  [484 dated rows in the roster]
+ok   the exit rule is live: a January exit keeps its year, a September exit loses it
+ok   every comparison row is LIM School = False
+ok   every roster row is LIM School = True
+ok   the roster's '% White' is a count, not a percentage
+ok   DOMO's lunch count is saturated by community eligibility (median school over 95%)  [roster median 98.6%]
+ok   DOMO's chronic absence is empty for every North Carolina row
+ok   the Black engagement colour is stamped on 70 roster schools (a caveat, never an exclusion)  [70 schools]
+ok   DOMO's graduation rate is the state's four-year cohort rate (same year, to the decimal)  [3,330 overlapping rows]
+ok   MRA exact-100 is a sentinel, not a score  [839 at 100 vs 44 in 90-99.9, highest real 96.0]
+ok   MRA empty-shell rows exist and were counted
+ok   crosswalk covers every Leader in Me school  [195 of 195]
+ok   crosswalk covers nearly every comparison school  [2517 of 2,567]
+ok   crosswalk school ids are unique on the DOMO side
+ok   a state id claimed twice belongs to one school whose federal id changed (disjoint years)  [2 shared state ids]
+ok   crosswalk audited against a table it was not built from (state ADM vs DOMO enrollment)  [r = 0.9972 on 2,491 schools]
+ok   Jones Senior High's old id is folded into its Leader in Me id
+ok   the identity finding is on the methods page
+ok   no Leader in Me school sits in both groups in the same year
+
+--------------------------------------------------------------------------
+Tier 1 — rules and maths
+--------------------------------------------------------------------------
+ok   lim_rules.py self-tests pass
+ok   skill_version.py self-tests pass
+ok   payload carries the Georgia/Florida rule set  [88ba249d83ae]
+ok   years exclude both COVID years
+ok   the straight-numbers window starts at 2021-22
+ok   the long window is scored relative to the state
+ok   no Leader in Me row counted before its full year was finished  [0 rows]
+ok   schools with no start date appear in neither group  [4 schools]
+ok   the count of undated schools is on the methods page
+ok   a Leader in Me school's pre-start years count in the comparison group  [2,414 rows]
+ok   Lighthouse schools are inside the Leader in Me family
+ok   combined-grade schools appear in both bands  [425 schools]
+ok   science rows carry the composite flag, nothing else does
+ok   no science or Biology row survives for 2024-25
+ok   science is still present through 2023-24
+ok   Math III is in every year it was tested, 2024-25 included (Eve, Sept 2)
+ok   the Math III 2024-25 rise is in the rows (about 8 points statewide, both groups)  [58.9 -> 66.4 school mean]
+ok   the composite is reading and math (Math III included) in every year from 2019
+ok   the exclusions are counted by name on the methods page
+ok   the headline is written both ways, with Math III in and out of the composite
+ok   the methods page prints both Math III headlines and the research
+ok   cohort movement is computed, pooled across the raw window, reading and math and combined
+ok   cohort movement is only ever a Leader in Me minus comparison figure with a p-value
+ok   cohort movement ships switched off on the card (methods page only) until Eve says otherwise
+ok   the cohort movement figures are on the methods page
+ok   the subject filter wording is payload-driven
+ok   percent below grade level from 2022 is on the not-proficient scale (no fractions, no negatives)  [mean 45.4]
+ok   percent below grade level through 2019 is levels 1 and 2 added, never over 100
+ok   the school count is lower than the band-slice count, as it must be  [2435 schools vs 2723 band slices]
+ok   pairs are built inside each band
+ok   every band carries three or more pairs  [{'Primary': {'pairs': 93, 'unmatched': 1}, 'Secondary': {'pairs': 38, 'unmatched': 0}}]
+ok   the by-band pair counts sum to the total
+ok   no comparison school is used twice
+ok   no Leader in Me school is paired twice inside a band
+ok   every pair carries the band it was formed in
+ok   the signed baseline gap recomputes to the payload's  [offline -0.012 vs payload -0.010 on 131 pairs]
+ok   the mean signed baseline gap is under one point  [-0.012]
+ok   partners start above in roughly half of the pairs that are not exact ties  [29% above, 39% ties, 48% of non-ties]
+ok   the widest single baseline gap is small  [1.3 points]
+ok   the printed signed gap is not a negative zero
+ok   the tie share is carried for the methods page
+ok   special-purpose schools are excluded from the matched pool and named
+ok   no state alternative, exceptional-children or vocational school appears as a partner  [96 such schools in the crosswalk]
+ok   locale is not claimed as a matching trait
+ok   the matched secondary view carries three or more records a side
+ok   every extras metric has a trend with both groups
+ok   no extras cell is built on fewer than three schools
+ok   the two v2 extras are on the card: Read to Achieve and ACT WorkKeys (Eve, Sept 2)  [['eg_met', 'eg_index', 'spg_ab', 'spg_score', 'iss_per1k', 'ccr', 'rta', 'college', 'act', 'workkeys', 'beg_teachers', 'nbpts', 'lowperf', 'eds', 'title1']]
+ok   fifteen report-card measures in all  [15]
+ok   Read to Achieve is the promoted share and reads the state's own statewide figure (79.4% in 2024-25)  [79.4]
+ok   WorkKeys reads the state's own statewide figure (59.8% of CTE concentrators in 2024-25)  [59.8]
+ok   Read to Achieve draws on elementary schools only (hundreds a side), WorkKeys on high schools only (dozens a side)  [rta comp max n 1357, wk comp max n 414, wk lim max n 16]
+ok   the two composition measures cannot fire an insight
+ok   every outcome measure carries a poverty-direction context line
+ok   the college-and-career composite has no 2024-25 point
+ok   no extras year is a closure year
+ok   teacher shares are on the percent scale, not fractions  [beginning 17.09, National Board 9.34]
+ok   college enrollment and ACT are on the percent scale
+ok   chronic absence rows are on the percent scale  [mean 23.2]
+ok   graduation rates never exceed the state's 95 cap
+ok   graduation never rides on a primary row
+ok   the suspension card carries both groups over six years
+ok   the closure years are off the suspension chart
+ok   the poverty source switch changes the picture materially  [high poverty: 9% on the state's measure vs 69% on DOMO's]
+ok   poverty_help tells the reader which measure is on screen
+ok   the payload's poverty bands come from the state measure (a minority of schools high poverty)  [24%]
+ok   no MRA value of exactly 100 survives into the payload
+ok   every MRA value sits on the published scale
+ok   the MRA trend stays inside one instrument version
+ok   every promised MRA group either draws or is explained  [drawn=['all', 'early', 'established', 'lighthouse', 'spring'] absent=[]]
+ok   the MRA note names the published quality band
+ok   movers are built on ten or more schools each
+ok   the MRA composition check has a same-schools panel
+ok   the engagement-colour sensitivity was run both ways
+ok   the verdict does not turn on the Black-colour schools  [p 0.32 vs 0.502]
+
+--------------------------------------------------------------------------
+Tier 2 — behaviour in a real browser
+--------------------------------------------------------------------------
+ok   the page loads and the headline renders
+ok   load time is workable  [1.5s]
+ok   no console errors on load
+ok   chart c1 draws an svg
+ok   chart c2 draws an svg
+ok   chart c8 draws an svg
+ok   chart c9 draws an svg
+ok   chart c6 draws an svg
+ok   the MRA card is visible
+ok   the Georgia discipline card stays hidden
+ok   the suspension card is visible
+ok   the North Carolina extras card is visible
+ok   the community filter is hidden because the state publishes no locale
+ok   the MRA composition check renders three ways
+ok   the suspension note does not speak a first-to-last trend across a growing group
+ok   the movement card says below grade level, not the lowest level
+ok   the subject filter offers the composite, ELA, Math, Math III and Science  [['Reading and math (all grades)', 'ELA', 'Math', 'Math III', 'Science']]
+ok   the no-filter composite leaves the flagged science rows out and nothing else  [25073 of 33218 rows in scope]
+ok   the Math III view runs through 2024-25  [{'y0': 2022, 'y1': 2025}]
+ok   the movement card carries no cohort line while the payload switch is off
+ok   one extras chip per payload metric  [15 vs 15]
+ok   extras metric draws with a note: eg_met  [In 2024-25, 64.0% of Leader in Me schools met or exceeded expected gro]
+ok   extras metric draws with a note: eg_index  [In 2024-25, Leader in Me schools averaged a growth index of -0.52, aga]
+ok   extras metric draws with a note: spg_ab  [In 2024-25, 25.7% of Leader in Me schools were graded A or B, against ]
+ok   extras metric draws with a note: spg_score  [In 2024-25, Leader in Me schools averaged a performance score of 61.3,]
+ok   extras metric draws with a note: iss_per1k  [In 2024-25, Leader in Me schools recorded 107.4 in-school suspensions ]
+ok   extras metric draws with a note: ccr  [In 2023-24, 38.8% of tests in Leader in Me schools reached the college]
+ok   extras metric draws with a note: rta  [In 2024-25, 81.8% of third graders in Leader in Me schools were promot]
+ok   extras metric draws with a note: college  [In 2024-25, 56.7% of graduates from Leader in Me high schools enrolled]
+ok   extras metric draws with a note: act  [In 2024-25, 25.5% of eleventh graders in Leader in Me high schools met]
+ok   extras metric draws with a note: workkeys  [In 2024-25, 60.0% of CTE concentrators in Leader in Me high schools ea]
+ok   extras metric draws with a note: beg_teachers  [In 2024-25, 17.1% of teachers in Leader in Me schools were in their fi]
+ok   extras metric draws with a note: nbpts  [In 2024-25, 9.3% of teachers in Leader in Me schools held National Boa]
+ok   extras metric draws with a note: lowperf  [In 2024-25, 24.3% of Leader in Me schools were designated low-performi]
+ok   extras metric draws with a note: eds  [In 2024-25, 53.4% of students in Leader in Me schools were economicall]
+ok   extras metric draws with a note: title1  [In 2024-25, 65.4% of Leader in Me schools operated a Title I program, ]
+ok   no console errors after the extras sweep
+ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
+ok   the headline p recomputes offline  [page 0.3205 scipy 0.3205 · 2022-2025 · LiM n=136 +4.99 · comparison n=2299 +5.67]
+ok   the headline counts schools, not band slices  [page 2435 vs offline 2435]
+ok   chronic absence fell faster in Leader in Me schools and the test clears .05  [LiM -9.64 (n=135) vs -6.40 (n=2259), p=0.0000]
+ok   the chronic absence result is not regression to the mean (Leader in Me did not start higher)  [start 28.9 vs 30.8]
+ok   the chronic absence window ends in the state's latest year
+ok   the science view ends at 2023-24 by itself  [{'y0': 2022, 'y1': 2024}]
+ok   the district filter re-renders the headline
+ok   the district filter re-renders the chart title
+ok   the Primary band filter re-renders without error
+ok   the Secondary band filter re-renders without error
+ok   measure 'percent_proficient' either draws or says why
+ok   measure 'percent_below' either draws or says why
+ok   measure 'standard_score' either draws or says why
+ok   measure 'chronic_absent' either draws or says why
+ok   measure 'grad_rate' either draws or says why
+ok   the matched toggle re-renders the headline
+ok   the matched view shrinks the Leader in Me count  [95 matched vs 136]
+ok   the matched Secondary view runs on real secondary pairs  [30 records]
+ok   a filter combination with almost nothing in it says so kindly
+ok   no console errors after the empty-state probe
+ok   the insights tab hides the explore view
+ok   statewide insights generate cards  [9 cards]
+ok   the statewide chronic absence story is a card
+ok   unfavourable report-card gaps are internal watch cards, never wins
+ok   Henderson County Schools generates its own cards  [13 cards]
+ok   the demo district's academic data is joined
+ok   insight cards carry a topic link
+ok   the New school (CP) audience filter runs
+ok   the Retention (ESP) audience filter runs
+ok   the Coaching audience filter runs
+ok   the insights tab uses the same unit and window as the explore tab  [insights {'p': 0.32053492162021235, 'n1': 136, 'n2': 2299, 'y0': 2022, 'y1': 2025} vs explore n1=136 n2=2299 p=0.3205]
+ok   export c1.pptx downloads, opens and carries the chart image  [183,273 bytes]
+ok   export c1.docx downloads, opens and carries the chart image  [181,384 bytes]
+ok   export c9.pptx downloads, opens and carries the chart image  [111,206 bytes]
+ok   export c8.docx downloads, opens and carries the chart image  [105,122 bytes]
+ok   export c6.pptx downloads, opens and carries the chart image  [115,004 bytes]
+ok   statewide exports do not inherit the filtered view's period
+ok   dark mode re-renders the charts
+ok   no console errors in dark mode
+ok   no horizontal overflow at 900px  [0px]
+ok   no horizontal overflow at 700px  [0px]
+ok   a full-page screenshot was taken for eyes-on review
+ok   the research pack button downloads a CSV for the whole state  [NC_statewide_research_pack.csv, 24.3 MB]
+ok   no console errors while building the statewide pack
+ok   the pack carries every section  [['about', 'cohort_movement', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'report_card_school', 'report_card_subgroup', 'roster', 'school', 'school_counts', 'school_values', 'state_published', 'suspensions', 'trend', 'years_in_process']]
+ok   the pack's statewide headline is the page's headline, to two decimals  [pack 4.9909 vs 5.6677 p 0.3205; page 4.99 vs 5.67 p 0.3205]
+ok   the pack's chronic absence test agrees with the page (LiM fell faster, p under .05)
+ok   every growth test carries both windows and both statewide comparisons
+ok   every school row carries a name, not an id
+ok   the statewide pack lists every Leader in Me school that has a counted year, each with a start date  [172 listed, 172 in the rows]
+ok   the pack states the filters in force and how to read it
+ok   the research pack builds for the demo district  [NC_Henderson_County_Schools_research_pack.csv, 29761 rows]
+ok   a district pack carries the three comparisons for the composite test
+ok   the district pack's Leader in Me count is the district's, against the whole state's comparison schools
+ok   the matched comparison in a district pack is the district's schools against their own partners (equal or smaller counts)  [{('lim', 'n'): '11', ('lighthouse', 'n'): '6', ('comparison', 'n'): '11'}]
+ok   the district pack carries the district's field insight cards
+ok   the district pack rolls the report-card measures up for the district, both groups
+ok   the district pack carries the district's schools by year and its MRA surveys by school
+ok   student-group rows are in the pack, for seven groups, with district roll-ups by band and within-school gaps  [11527 rows]
+ok   every student-group measure carries a definition with its direction
+ok   report-card district roll-ups come by grade band, both groups
+ok   suspensions per 100 come by band and group for the district, weighted by state membership  [[('All', 'comparison'), ('All', 'lim'), ('Primary', 'comparison'), ('Primary', 'lim'), ('Secondary', 'comparison'), ('Secondary', 'lim')]]
+ok   school-level report-card rows carry the school's band and the state's letter grade
+ok   the counts behind the rates are in the pack: membership, chronic-absence denominators, tested students by test  [['adm', 'chronic_absence_count', 'chronic_absence_students', 'tested_biology', 'tested_english2', 'tested_eoc_all', 'tested_eog_all', 'tested_math', 'tested_math1', 'tested_math3', 'tested_reading', ']
+ok   a pack membership figure is the state's own ADM row
+ok   MRA school rows say which respondent group answered and carry that group's count
+ok   the MRA respondent mapping was read off the file and puts Interpersonal Effectiveness with staff
+ok   the roster section lists every roster school in the district with its status and the state's schools missing from DOMO
+ok   Charlotte-Mecklenburg's roster section names Knights View Elementary as absent from both DOMO exports
+ok   the district's own published figures are in the pack, student-weighted, with the state's published figures beside them
+ok   the district's published chronic absence is the state's LEA row to the decimal  [14.58 vs 0.1457582957]
+ok   the pack's about section lists its sections and the student-group codes
+ok   the Field insights tab's button builds the same district pack  [29761 vs 29761 rows]
+ok   no console errors after the three packs
+ok   the methods page loads
+ok   the methods page prints the rule set that produced the payload
+ok   the methods page shows the starting-line arithmetic and the tie share
+ok   the methods page names the two excluded subject-years and the Math III rise
+ok   the methods page carries the cohort movement figures
+ok   the methods page shows the Read to Achieve and WorkKeys sources
+ok   no console errors on the methods page
+
+--------------------------------------------------------------------------
+Tier 3 — honesty
+--------------------------------------------------------------------------
+ok   the build declares itself real, not a prototype
+ok   the banner names the DOMO Subject Test source
+ok   the banner names the MRA source
+ok   the banner names the School Report Card source
+ok   the banner names the EVAAS source
+ok   the methods page owns the 'exit' limitation
+ok   the methods page owns the 'Black' limitation
+ok   the methods page owns the 'locale' limitation
+ok   the methods page owns the '95' limitation
+ok   the methods page owns the 'snapshot' limitation
+ok   the methods page owns the 'Math III' limitation
+ok   the methods page states the poverty-source switch
+ok   the methods page names the method rather than asserting it
+ok   the crosswalk audit is on the methods page
+ok   the level identity is on the methods page
+ok   the science exclusion and the Math III decision are explained on the methods page
+ok   charter grouping is explained on the methods page
+ok   the undated schools are listed by name in the payload
+
+  HEADLINE (statewide, 2022-2025, no filters): Leader in Me +4.99 pts (n=136) vs comparison +5.67 pts (n=2299), p=0.3205 -> not significant
+ok   the headline verdict is internally consistent
+
+==========================================================================
+252 of 252 checks pass
+==========================================================================

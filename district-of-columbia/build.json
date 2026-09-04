@@ -1,0 +1,127 @@
+{
+ "state": "DC",
+ "name": "District of Columbia",
+ "folder": "district-of-columbia",
+ "built": "2026-09-04",
+ "seconds": 23,
+ "builder": "build_payload_core.py",
+ "page_kind": "descriptive",
+ "lim_headline_n": 5,
+ "schools": 234,
+ "years": [
+  2014,
+  2025
+ ],
+ "lim_roster_schools": 6,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-03"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-03"
+  },
+  "comparison": {
+   "file": "All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 132812308,
+   "modified": "2026-09-03"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-03"
+  }
+ },
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/national/Build/work/DC/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 12429
+  },
+  "roster": {
+   "path": "/home/claude/national/Build/work/DC/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 58
+  },
+  "comparison": {
+   "path": "/home/claude/national/Build/work/DC/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 1683
+  },
+  "mra": {
+   "path": "/home/claude/national/Build/work/DC/data/All MRA Surveys.csv",
+   "rows": 6
+  }
+ },
+ "state_files": [],
+ "verified": true,
+ "dashboard_bytes": 429865,
+ "audits": {
+  "levels": {
+   "rows": 12429,
+   "levels 3 and 4": 12.9,
+   "levels 2, 3 and 4": 0.8,
+   "level 4 alone": 25.5,
+   "100 minus level 1": 0.2,
+   "best": "level 4 alone",
+   "levels_sum_to_100_share": 37.9
+  },
+  "poverty": {
+   "lim": {
+    "schools": 6,
+    "missing": 3,
+    "at_99_or_more": 0,
+    "above_100": 0,
+    "high_poverty_share": 33.3
+   },
+   "comparison": {
+    "schools": 228,
+    "missing": 42,
+    "at_99_or_more": 60,
+    "above_100": 57,
+    "high_poverty_share": 43.9
+   }
+  },
+  "statewide_jumps": [
+   {
+    "subject": "ELA",
+    "from": 2014,
+    "to": 2015,
+    "from_mean": 47.7,
+    "to_mean": 22.5,
+    "change": -25.2
+   },
+   {
+    "subject": "Math",
+    "from": 2014,
+    "to": 2015,
+    "from_mean": 51.1,
+    "to_mean": 19.9,
+    "change": -31.2
+   }
+  ],
+  "sensitivity": {
+   "with": {
+    "y0": 2023,
+    "y1": 2025,
+    "lim_n": 5,
+    "comp_n": 178,
+    "lim_change": 7.2,
+    "comp_change": 2.66,
+    "p": 0.048
+   },
+   "without": {
+    "y0": 2023,
+    "y1": 2025,
+    "lim_n": 5,
+    "comp_n": 178,
+    "lim_change": 7.2,
+    "comp_change": 2.66,
+    "p": 0.048
+   },
+   "schools": 0
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": []
+ }
+}
