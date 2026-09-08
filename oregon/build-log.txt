@@ -1,5 +1,5 @@
 
-$ python3 /home/claude/national/Build/build_payload_core.py --state OR --core /home/claude/national/corefolder --out /home/claude/national/Build/work/OR
+$ python3 /home/claude/sdf/Build/build_payload_core.py --state OR --core /home/claude/sdf/Core --out /home/claude/sdf/Build/work/OR --data /home/claude/sdf/Build/work/OR/data --extras or_core_extras
 reading the core for Oregon ...
 [core] subjects: 89,746 school rows kept; dropped 27,984 rows with no school id and 755 with an id but no school record
 [core] Leader in Me roster: 46 rows
@@ -13,24 +13,93 @@ applying the cleaning rules ...
   42,712 school-year-band-subject rows · years [2014, 2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
   Leader in Me school-years counted: 20 of 50 reviewed
   no start date: 0 schools · dated exits: 1 (school-years after an exit with rows: 3) · aggregate 'All grades' rows used 0, skipped 1
-  proficiency = levels 3 and 4 on 82.3% of rows
+  achievement levels as measures: yes (four levels, numbered from the bottom; proficiency is the top 2; 82.0% of rows in years and subjects whose levels add up)
+  level values blanked on 4 year-subject cells that do not add up: 2014-15 Science, 2015-16 Science, 2016-17 Science, 2017-18 Science
+  proficiency = levels 3 and 4 on 82.0% of rows
   statewide jump: ELA 2014->2015: 72.1 -> 54.0 (-18.1)
   statewide jump: Math 2014->2015: 61.5 -> 39.5 (-22.0)
+folding in Oregon's own measures (or_core_extras) ...
+  state files (resolved by pattern; the log names the file each year came from):
+    attendance 2017: regularattenders_report_1617.xlsx
+    attendance 2018: regularattenders_report_1718.xlsx
+    attendance 2019: regularattenders_report_1819.xlsx
+    attendance 2022: regularattenders_report_2122.xlsx
+    attendance 2023: regularattenders_report_2223.xlsx
+    attendance 2024: regularattenders_report_2324.xlsx
+    attendance 2025: regularattenders_report_2425.xlsx
+    ccr (2018, 'AllStudents'): NinthGradeOnTrack_20172018_AllStudents.xlsx
+    ccr (2018, 'FAY'): NinthGradeOnTrack_20172018_FAY.xlsx
+    ccr (2019, 'AllStudents'): NinthGradeOnTrack_20182019_AllStudents.xlsx
+    ccr (2019, 'FAY'): NinthGradeOnTrack_20182019_FAY.xlsx
+    ccr (2021, 'AllStudents'): NinthGradeOnTrack_20202021_AllStudents.xlsx
+    ccr (2021, 'FAY'): NinthGradeOnTrack_20202021_FAY.xlsx
+    ccr (2022, 'AllStudents'): NinthGradeOnTrack_20212022_AllStudents.xlsx
+    ccr (2022, 'FAY'): NinthGradeOnTrack_20212022_FAY.xlsx
+    ccr (2023, 'AllStudents'): NinthGradeOnTrack_20222023_AllStudents.xlsx
+    ccr (2023, 'FAY'): NinthGradeOnTrack_20222023_FAY.xlsx
+    ccr (2024, 'AllStudents'): NinthGradeOnTrack_20232024_AllStudents.xlsx
+    ccr (2024, 'FAY'): NinthGradeOnTrack_20232024_FAY.xlsx
+    ccr (2025, 'AllStudents'): NinthGradeOnTrack_20242025_AllStudents.xlsx
+    ccr (2025, 'FAY'): NinthGradeOnTrack_20242025_FAY.xlsx
+    postsec 2016: Post-Secondary_Enrollment_2015-16_HS_Graduates.xlsx
+    postsec 2017: Post-Secondary_Enrollment_2016-17_HS_Graduates.xlsx
+    postsec 2018: Post-Secondary_Enrollment_2017-18_HS_Graduates.xlsx
+    postsec 2019: Post-Secondary_Enrollment_2018-19_HS_Graduates.xlsx
+    postsec 2020: Post-Secondary_Enrollment_2019-20_HS_Graduates.xlsx
+    postsec 2021: Post-Secondary_Enrollment_2020-21_HS_Graduates.xlsx
+    postsec 2022: Post-Secondary_Enrollment_2021-22_HS_Graduates.xlsx
+    postsec 2023: Post-Secondary_Enrollment_2022-23_HS_Graduates.xlsx
+    growth (2016, 'rc'): growth-percentile_1516.xlsx
+    growth (2017, 'rc'): growth-percentile_1617.xlsx
+    growth (2018, 'agr'): growth-percentile_agr_1718.xlsx
+    growth (2018, 'rc'): growth-percentile_rc_1718.xlsx
+    growth (2019, 'agr'): growth-percentile_agr_1819.xlsx
+    growth (2019, 'rc'): growth-percentile_rc_1819.xlsx
+    acct 2018: accountabilitydetails_1718.xlsx
+    acct 2019: accountabilitydetails_1819.xlsx
+    acct 2022: accountabilitydetails_2122.xlsx
+    acct 2023: accountabilitydetails_2223.xlsx
+    acct 2024: accountabilitydetails_2324.xlsx
+    acct 2025: accountabilitydetails_2425.xlsx
+    rcdetails 2015: rcdetails_1415.xlsx
+    rcdetails 2016: rcdetails_1516.xlsx
+    rcdetails 2017: rcdetails_1617.xlsx
+    NCES directory: 1,353 federal-to-state id triples from the cache (8 CCD files unchanged)
+    ODE workbooks: 166,855 values from the cache (44 workbooks unchanged)
+  growth: the report-card-rules medians are the accountability details' on 3,634 of 3,794 school-years in ELA (the agr files on 1,139 of 1,912), so the rc files are the series
+  ninth grade on track: the accountability figure is the full-academic-year file on 1,389 of 1,389 school-years (the all-students file on 164), so FAY is the measure
+  regular attenders: the accountability sheet's grade-band cut equals the report on 4,773 of 8,337 school-years; the report is the whole-school measure
+  graduation: 2,267 school-classes sit in two workbooks, identical on 2,156 (the class keying holds across the label change from graduation year to cohort entry year)
+  postsecondary: graduates counted per class 2016: 34678, 2017: 35380, 2018: 36257, 2019: 23377, 2020: 21289.0, 2021: 37316, 2022: 39320, 2023: 39149
+  crosswalk: NCES's ODE institution id for each federal id, audited against the ODE files' own school names and districts
+    1,240 of 1,261 schools carry an ODE institution id in NCES's directory; Leader in Me 5 of 5, comparison 1,235 of 1,256; 1,240 appear in at least one ODE file
+    names: the ODE files' own school name agrees with DOMO's on 1,239 of 1,240 crosswalked schools; districts agree on 1,238 of 1,238 with a district in both; 0 triples re-pointed to a folded id; 1 shared institution ids settled
+  state table: 11,508 school-years on institution ids; 4,594 values describing the closure years set aside, 3,833 agr growth values kept for the audit only, the class of 2019 postsecondary file excluded by name (226 values); 12,706 suppressed cells (*, <5, >95) read as missing
+  chronic absence: DOMO's value is ODE's chronically absent share within 0.15 on 100.0% of 6,645 overlapping school-years (identical on 6,645) -> the same measure; ODE fills 4,274 rows DOMO left empty {2017: 4082, 2018: 89, 2019: 80, 2022: 23}; graduation: ODE's four-year rate is DOMO's within 0.15 on 100.0% of 818 school-years once keyed on the class -> the same measure; ODE fills 6,742 secondary rows {2014: 1436, 2015: 1089, 2016: 1102, 2017: 1057, 2018: 1068, 2019: 990}; no DOMO value is overwritten
+  rows gain: reg_attend on 10,320 school-year-bands (5 Leader in Me schools ever); left off the rows for thin Leader in Me coverage: mgp_ela (2), mgp_math (2), ninth_on_track (1), college_first_year (0), college_16mo (0), college_12mo (1); 0 school-years had no band to sit in
+  card: 2 Oregon measures, each group on each year's own membership (Leader in Me schools counted per year {2016: 1, 2017: 1, 2018: 1, 2019: 2, 2022: 2, 2023: 3, 2024: 3, 2025: 3})
+    card line reg_attend: 3 Leader in Me points, latest 2025 n=3 (75.63)
+    card line support_identified: 3 Leader in Me points, latest 2025 n=3 (0.0)
+  per-school Oregon records for the pack: 10,987 (18 columns); published rows 1443 for the state and 182 districts
+  Oregon's measures on 10,320 school-year-bands: 9,525 joined to existing rows, 795 school-year-bands added with no test rows of their own
+  core measures filled from Oregon's own files where DOMO had none: chronic_absent 4,760 rows, grad_rate 6,945 rows
+  school type from NCES: Title I on 1,219 schools (548 yes), charter 133, magnet 0, alternative 38; Title I published 2018-2022, carried forward after
+  funders: 1 Oregon schools carry a funding source (1 on the page; Kern 0, 0 on the page); latest non-blank year per school
 building matched pairs, inside each band ...
   pairs 4  by band {'Primary': {'pairs': 2, 'unmatched': 0}, 'Secondary': {'pairs': 2, 'unmatched': 0}}
   MRA: 5 surveys · 2 schools · 11 sentinel values · 1 shells
   headline 2022-23 to 2024-25: {'y0': 2023, 'y1': 2025, 'lim_n': 3, 'comp_n': 1097, 'lim_change': -7.93, 'comp_change': -0.01, 'p': 0.022} · without the 3 undated schools {'y0': 2023, 'y1': 2025, 'lim_n': 1, 'comp_n': 1097, 'lim_change': -6.62, 'comp_change': -0.01, 'p': None}
   roster: 3 counted, 2 exited, 0 not counted yet, 0 not counted
 
-wrote or_payload.json  (17.7 MB, 42,712 rows) · page kind descriptive (3 Leader in Me schools on the headline)
-build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+wrote or_payload.json  (25.5 MB, 43,507 rows) · page kind descriptive (3 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'fb6eaf7cb415'}
 
 $ python3 build2.py or_payload.json OR_Dashboard.html OR_Methods.html
-payload 17.7 MB -> 1.06 MB gzip
-OR_Dashboard.html: 1620 KB
-OR_Methods.html: 28 KB
+payload 25.5 MB -> 2.01 MB gzip
+OR_Dashboard.html: 2908 KB
+OR_Methods.html: 56 KB
 
-$ python3 /home/claude/national/Build/verify_core.py --state OR --work /home/claude/national/Build/work/OR
+$ python3 /home/claude/sdf/Build/verify_core.py --state OR --work /home/claude/sdf/Build/work/OR
 
 --------------------------------------------------------------------------
 Tier 0 — install and input-value audit
@@ -68,6 +137,7 @@ ok   skill_version.py self-tests pass
 ok   payload carries a build stamp
 ok   years exclude both COVID years
 ok   the straight-numbers window starts in 2022 or later
+note the headline window settles on 2023-2025 (the window's edges are 2022-2025)
 ok   the long window is scored relative to the state
 ok   no Leader in Me row counted before its full year was finished  [0 rows]
 ok   schools with no start date appear in neither group  [0 schools]
@@ -82,10 +152,19 @@ ok   an exited school's reason names its expiration and the grace rule, or DOMO'
 ok   the headline sensitivity without the undated schools is on the methods page
 ok   size bands are the NCES categories in the payload's order
 ok   the poverty share rides on most rows for the look-alike caliper  [94%]
+ok   every offered measure is carried by at least one school-year
 ok   the composite flag keeps science, social studies and writing out of the no-filter view
 ok   the grade table lists tested grades in order and every school in it has a name
 ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [698 schools]
 ok   the grade table carries no school-year the rules dropped
+ok   the 4 achievement levels are measures of their own  [percent_below, percent_level2, percent_level3, percent_level4]
+ok   the level shares sum to 100 on the grade rows that carry them  [62,537 grade rows, 100.0% within 1.5 points]
+ok   the levels from the proficiency cut up add up to the proficiency rate  [cut at canonical level 3 of 4; 100.0% of grade rows within 1.5]
+ok   the grade table carries the level columns
+ok   the level labels carry the state's own numbering  [Level 1: below the standard; Level 2: approaching the standard; Level 3: meeting the standard; Level 4: exceeding the standard]
+ok   the levels at or above the standard count up, the levels below count down
+ok   the proficiency label names the levels it adds
+ok   years and subjects whose levels do not add up carry no level values  [4 cells set aside, 5,240 grade rows in them]
 ok   school names and start dates are in the payload for the pack
 ok   MRA by-school rows exist for the pack
 ok   the MRA respondent map names a group or a blend for every measure
@@ -93,14 +172,14 @@ ok   look-alike settings are in the payload with their rationale
 ok   a Leader in Me school's pre-start years count in the comparison group  [132 rows]
 ok   Lighthouse schools are inside the Leader in Me family
 ok   combined-grade schools appear in both bands  [339 schools]
-ok   the school count never exceeds the band-slice count  [1080 schools vs 1289 band slices]
+ok   the school count never exceeds the band-slice count  [1100 schools vs 1314 band slices]
 ok   pairs are built inside bands
 ok   the by-band pair counts sum to the total
 ok   no comparison school is used twice
 ok   no Leader in Me school is paired twice inside a band
-ok   the signed baseline gap recomputes to the payload's  [offline -0.275 vs payload -0.260 on 4 pairs]
-skip mean signed gap under one point  [only 4 pairs; the gap is -0.28]
-ok   the widest single baseline gap is inside the caliper's reach  [0.8 points]
+skip signed baseline gap recompute  [only 2 pairs; rounding alone can move the mean]
+skip mean signed gap under one point  [only 2 pairs; the gap is -0.70]
+skip widest baseline gap  [only 2 pairs; the matched view is not offered under three]
 ok   the printed signed gap is not a negative zero  [-0.26]
 ok   no MRA value of exactly 100 survives into the payload
 ok   every MRA value sits on the published scale
@@ -112,43 +191,68 @@ ok   movers are built on ten or more schools each
 Tier 2 — behaviour in a real browser
 --------------------------------------------------------------------------
 ok   the page loads and the headline renders
-ok   load time is workable  [0.6s]
+ok   load time is workable  [1.4s]
 ok   no console errors on load
 ok   chart c1 draws an svg or explains why
 ok   chart c2 draws an svg or explains why
 ok   the MRA card shows exactly when a trend line can be drawn
-ok   the Georgia discipline card stays hidden
-ok   the incidents card stays hidden (no state incident file)
-ok   the state extras card stays hidden (no state files)
+ok   the discipline card shows exactly when the payload carries a discipline trend  [payload has no discipline_ga]
+ok   the incidents card shows exactly when the payload carries an incident trend  [payload has no incidents]
+ok   the state extras card shows exactly when the payload carries state measures  [2 state measures]
+ok   every state measure on the card draws a Leader in Me and a comparison line
 ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
 ok   the headline p recomputes offline  [page 0.0210 scipy 0.0210 · window 2023-2025 · LiM n=3 mean -7.95 · comparison n=1097 mean -0.01]
 ok   the headline counts schools, not band slices  [page 1100 vs offline 1100 on 2023-2025]
 ok   the page's Leader in Me count is the builder's  [3 vs 3]
 ok   the district filter re-renders the headline  [Not enough schools match these filters to compare anything yet. Remove a filter on the lef]
+ok   the school type filter is offered with the payload's kinds  [Title I schools, Not Title I, Charter schools, Alternative schools]
+ok   choosing 'Title I schools' narrows the view and names it  [531 of 1261 schools; Not enough schools match these filters to compare anything yet. Remove a filter ]
+ok   every school in the 'Title I schools' view carries that attribute
+ok   Title I status is known for most schools on the page  [96.7%]
 ok   the Primary band filter re-renders without error
 ok   the Secondary band filter re-renders without error
 ok   measure 'percent_proficient' either draws or says why
+ok   measure 'percent_level4' either draws or says why
+ok   measure 'percent_level3' either draws or says why
+ok   measure 'percent_level2' either draws or says why
 ok   measure 'percent_below' either draws or says why
 ok   measure 'standard_score' either draws or says why
 ok   measure 'chronic_absent' either draws or says why
 ok   measure 'grad_rate' either draws or says why
+ok   measure 'reg_attend' either draws or says why
 ok   the matched toggle re-renders the headline  [Not enough schools match these filters to compare anything yet. Remove a filter on the lef]
 ok   the matched view shrinks or equals the Leader in Me count  [0 matched]
 ok   no console errors after the filter sweep
 ok   the insights tab hides the explore view
-ok   Gresham-Barlow School District 10J generates cards or says there is nothing to report  [3 cards]
+ok   Gresham-Barlow School District 10J generates cards or says there is nothing to report  [4 cards]
 ok   the insights tab uses the same unit and window as the explore tab  [{'p': 0.021047313316698516, 'n1': 3, 'n2': 1097}]
 ok   no console errors on the insights tab
-ok   export c1.pptx downloads, opens and carries the chart image  [113,111 bytes]
-ok   the pptx export is named for the state and chart  [OR_Percent_meeting_the_standard_year_by_year_Oregon_schools.pptx]
-ok   export c1.docx downloads, opens and carries the chart image  [110,783 bytes]
-ok   the docx export is named for the state and chart  [OR_Percent_meeting_the_standard_year_by_year_Oregon_schools.docx]
-ok   the research pack downloads with its sections  [6,747 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'report_card', 'roster', 'school']]
+ok   the MRA tab is offered exactly when the payload carries surveys
+ok   the MRA tab shows its own view and sidebar and hides the explore ones
+ok   the MRA summary renders a sentence  [Fewer than three Oregon Leader in Me schools have a survey with Leadership in this range, so nothing]
+ok   MRA chart c6 draws an svg or explains why
+ok   MRA chart c7 draws an svg or explains why
+ok   MRA chart c10 draws an svg or explains why
+ok   the measure picker offers every MRA measure with data  [34 options, 34 measures with data, 37 in the catalogue]
+skip MRA paired test recompute  [under three schools surveyed more than once]
+ok   choosing the submeasure 'Personal Effectiveness' re-renders the MRA summary  [Fewer than three Oregon Leader in Me schools have a survey with Personal Effectiveness in ]
+ok   the MRA district filter narrows to Klamath County School District's surveyed schools  [1 of 2 schools]
+ok   the MRA school type filter keeps only schools with that trait  [title1_yes]
+ok   the same-schools switch keeps only schools surveyed at both ends
+ok   no console errors on the MRA tab
+ok   the MRA view downloads one row per school, year and measure  [147 rows]
+ok   leaving the MRA tab restores the explore view
+ok   export c1.pptx downloads, opens and carries the chart image  [113,133 bytes]
+ok   the pptx export is named for the state and chart  [OR_Meeting_or_exceeding_the_standard_levels_3_and_4_year_by_year_Oregon_schools.pptx]
+ok   export c1.docx downloads, opens and carries the chart image  [113,987 bytes]
+ok   the docx export is named for the state and chart  [OR_Meeting_or_exceeding_the_standard_levels_3_and_4_year_by_year_Oregon_schools.docx]
+ok   the research pack downloads with its sections  [16,046 rows, sections ['about', 'district_published', 'field_insight', 'growth_test', 'movement', 'mra', 'report_card', 'report_card_school']]
 skip pack count against the page  [no district with three Leader in Me and three comparison schools in the end year]
 skip look-alike mode  [no prospect district with three or more schools, or not a full page]
 ok   the grade filter lists the tested grades
-ok   choosing a grade re-renders the headline and names the grade  [In Oregon grade 4 results, between 2022-23 and 2024-25, Leader in Me schools fell 11.5% on Percent m]
-ok   whole-school measures switch off while a grade is chosen
+ok   choosing a grade re-renders the headline and names the grade  [In Oregon grade 4 results, between 2022-23 and 2024-25, Leader in Me schools fell 11.5% on Meeting o]
+ok   the level measures stay on while a grade is chosen
+ok   whole-school measures switch off while a grade is chosen  [4 whole-school measures in the payload]
 ok   dark mode re-renders without errors
 ok   no horizontal overflow at 900px  [0px]
 ok   no horizontal overflow at 700px  [0px]
@@ -181,5 +285,89 @@ ok   a descriptive page says so on the methods page
   HEADLINE (statewide, 2023-2025, no filters): Leader in Me -7.95 pts (n=3) vs comparison -0.01 pts (n=1097), p=0.0210 -> significant in the comparison group's favour
 
 ==========================================================================
-126 of 126 checks pass · 3 skipped
+157 of 157 checks pass · 6 skipped
 ==========================================================================
+
+$ python3 /home/claude/sdf/Build/states/or_core_verify.py --work /home/claude/sdf/Build/work/OR
+
+Oregon's own measures
+--------------------------------------------------------------------------
+ok   the crosswalk reaches every Leader in Me school  [5 of 5]
+ok   the crosswalk reaches nearly every comparison school  [1,235 of 1,256]
+ok   NCES's own id triples anchor the crosswalk  [1,240 triples for 1,261 schools]
+ok   the ODE files' own school names agree with DOMO's on nearly every crosswalked school (the second-way audit)  [1,239 of 1,240; 1 read one by one]
+ok   the ODE files' own districts agree with DOMO's on nearly every crosswalked school  [1,238 of 1,238]
+ok   DOMO's chronic absence is ODE's chronically absent share within 0.15 on nearly every school-year both carry (an independent check of the join)  [100.0% of 6,645 (identical on 6,645)]
+ok   DOMO's graduation rate is ODE's four-year cohort rate within 0.15 once keyed on the class (a second independent check)  [100.0% of 818]
+ok   no institution id is on two schools  [1,240 triples, 1,240 schools]
+ok   the Leader in Me schools the crosswalk cannot reach are named on the page, or every one is reached and the page says so
+ok   the join note on the card carries the reach
+ok   each Leader in Me school's institution id sits in the pack's state ids  [5 Leader in Me schools]
+ok   attendance 2024-25: the pack's reg_attend is the workbook's own value re-read from the xlsx  [1178 of 1178 agree (need 800); 4 Leader in Me schools among them]
+ok   attendance 2024-25 (the complement): the pack's chronic_absent_or is the workbook's own value re-read from the xlsx  [1178 of 1178 agree (need 800); 4 Leader in Me schools among them]
+ok   attendance 2024-25: the rows' regular attenders measure equals the pack's value  [1487 of 1487]
+ok   regular attenders is carried on both bands of a combined school
+ok   chronic absence: DOMO's own value stands on every school-year DOMO carries (never overwritten)  [6645 of 6,645]
+ok   chronic absence 2016-17: the school-years DOMO lacks carry ODE's chronically absent share, re-read from the report  [1135 of 1135 filled schools]
+ok   chronic absence 2016-17 is the fill year the page names
+ok   ninth grade on-track 2024-25 (full academic year): the pack's ninth_on_track is the workbook's own value re-read from the xlsx  [216 of 216 agree (need 150); 0 Leader in Me schools among them]
+ok   ninth grade on-track 2024-25 (all students, under its own name): the pack's ninth_on_track_all is the workbook's own value re-read from the xlsx  [242 of 242 agree (need 150); 0 Leader in Me schools among them]
+ok   postsecondary enrollment, class of 2023 (college_12mo): the pack's college_12mo is the workbook's own value re-read from the xlsx  [293 of 293 agree (need 250); 1 Leader in Me schools among them]
+ok   growth 2018-19 (report card rules): the pack's mgp_ela is the workbook's own value re-read from the xlsx  [957 of 957 agree (need 800); 5 Leader in Me schools among them]
+ok   where the rc and agr growth files differ, the pack carries the report-card-rules value  [219 of 219 differing schools carry rc]
+ok   four-year graduation, class of 2024 (the 2024-25 accountability details' latest cohort): the pack's grad4_or is the workbook's own value re-read from the xlsx  [321 of 321 agree (need 250); 1 Leader in Me schools among them]
+ok   the latest class the accountability details carry is the year before the file  [class of 2024 in the 2024-25 file]
+ok   English learners on track 2024-25: the pack's el_on_track is the workbook's own value re-read from the xlsx  [701 of 701 agree (need 300); 3 Leader in Me schools among them]
+ok   level of support 2024-25: the pack's support_identified is the workbook's own value re-read from the xlsx  [1194 of 1194 agree (need 800); 4 Leader in Me schools among them]
+ok   the accountability details' gap-score sheets are not read
+ok   graduation: DOMO's own rate stands on every secondary school-year DOMO carries (never overwritten)  [1104 of 1104]
+ok   graduation: the school-years DOMO lacks carry ODE's four-year rate keyed on the class  [1952 of 1952 filled school-years]
+ok   the filled graduation classes reach every class DOMO does not carry (2014 to 2019), sit inside the page's years and never in a closure class  [[2014, 2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024]]
+ok   graduation sits on secondary rows only
+ok   the same school-class read from two accountability workbooks agrees (the class keying holds across the label change)  [2,156 of 2,267 identical]
+ok   Regular attenders: the latest Leader in Me point recomputes from the long table and the membership file  [2025: payload 75.63 (n=3) vs offline 75.63 (n=3)]
+ok   Regular attenders: the latest comparison point recomputes from the long table and the membership file  [2025: payload 67.39 (n=1174) vs offline 67.39 (n=1174)]
+ok   Schools identified for ESSA support: the latest Leader in Me point recomputes from the long table and the membership file  [2025: payload 0.0 (n=3) vs offline 0.0 (n=3)]
+ok   Schools identified for ESSA support: the latest comparison point recomputes from the long table and the membership file  [2025: payload 24.62 (n=1190) vs offline 24.62 (n=1190)]
+ok   the closure years are on no Oregon card  [[2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   no card year sits past the core's last year  [2025 vs 2025]
+ok   reg_attend sits in no closure year on the rows  [[2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   chronic_absent sits in no closure year on the rows  [[2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   grad_rate sits in no closure year on the rows  [[2014, 2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   the pack carries no closure year and nothing past the page's last year  [[2014, 2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   ninth grade on-track skips 2020-21 (a closure year) and carries the other file years  [[2018, 2019, 2022, 2023, 2024, 2025]]
+ok   postsecondary enrollment sits under three windows, each on its own classes; the class of 2019 and the closure classes carry no value  [college_first_year: [2016, 2017]; college_16mo: [2018]; college_12mo: [2022, 2023]]
+ok   the growth percentiles run 2014-15 to 2018-19 only (Oregon computed none after)
+ok   every named exclusion is counted on the cleaning audit
+ok   the class of 2019 postsecondary exclusion is explained on the methods page by its denominators
+ok   the two growth-file variants and the gap-score change are explained on the methods page
+ok   the accountability details' regular attenders sheet was checked against the report and found to be a grade-band cut, not the measure  [identical on 4,773 of 8,337]
+ok   the support designation is a flag (0 or 100) in the pack
+ok   the card membership is the core's own status wherever a school has rows that year  [0 mismatches over 11,688 school-years]
+ok   no Leader in Me card member is a school-year the core dropped  [20 Leader in Me school-years on the cards]
+ok   every Leader in Me card member is a school the headline's roster counts  [5 schools]
+ok   no card member sits past the core's last year  [2025 vs 2025]
+ok   Regular attenders: the Leader in Me point in 2025 rests on at least three counted schools and a comparison line exists  [n=3]
+ok   Regular attenders: every Leader in Me point rests on the schools the headline counts that year
+ok   Schools identified for ESSA support: the Leader in Me point in 2025 rests on at least three counted schools and a comparison line exists  [n=3]
+ok   Schools identified for ESSA support: every Leader in Me point rests on the schools the headline counts that year
+ok   every card measure carries the poverty context line
+ok   the card stays at a dozen measures or fewer  [2 on the card]
+ok   the page says before which year no Leader in Me point is drawn, and none is  [first Leader in Me point 2022-23]
+ok   every Oregon measure that never reaches three counted Leader in Me schools is off the card and the rows and named on the methods page  [pack only: mgp_ela, mgp_math, ninth_on_track, college_first_year, college_16mo, college_12mo, grad4_or, el_on_track]
+ok   each pack-only measure is in the research pack
+ok   regular attenders is a measure in the rows with Leader in Me school-years behind it  [15 Leader in Me school-years]
+ok   regular attenders and DOMO's chronic absence are complements on the rows where both sit (the same file, to the decimal)
+ok   chronic absence and graduation are described as ODE-filled in the measure text
+ok   the research pack's per-school Oregon values are keyed to schools on the page  [10,987 records]
+ok   every pack key carries a label
+ok   every school with an institution id on the page has it in the pack  [1,240 of 1,261]
+ok   the pack's published section carries the state's own regular attenders and growth figures  [8 state rows, 1443 rows in all]
+ok   the district codes the pack maps carry published rows  [182 districts mapped]
+ok   look-alike mode names no behavior measure for Oregon (no school-level discipline file in this build)
+ok   the banner names the attendance, on-track, postsecondary, growth and accountability files
+ok   the methods page owns the descriptive limit for Oregon's cards
+ok   the methods page carries the fill rule and the class keying
+ok   the measures the card can carry are on it  [2 on the card]
+
+ALL OREGON CHECKS PASS

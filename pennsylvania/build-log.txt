@@ -1,5 +1,5 @@
 
-$ python3 /home/claude/national/Build/build_payload_core.py --state PA --core /home/claude/national/corefolder --out /home/claude/national/Build/work/PA
+$ python3 /home/claude/sdf/Build/build_payload_core.py --state PA --core /home/claude/sdf/Core --out /home/claude/sdf/Build/work/PA --data /home/claude/sdf/Build/work/PA/data --extras pa_core_extras
 reading the core for Pennsylvania ...
 [core] subjects: 243,376 school rows kept; dropped 28,534 rows with no school id and 6,128 with an id but no school record
 [core] Leader in Me roster: 1,269 rows
@@ -13,22 +13,64 @@ applying the cleaning rules ...
   87,730 school-year-band-subject rows · years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
   Leader in Me school-years counted: 524 of 1206 reviewed
   no start date: 5 schools · dated exits: 30 (school-years after an exit with rows: 81) · aggregate 'All grades' rows used 0, skipped 2
-  proficiency = levels 3 and 4 on 1.0% of rows
+  achievement levels as measures: yes (four levels, numbered from the top; proficiency is the top 2; 100.0% of rows in years and subjects whose levels add up)
+  proficiency = levels 3 and 4 on 100.0% of rows
+folding in Pennsylvania's own measures (pa_core_extras) ...
+  state files (resolved by name; the log names the file each year came from):
+    Future Ready PA 2017-18: Datafile_20172018.xlsx
+    Future Ready PA 2018-19: Datafile_20182019.xlsx
+    Future Ready PA 2019-20: Datafile_20192020.xlsx
+    Future Ready PA 2020-21: Datafile_20202021.xlsx
+    Future Ready PA 2021-22: Datafile_20212022.xlsx
+    Future Ready PA 2022-23: Datafile_20222023.xlsx
+    Future Ready PA 2023-24: Datafile_20232024.xlsx
+    Future Ready PA 2024-25: Datafile_20242025.xlsx
+    NCES directory: 3,190 federal-to-state id pairs from the cache (8 CCD files unchanged)
+    Future Ready PA files: 714,092 values for 8 years from the cache (workbooks unchanged)
+    designations ATSI: atsi schools.xlsx (251 rows, 169 schools)
+    designations CSI: csi schools.xlsx (160 rows, 160 schools)
+    designations TSI: tsi schools.xlsx (589 rows, 382 schools)
+  the 2019-20 file repeats 2018-19 exactly on: adv_ela, adv_math, adv_sci, ap_ib, career_std, dual_enroll, grade3_reading, grade7_math, industry, industry_adv, part_ela, part_math, part_sci, prof_ela, prof_math, prof_sci, pvaas_ela, pvaas_math, pvaas_sci, rigorous; new values on: eds_share, el_progress, enrollment, grad4, grad5, postsec_ihe, postsec_military, postsec_trans, postsec_work, reg_attend
+  workbooks: 8 years, 3,081 schools, 714,092 values; 281,936 all-students cells carry a suppression mark and are read as missing; empty columns 17 (in 2021-22, 2024-25); waiver columns in 2024-25: adv_sci, prof_sci, pvaas_sci
+  crosswalk: NCES's AUN and school number for each federal id, audited against the state files' own school names and districts
+    2,879 of 2,911 schools carry a state id in NCES's directory; Leader in Me 134 of 134, comparison 2,745 of 2,777; 2,795 appear in at least one Future Ready PA file
+    names: the state files' own school name agrees with DOMO's on 2,787 of 2,795 crosswalked schools; districts agree on 2,719 of 2,752 with a district in both; 0 pairs re-pointed to a folded id; 0 shared state ids settled
+  state table: 21,114 school-years on state ids after 40,876 all-students values the 2019-20 file repeats from 2018-19 are dropped by name and 52,270 describing the closure years are set aside; attendance and graduation keyed one year before their file, the postsecondary shares two
+  graduation: the state's four-year cohort rate is DOMO's within 0.15 on 100.0% of 3,265 overlapping school-years once the index's one-year lag is undone (unshifted: 4.3% of 3,916, r = 0.863); chronic absence: DOMO carries 0 values for Pennsylvania, so nothing to compare and the state's complement of regular attendance supplies every year; the state's table fills 59,733 chronic-absence rows and 2,634 graduation rows DOMO left empty on the test rows ({2017: 2559, 2018: 45, 2019: 30}), and overwrites none
+  rows gain: pvaas_ela on 20,157 school-year-bands (124 Leader in Me schools ever), pvaas_math on 20,166 school-year-bands (124 Leader in Me schools ever), career_std on 18,512 school-year-bands (119 Leader in Me schools ever), postsec_trans on 3,934 school-year-bands (9 Leader in Me schools ever), rigorous on 3,445 school-year-bands (12 Leader in Me schools ever); 0 school-years had no band to sit in
+  card: 12 Pennsylvania measures, each group on each year's own membership
+    card line reg_attend: 6 Leader in Me points, latest 2024 n=72 (80.6)
+    card line pvaas_ela: 6 Leader in Me points, latest 2025 n=92 (70.68)
+    card line pvaas_math: 6 Leader in Me points, latest 2025 n=92 (77.74)
+    card line pvaas_sci: 5 Leader in Me points, latest 2024 n=72 (69.81)
+    card line career_std: 6 Leader in Me points, latest 2025 n=88 (98.19)
+    card line grad4: 3 Leader in Me points, latest 2024 n=10 (90.99)
+    card line postsec_trans: 2 Leader in Me points, latest 2023 n=9 (79.89)
+    card line postsec_ihe: 2 Leader in Me points, latest 2023 n=9 (59.92)
+    card line rigorous: 3 Leader in Me points, latest 2024 n=10 (61.69)
+    card line industry: 3 Leader in Me points, latest 2024 n=10 (43.22)
+    card line el_progress: 6 Leader in Me points, latest 2025 n=34 (39.22)
+    card line designated: 1 Leader in Me points, latest 2025 n=94 (21.28)
+  per-school Pennsylvania records for the pack: 19,472 (39 columns); student-group rows 96,004; published statewide years 4; designations scored for 2,669 schools in 2024-25
+  Pennsylvania's measures on 21,773 school-year-bands: 20,876 joined to existing rows, 897 school-year-bands added with no test rows of their own
+  core measures filled from Pennsylvania's own files where DOMO had none: chronic_absent 60,460 rows, grad_rate 2,690 rows
+  school type from NCES: Title I on 2,812 schools (1,632 yes), charter 194, magnet 51, alternative 0; Title I published 2017-2022, carried forward after
+  funders: 71 Pennsylvania schools carry a funding source (71 on the page; Kern 17, 17 on the page); latest non-blank year per school
 building matched pairs, inside each band ...
   pairs 58  by band {'Primary': {'pairs': 41, 'unmatched': 13}, 'Secondary': {'pairs': 17, 'unmatched': 3}}
   MRA: 193 surveys · 77 schools · 558 sentinel values · 6 shells
   headline 2021-22 to 2024-25: {'y0': 2022, 'y1': 2025, 'lim_n': 93, 'comp_n': 2414, 'lim_change': -1.05, 'comp_change': -1.46, 'p': 0.636} · without the 21 undated schools {'y0': 2022, 'y1': 2025, 'lim_n': 75, 'comp_n': 2414, 'lim_change': -1.96, 'comp_change': -1.46, 'p': 0.624}
   roster: 86 counted, 41 exited, 2 not counted yet, 5 not counted
 
-wrote pa_payload.json  (35.9 MB, 87,730 rows) · page kind full (93 Leader in Me schools on the headline)
-build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+wrote pa_payload.json  (64.5 MB, 88,627 rows) · page kind full (93 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'fb6eaf7cb415'}
 
 $ python3 build2.py pa_payload.json PA_Dashboard.html PA_Methods.html
-payload 35.9 MB -> 2.13 MB gzip
-PA_Dashboard.html: 3009 KB
-PA_Methods.html: 29 KB
+payload 64.5 MB -> 5.86 MB gzip
+PA_Dashboard.html: 7910 KB
+PA_Methods.html: 54 KB
 
-$ python3 /home/claude/national/Build/verify_core.py --state PA --work /home/claude/national/Build/work/PA
+$ python3 /home/claude/sdf/Build/verify_core.py --state PA --work /home/claude/sdf/Build/work/PA
 
 --------------------------------------------------------------------------
 Tier 0 — install and input-value audit
@@ -80,15 +122,23 @@ ok   an exited school's reason names its expiration and the grace rule, or DOMO'
 ok   the headline sensitivity without the undated schools is on the methods page
 ok   size bands are the NCES categories in the payload's order
 ok   the poverty share rides on most rows for the look-alike caliper  [99%]
+ok   every offered measure is carried by at least one school-year
 ok   the composite flag keeps science, social studies and writing out of the no-filter view
 ok   the grade table lists tested grades in order and every school in it has a name
 ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [1476 schools]
 ok   the grade table carries no school-year the rules dropped
+ok   the 4 achievement levels are measures of their own  [percent_below, percent_level2, percent_level3, percent_level4]
+ok   the level shares sum to 100 on the grade rows that carry them  [138,938 grade rows, 100.0% within 1.5 points]
+ok   the levels from the proficiency cut up add up to the proficiency rate  [cut at canonical level 3 of 4; 100.0% of grade rows within 1.5]
+ok   the grade table carries the level columns
+ok   the level labels carry the state's own numbering  [Level 4: below the standard; Level 3: approaching the standard; Level 2: meeting the standard; Level 1: exceeding the standard]
+ok   the levels at or above the standard count up, the levels below count down
+ok   the proficiency label names the levels it adds
 ok   school names and start dates are in the payload for the pack
 ok   MRA by-school rows exist for the pack
 ok   the MRA respondent map names a group or a blend for every measure
 ok   look-alike settings are in the payload with their rationale
-ok   a Leader in Me school's pre-start years count in the comparison group  [1,997 rows]
+ok   a Leader in Me school's pre-start years count in the comparison group  [2,020 rows]
 ok   Lighthouse schools are inside the Leader in Me family
 ok   combined-grade schools appear in both bands  [834 schools]
 ok   the school count never exceeds the band-slice count  [2507 schools vs 3118 band slices]
@@ -111,50 +161,82 @@ ok   movers are built on ten or more schools each
 Tier 2 — behaviour in a real browser
 --------------------------------------------------------------------------
 ok   the page loads and the headline renders
-ok   load time is workable  [1.1s]
+ok   load time is workable  [2.5s]
 ok   no console errors on load
 ok   chart c1 draws an svg or explains why
 ok   chart c2 draws an svg or explains why
 ok   the MRA card shows exactly when a trend line can be drawn
-ok   the Georgia discipline card stays hidden
-ok   the incidents card stays hidden (no state incident file)
-ok   the state extras card stays hidden (no state files)
+ok   the discipline card shows exactly when the payload carries a discipline trend  [payload has no discipline_ga]
+ok   the incidents card shows exactly when the payload carries an incident trend  [payload has no incidents]
+ok   the state extras card shows exactly when the payload carries state measures  [12 state measures]
+ok   every state measure on the card draws a Leader in Me and a comparison line
 ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
 ok   the headline p recomputes offline  [page 0.6330 scipy 0.6330 · window 2022-2025 · LiM n=93 mean -1.04 · comparison n=2414 mean -1.46]
 ok   the headline counts schools, not band slices  [page 2507 vs offline 2507 on 2022-2025]
 ok   the page's Leader in Me count is the builder's  [93 vs 93]
 ok   the district filter re-renders the headline  [In Philadelphia City School District schools, between 2021-22 and 2024-25, Leader in Me sc]
+ok   the school type filter is offered with the payload's kinds  [Title I schools, Not Title I, Charter schools, Magnet schools, Kern Family Foundation schools]
+ok   choosing 'Title I schools' narrows the view and names it  [1551 of 2906 schools; In Pennsylvania Title I schools, between 2021-22 and 2024-25, Leader in Me schoo]
+ok   every school in the 'Title I schools' view carries that attribute
+ok   'Kern Family Foundation schools' narrows the Leader in Me side only and keeps the comparison side whole  [Not enough schools match these filters to compare anything yet. Remove a filter on the left and it w]
+ok   Title I status is known for most schools on the page  [96.8%]
 ok   the Primary band filter re-renders without error
 ok   the Secondary band filter re-renders without error
 ok   measure 'percent_proficient' either draws or says why
+ok   measure 'percent_level4' either draws or says why
+ok   measure 'percent_level3' either draws or says why
+ok   measure 'percent_level2' either draws or says why
 ok   measure 'percent_below' either draws or says why
 ok   measure 'standard_score' either draws or says why
 ok   measure 'chronic_absent' either draws or says why
 ok   measure 'grad_rate' either draws or says why
+ok   measure 'pvaas_ela' either draws or says why
+ok   measure 'pvaas_math' either draws or says why
+ok   measure 'career_std' either draws or says why
+ok   measure 'postsec_trans' either draws or says why
+ok   measure 'rigorous' either draws or says why
 ok   the matched toggle re-renders the headline  [In Pennsylvania schools (matched to similar schools only), between 2021-22 and 2024-25, Le]
 ok   the matched view shrinks or equals the Leader in Me count  [38 matched]
 ok   no console errors after the filter sweep
 ok   the insights tab hides the explore view
-ok   Philadelphia City School District generates cards or says there is nothing to report  [5 cards]
+ok   Philadelphia City School District generates cards or says there is nothing to report  [12 cards]
 ok   the insights tab uses the same unit and window as the explore tab  [{'p': 0.632964422070913, 'n1': 93, 'n2': 2414}]
 ok   no console errors on the insights tab
-ok   export c1.pptx downloads, opens and carries the chart image  [154,801 bytes]
-ok   the pptx export is named for the state and chart  [PA_Percent_meeting_the_standard_year_by_year_Pennsylvania_schools.pptx]
-ok   export c1.docx downloads, opens and carries the chart image  [152,461 bytes]
-ok   the docx export is named for the state and chart  [PA_Percent_meeting_the_standard_year_by_year_Pennsylvania_schools.docx]
-ok   the research pack downloads with its sections  [34,559 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'report_card', 'roster', 'school']]
+ok   the MRA tab is offered exactly when the payload carries surveys
+ok   the MRA tab shows its own view and sidebar and hides the explore ones
+ok   the MRA summary renders a sentence  [Across 60 Pennsylvania Leader in Me schools surveyed in 2024-25, Leadership averaged 74.9 on the MRA]
+ok   MRA chart c6 draws an svg or explains why
+ok   MRA chart c7 draws an svg or explains why
+ok   MRA chart c10 draws an svg or explains why
+ok   the measure picker offers every MRA measure with data  [37 options, 37 measures with data, 37 in the catalogue]
+ok   the MRA paired test recomputes offline  [page 0.6007 scipy 0.6007 on 49 schools]
+ok   the MRA latest-year school count recomputes offline  [page 60 vs offline 60]
+ok   the MRA same-schools count is every school surveyed more than once  [page 49 vs offline 49]
+ok   choosing the submeasure 'Personal Effectiveness' re-renders the MRA summary  [Across 59 Pennsylvania Leader in Me schools surveyed in 2024-25, Personal Effectiveness av]
+ok   the MRA district filter narrows to Bethlehem Area School District's surveyed schools  [20 of 77 schools]
+ok   the MRA school type filter keeps only schools with that trait  [title1_yes]
+ok   the same-schools switch keeps only schools surveyed at both ends
+ok   no console errors on the MRA tab
+ok   the MRA view downloads one row per school, year and measure  [5,628 rows]
+ok   leaving the MRA tab restores the explore view
+ok   export c1.pptx downloads, opens and carries the chart image  [154,823 bytes]
+ok   the pptx export is named for the state and chart  [PA_Meeting_or_exceeding_the_standard_levels_1_and_2_year_by_year_Pennsylvania_schools.pptx]
+ok   export c1.docx downloads, opens and carries the chart image  [155,742 bytes]
+ok   the docx export is named for the state and chart  [PA_Meeting_or_exceeding_the_standard_levels_1_and_2_year_by_year_Pennsylvania_schools.docx]
+ok   the research pack downloads with its sections  [114,322 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'report_card', 'report_card_school', 'report_card_subgroup']]
 ok   the pack's Leader in Me count for the district is the page's  [3 vs 3]
 ok   look-alike mode rewrites the headline around the anchor district, or says nothing matched  [In Pennsylvania schools like Pittsburgh School District’s, between 2021-22 and 2024-25, Leader in Me schools rose 1.8% o]
-ok   the look-alike box reports both counts or says why not  [Schools like Pittsburgh School District’s: 12 Leader in Me schools and 491 comparison schools look like Pittsburgh School District’s 51 schools with results in ]
+ok   the look-alike box reports both counts or says why not  [Schools like Pittsburgh School District’s: 12 Leader in Me schools and 432 comparison schools look like Pittsburgh School District’s 51 schools with results in ]
 ok   the matched switch is disabled while an anchor is set
 ok   no console errors in look-alike mode
-ok   the look-alike headline p recomputes offline  [p=0.6832]
+ok   the look-alike headline p recomputes offline  [p=0.8562]
 ok   the anchor's own schools are never inside the look-alike groups
 ok   the school list downloads with one row per school  [63 rows, 0 same-name pairs]
 ok   the school list carries traits and change columns
 ok   the grade filter lists the tested grades
-ok   choosing a grade re-renders the headline and names the grade  [In Pennsylvania grade 4 results, between 2021-22 and 2024-25, Leader in Me schools fell 5.1% on Perc]
-ok   whole-school measures switch off while a grade is chosen
+ok   choosing a grade re-renders the headline and names the grade  [In Pennsylvania grade 4 results, between 2021-22 and 2024-25, Leader in Me schools fell 5.1% on Meet]
+ok   the level measures stay on while a grade is chosen
+ok   whole-school measures switch off while a grade is chosen  [8 whole-school measures in the payload]
 ok   dark mode re-renders without errors
 ok   no horizontal overflow at 900px  [0px]
 ok   no horizontal overflow at 700px  [0px]
@@ -185,5 +267,98 @@ ok   the undated schools are listed by name in the payload
   HEADLINE (statewide, 2022-2025, no filters): Leader in Me -1.04 pts (n=93) vs comparison -1.46 pts (n=2414), p=0.6330 -> not significant
 
 ==========================================================================
-135 of 135 checks pass
+175 of 175 checks pass
 ==========================================================================
+
+$ python3 /home/claude/sdf/Build/states/pa_core_verify.py --work /home/claude/sdf/Build/work/PA
+
+Pennsylvania's own measures
+--------------------------------------------------------------------------
+ok   the crosswalk reaches nearly every Leader in Me school  [134 of 134]
+ok   the crosswalk reaches most schools on the page  [2,879 of 2,911]
+ok   the state files' own school names agree with DOMO's on nearly every crosswalked school  [2,787 of 2,795]
+ok   the state files' own districts agree with DOMO's on nearly every crosswalked school  [2,719 of 2,752]
+ok   the independent value check holds: the state's graduation rate is DOMO's once the lag is undone  [100.0% within 0.15 on 3,265]
+ok   the index's one-year graduation lag is real (the unshifted join does not match)  [4.3% unshifted]
+ok   the attendance lag is real: schools new to NCES carry no attendance in their own year's file and do in the next  [77 new schools: 0 in their own year's file, 74 in the next]
+ok   every crosswalked id is one school (no state id shared, no pair re-pointed without a record)  [0 shared ids settled]
+ok   chronic absence on the rows is 100 minus the state's regular attendance in the next year's file (2023-24 from the 2024-25 file)  [2616 of 2616 school-years agree]
+ok   Leader in Me schools carry that chronic absence  [95 Leader in Me schools in 2023-24]
+ok   the PVAAS ELA growth score on the rows is the state's own 2024-25 value  [2560 of 2560 agree]
+ok   the career standards benchmark on the rows is the state's own 2024-25 value  [2296 of 2296 agree]
+ok   exact zeros on the career standards benchmark are read as unreported (none on the rows or in the pack)  [36 zeros in the 2024-25 file, 0 on the rows]
+ok   the graduation rate on the rows for 2023-24 is the 2024-25 file's cohort rate (DOMO's value, not overwritten, is the state's)  [667 of 667 agree]
+ok   the postsecondary transition share for the class of 2023 is the 2024-25 file's value, keyed two years back  [664 of 664 agree]
+ok   the 2024-25 12th-grader rigorous-courses column is in the pack under its own key, matching the file  [700 of 700 agree]
+ok   every CSI school on the page is flagged in the pack, and no other school is  [157 CSI schools on the page, 157 flagged]
+ok   the 2019-20 file's copied columns are exactly the registry's, and none is read  [20 copied columns]
+ok   no state value describing a closure year survives into the state table  [0 rows]
+ok   pvaas_ela carries no closure-year values on the rows  [years [2018, 2019, 2022, 2023, 2024, 2025]]
+ok   pvaas_math carries no closure-year values on the rows  [years [2018, 2019, 2022, 2023, 2024, 2025]]
+ok   career_std carries no closure-year values on the rows  [years [2018, 2019, 2022, 2023, 2024, 2025]]
+ok   postsec_trans carries no closure-year values on the rows  [years [2016, 2017, 2018, 2019, 2022, 2023]]
+ok   rigorous carries no closure-year values on the rows  [years [2018, 2019, 2022, 2023, 2024]]
+ok   chronic_absent carries no closure-year values on the rows  [years [2017, 2018, 2019, 2022, 2023, 2024]]
+ok   rigorous courses of study carries no 2024-25 values on the rows (re-based on 12th graders, excluded by name)
+ok   the pack carries no 2024-25 science values (the state's waiver)
+ok   the pack carries the re-based 2024-25 columns only under their own keys
+ok   the pack keeps the closure years out
+ok   attendance and graduation end a year before the newest file, the postsecondary shares two (the lags undone)  [chronic to 2024]
+ok   the graduation fill added the 2016-17 cohort (the year DOMO lacks) and nothing more there  [2569 rows in 2016-17 vs 2569 expected (test rows plus added school-year-bands)]
+ok   graduation sits on secondary rows only
+ok   chronic absence fills every row the state reaches (test rows plus the added school-year-bands)  [60,460 rows vs 59,733 + 727]
+ok   postsec_trans sits on secondary rows only
+ok   rigorous sits on secondary rows only
+ok   pvaas_ela is carried on both bands  [bands ['Primary', 'Secondary']]
+ok   pvaas_math is carried on both bands  [bands ['Primary', 'Secondary']]
+ok   career_std is carried on both bands  [bands ['Primary', 'Secondary']]
+ok   chronic absence on the rows is the complement of the pack's regular attendance on every school-year  [15,797 school-years]
+ok   no school the card counts as Leader in Me in a year is a comparison school on the page that year  [0 conflicts]
+ok   no school the card counts as comparison in a year is a Leader in Me school on the page that year  [0 conflicts]
+ok   Regular attendance: the Leader in Me point in 2024 rests on at least three counted schools  [n=72]
+ok   Regular attendance: every Leader in Me point counts no more schools than the membership carries
+ok   Regular attendance: no closure year on the card
+ok   PVAAS growth score, ELA: the Leader in Me point in 2025 rests on at least three counted schools  [n=92]
+ok   PVAAS growth score, ELA: every Leader in Me point counts no more schools than the membership carries
+ok   PVAAS growth score, ELA: no closure year on the card
+ok   PVAAS growth score, math: the Leader in Me point in 2025 rests on at least three counted schools  [n=92]
+ok   PVAAS growth score, math: every Leader in Me point counts no more schools than the membership carries
+ok   PVAAS growth score, math: no closure year on the card
+ok   PVAAS growth score, science: the Leader in Me point in 2024 rests on at least three counted schools  [n=72]
+ok   PVAAS growth score, science: every Leader in Me point counts no more schools than the membership carries
+ok   PVAAS growth score, science: no closure year on the card
+ok   Career standards benchmark: the Leader in Me point in 2025 rests on at least three counted schools  [n=88]
+ok   Career standards benchmark: every Leader in Me point counts no more schools than the membership carries
+ok   Career standards benchmark: no closure year on the card
+ok   Four-year cohort graduation rate: the Leader in Me point in 2024 rests on at least three counted schools  [n=10]
+ok   Four-year cohort graduation rate: every Leader in Me point counts no more schools than the membership carries
+ok   Four-year cohort graduation rate: no closure year on the card
+ok   Graduates in school, the military or work a year on: the Leader in Me point in 2023 rests on at least three counted schools  [n=9]
+ok   Graduates in school, the military or work a year on: every Leader in Me point counts no more schools than the membership carries
+ok   Graduates in school, the military or work a year on: no closure year on the card
+ok   Graduates enrolled in higher education a year on: the Leader in Me point in 2023 rests on at least three counted schools  [n=9]
+ok   Graduates enrolled in higher education a year on: every Leader in Me point counts no more schools than the membership carries
+ok   Graduates enrolled in higher education a year on: no closure year on the card
+ok   Graduates who completed a rigorous course of study: the Leader in Me point in 2024 rests on at least three counted schools  [n=10]
+ok   Graduates who completed a rigorous course of study: every Leader in Me point counts no more schools than the membership carries
+ok   Graduates who completed a rigorous course of study: no closure year on the card
+ok   Graduates competent or advanced on an industry assessment: the Leader in Me point in 2024 rests on at least three counted schools  [n=10]
+ok   Graduates competent or advanced on an industry assessment: every Leader in Me point counts no more schools than the membership carries
+ok   Graduates competent or advanced on an industry assessment: no closure year on the card
+ok   English learners making progress toward proficiency: the Leader in Me point in 2025 rests on at least three counted schools  [n=34]
+ok   English learners making progress toward proficiency: every Leader in Me point counts no more schools than the membership carries
+ok   English learners making progress toward proficiency: no closure year on the card
+ok   Schools on the state's CSI, ATSI or TSI lists: the Leader in Me point in 2025 rests on at least three counted schools  [n=94]
+ok   Schools on the state's CSI, ATSI or TSI lists: every Leader in Me point counts no more schools than the membership carries
+ok   Schools on the state's CSI, ATSI or TSI lists: no closure year on the card
+ok   the card keeps to a manageable set  [12 measures]
+ok   the research pack's per-school Pennsylvania values are keyed to schools on the page  [19,472 records]
+ok   the student-group rows are keyed to schools on the page  [96,004 rows]
+ok   each school's state id in the pack is on the page
+ok   the statewide published rows carry the 2022-23 file's attendance figure (73.9) keyed on 2021-22, the year it describes
+ok   the Pennsylvania measures are on the page  [career_std, chronic_absent, grad_rate, percent_proficient, pvaas_ela, pvaas_math]
+ok   chronic absence is offered (no longer 'not offered' for Pennsylvania)
+ok   look-alike mode names no behavior measure (Pennsylvania's files carry none)
+ok   the methods page names the lag, the copies and the zeros
+
+ALL PENNSYLVANIA CHECKS PASS

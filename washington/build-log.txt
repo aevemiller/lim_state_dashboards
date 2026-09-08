@@ -1,5 +1,5 @@
 
-$ python3 /home/claude/national/Build/build_payload_core.py --state WA --core /home/claude/national/corefolder --out /home/claude/national/Build/work/WA
+$ python3 /home/claude/sdf/Build/build_payload_core.py --state WA --core /home/claude/sdf/Core --out /home/claude/sdf/Build/work/WA --data /home/claude/sdf/Build/work/WA/data --extras wa_core_extras
 reading the core for Washington ...
 [core] subjects: 152,783 school rows kept; dropped 45,999 rows with no school id and 3,601 with an id but no school record
 [core] Leader in Me roster: 383 rows
@@ -14,23 +14,55 @@ applying the cleaning rules ...
   56,239 school-year-band-subject rows · years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
   Leader in Me school-years counted: 150 of 396 reviewed
   no start date: 9 schools · dated exits: 10 (school-years after an exit with rows: 26) · aggregate 'All grades' rows used 29, skipped 51
-  proficiency = levels 3 and 4 on 57.4% of rows
+  achievement levels as measures: no (four levels, numbered from the bottom; proficiency is the top 2; 0.0% of rows in years and subjects whose levels add up; not offered because the levels add up on too few rows to stand as measures)
+  level values blanked on 30 year-subject cells that do not add up: 2014-15 ELA, 2014-15 Math, 2014-15 Science (end-of-course), 2014-15 Science, 2015-16 ELA, 2015-16 Math, 2015-16 Science (end-of-course), 2015-16 Science ...
+  proficiency = the reported PercentMetStandard alone (the file carries no level percentages) on 0% of rows
   statewide jump: ELA 2015->2016: 50.5 -> 58.9 (+8.5)
+folding in Washington's own measures (wa_core_extras) ...
+  state files (the trimmed all-students extracts where a year has one; every file is named in the audit):
+    sqss: 11 files
+    discipline: 11 files
+    growth: 8 files
+    wsif: 7 files
+    pathways: 1 files
+    enroll: 2 files
+    outcomes: 4 files
+    NCES directory: 2,750 federal-to-state id triples from the cache (8 CCD files unchanged)
+    SQSS (attendance, ninth grade on track, dual credit): 77,697 rows from the cache (11 files unchanged)
+    discipline: 25,909 rows from the cache (11 files unchanged)
+    growth: 27,663 rows from the cache (8 files unchanged)
+    school improvement framework: 17,119 rows from the cache (7 files unchanged)
+    graduation pathways: 30,401 rows from the cache (1 files unchanged)
+    graduate outcomes (Education Research and Data Center): 66,632 rows from the cache (6 files unchanged)
+  attendance year to year (same schools): 2015-2016 r=0.919 (84.6->84.2); 2016-2017 r=0.915 (84.2->83.8); 2017-2018 r=0.901 (83.9->84.0); 2018-2019 r=0.915 (84.0->84.0); 2019-2020 r=0.888 (84.1->90.2); 2020-2021 r=0.625 (90.3->79.8); 2021-2022 r=0.647 (80.1->64.3); 2022-2023 r=0.787 (64.8->68.5); 2023-2024 r=0.845 (68.5->72.2); 2024-2025 r=0.874 (72.2->72.3)
+  crosswalk: NCES's state district and school codes for each federal id, audited against the state files' own names
+    2,153 of 2,158 schools carry a state id in NCES's directory; Leader in Me 44 of 44, comparison 2,109 of 2,114; 2,153 appear in at least one Washington file
+    names: the state files' own school name agrees with DOMO's on 2,143 of 2,153 crosswalked schools; the name-within-district join lands on the same state id for 2,045, another id for 1, is ambiguous for 58 and finds no name for 49; 0 triples re-pointed to a folded id; 0 shared state ids settled
+  value check of the join (files the map was not built from): the framework's four-year graduation rate against DOMO's on 2,289 school-years, r=0.939, median difference 1.8 pts (31.7% within a point: a three-year pooled figure, not the annual rate, so nothing is filled from it); the framework's ELA proficiency against DOMO's reading proficiency on 12,912, r=0.923
+  attendance: the state's regular attendance reaches 2,077 schools on the page over 9 years (44 Leader in Me); DOMO carries 0 chronic-absence values for Washington, so 100 minus the state's rate fills 17,204 school-years and overwrites none
+  rows gain: median_sgp on 16,218 school-year-bands (28 Leader in Me schools ever); 0 school-years had no band to sit in; 1,943 school-year-bands will be added for it, and the chronic-absence fill lands on 53,418 existing rows plus 1,631 of those
+  card: 5 Washington measures, each group on each year's own membership (thin, left off: ninth_on_track, dual_credit)
+  per-school Washington records for the pack: 25,917 (67 columns)
+  Washington's measures on 16,218 school-year-bands: 14,275 joined to existing rows, 1,943 school-year-bands added with no test rows of their own
+  core measures filled from Washington's own files where DOMO had none: chronic_absent 55,049 rows
+  school type from NCES: Title I on 2,109 schools (988 yes), charter 19, magnet 46, alternative 208; Title I published 2017-2022, carried forward after
+  funders: 24 Washington schools carry a funding source (18 on the page; Kern 10, 4 on the page); latest non-blank year per school
 building matched pairs, inside each band ...
   pairs 30  by band {'Primary': {'pairs': 24, 'unmatched': 0}, 'Secondary': {'pairs': 6, 'unmatched': 1}}
   MRA: 31 surveys · 12 schools · 86 sentinel values · 4 shells
   headline 2021-22 to 2024-25: {'y0': 2022, 'y1': 2025, 'lim_n': 21, 'comp_n': 1838, 'lim_change': 1.46, 'comp_change': 0.7, 'p': 0.633} · without the 11 undated schools {'y0': 2022, 'y1': 2025, 'lim_n': 11, 'comp_n': 1838, 'lim_change': -0.47, 'comp_change': 0.7, 'p': 0.674}
   roster: 22 counted, 10 exited, 3 not counted yet, 9 not counted
+measures not offered (no school-year carries a value): percent_below
 
-wrote wa_payload.json  (22.7 MB, 56,239 rows) · page kind full (21 Leader in Me schools on the headline)
-build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+wrote wa_payload.json  (40.8 MB, 58,182 rows) · page kind full (21 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'fb6eaf7cb415'}
 
 $ python3 build2.py wa_payload.json WA_Dashboard.html WA_Methods.html
-payload 22.7 MB -> 1.41 MB gzip
-WA_Dashboard.html: 2067 KB
-WA_Methods.html: 28 KB
+payload 40.8 MB -> 3.01 MB gzip
+WA_Dashboard.html: 4204 KB
+WA_Methods.html: 54 KB
 
-$ python3 /home/claude/national/Build/verify_core.py --state WA --work /home/claude/national/Build/work/WA
+$ python3 /home/claude/sdf/Build/verify_core.py --state WA --work /home/claude/sdf/Build/work/WA
 
 --------------------------------------------------------------------------
 Tier 0 — install and input-value audit
@@ -82,17 +114,20 @@ ok   an exited school's reason names its expiration and the grace rule, or DOMO'
 ok   the headline sensitivity without the undated schools is on the methods page
 ok   size bands are the NCES categories in the payload's order
 ok   the poverty share rides on most rows for the look-alike caliper  [100%]
+ok   every offered measure is carried by at least one school-year
+ok   a measure no school-year carries is named on the methods page as not offered  [Percent in the lowest level]
 ok   the composite flag keeps science, social studies and writing out of the no-filter view
 ok   the grade table lists tested grades in order and every school in it has a name
 ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [1130 schools]
 ok   the grade table carries no school-year the rules dropped
+ok   no level measure is offered when the level structure is unconfirmed  [the levels add up on too few rows to stand as measures]
 ok   school names and start dates are in the payload for the pack
 ok   MRA by-school rows exist for the pack
 ok   the MRA respondent map names a group or a blend for every measure
 ok   look-alike settings are in the payload with their rationale
-ok   a Leader in Me school's pre-start years count in the comparison group  [402 rows]
+ok   a Leader in Me school's pre-start years count in the comparison group  [420 rows]
 ok   Lighthouse schools are inside the Leader in Me family
-ok   combined-grade schools appear in both bands  [516 schools]
+ok   combined-grade schools appear in both bands  [518 schools]
 ok   the school count never exceeds the band-slice count  [1859 schools vs 2073 band slices]
 ok   pairs are built inside bands
 ok   the by-band pair counts sum to the total
@@ -113,50 +148,73 @@ ok   movers are built on ten or more schools each
 Tier 2 — behaviour in a real browser
 --------------------------------------------------------------------------
 ok   the page loads and the headline renders
-ok   load time is workable  [0.9s]
+ok   load time is workable  [1.5s]
 ok   no console errors on load
 ok   chart c1 draws an svg or explains why
 ok   chart c2 draws an svg or explains why
 ok   the MRA card shows exactly when a trend line can be drawn
-ok   the Georgia discipline card stays hidden
-ok   the incidents card stays hidden (no state incident file)
-ok   the state extras card stays hidden (no state files)
+ok   the discipline card shows exactly when the payload carries a discipline trend  [payload has no discipline_ga]
+ok   the incidents card shows exactly when the payload carries an incident trend  [payload has no incidents]
+ok   the state extras card shows exactly when the payload carries state measures  [5 state measures]
+ok   every state measure on the card draws a Leader in Me and a comparison line
 ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
 ok   the headline p recomputes offline  [page 0.6320 scipy 0.6320 · window 2022-2025 · LiM n=21 mean +1.46 · comparison n=1838 mean +0.70]
 ok   the headline counts schools, not band slices  [page 1859 vs offline 1859 on 2022-2025]
 ok   the page's Leader in Me count is the builder's  [21 vs 21]
 ok   the district filter re-renders the headline  [Not enough schools match these filters to compare anything yet. Remove a filter on the lef]
+ok   the school type filter is offered with the payload's kinds  [Title I schools, Not Title I, Charter schools, Magnet schools, Alternative schools, Kern Family Foundation schools]
+ok   choosing 'Title I schools' narrows the view and names it  [978 of 2145 schools; In Washington Title I schools, between 2021-22 and 2024-25, Leader in Me schools]
+ok   every school in the 'Title I schools' view carries that attribute
+ok   'Kern Family Foundation schools' narrows the Leader in Me side only and keeps the comparison side whole  [Not enough schools match these filters to compare anything yet. Remove a filter on the left and it w]
+ok   Title I status is known for most schools on the page  [98.3%]
 ok   the Primary band filter re-renders without error
 ok   the Secondary band filter re-renders without error
 ok   measure 'percent_proficient' either draws or says why
-ok   measure 'percent_below' either draws or says why
 ok   measure 'standard_score' either draws or says why
 ok   measure 'chronic_absent' either draws or says why
 ok   measure 'grad_rate' either draws or says why
+ok   measure 'median_sgp' either draws or says why
 ok   the matched toggle re-renders the headline  [In Washington schools (matched to similar schools only), between 2021-22 and 2024-25, Lead]
 ok   the matched view shrinks or equals the Leader in Me count  [18 matched]
 ok   no console errors after the filter sweep
 ok   the insights tab hides the explore view
-ok   Concrete School District generates cards or says there is nothing to report  [2 cards]
+ok   Concrete School District generates cards or says there is nothing to report  [3 cards]
 ok   the insights tab uses the same unit and window as the explore tab  [{'p': 0.6320180179643036, 'n1': 21, 'n2': 1838}]
 ok   no console errors on the insights tab
+ok   the MRA tab is offered exactly when the payload carries surveys
+ok   the MRA tab shows its own view and sidebar and hides the explore ones
+ok   the MRA summary renders a sentence  [Across 10 Washington Leader in Me schools surveyed in 2024-25, Leadership averaged 74.0 on the MRA s]
+ok   MRA chart c6 draws an svg or explains why
+ok   MRA chart c7 draws an svg or explains why
+ok   MRA chart c10 draws an svg or explains why
+ok   the measure picker offers every MRA measure with data  [37 options, 37 measures with data, 37 in the catalogue]
+ok   the MRA paired test recomputes offline  [page 0.0115 scipy 0.0115 on 9 schools]
+ok   the MRA latest-year school count recomputes offline  [page 10 vs offline 10]
+ok   the MRA same-schools count is every school surveyed more than once  [page 9 vs offline 9]
+ok   choosing the submeasure 'Personal Effectiveness' re-renders the MRA summary  [Across 7 Washington Leader in Me schools surveyed in 2024-25, Personal Effectiveness avera]
+ok   the MRA district filter narrows to Concrete School District's surveyed schools  [2 of 12 schools]
+ok   the MRA school type filter keeps only schools with that trait  [title1_yes]
+ok   the same-schools switch keeps only schools surveyed at both ends
+ok   no console errors on the MRA tab
+ok   the MRA view downloads one row per school, year and measure  [862 rows]
+ok   leaving the MRA tab restores the explore view
 ok   export c1.pptx downloads, opens and carries the chart image  [161,067 bytes]
 ok   the pptx export is named for the state and chart  [WA_Percent_meeting_the_standard_year_by_year_Washington_schools.pptx]
-ok   export c1.docx downloads, opens and carries the chart image  [158,796 bytes]
+ok   export c1.docx downloads, opens and carries the chart image  [161,055 bytes]
 ok   the docx export is named for the state and chart  [WA_Percent_meeting_the_standard_year_by_year_Washington_schools.docx]
-ok   the research pack downloads with its sections  [5,907 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'roster']]
+ok   the research pack downloads with its sections  [6,374 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'report_card_school']]
 skip pack count against the page  [no district with three Leader in Me and three comparison schools in the end year]
 ok   look-alike mode rewrites the headline around the anchor district, or says nothing matched  [In Washington schools like Seattle School District No. 1’s, between 2021-22 and 2024-25, Leader in Me schools rose 2.4% ]
-ok   the look-alike box reports both counts or says why not  [Schools like Seattle School District No. 1’s: 12 Leader in Me schools and 460 comparison schools look like Seattle School District No. 1’s 101 schools with resu]
+ok   the look-alike box reports both counts or says why not  [Schools like Seattle School District No. 1’s: 11 Leader in Me schools and 386 comparison schools look like Seattle School District No. 1’s 101 schools with resu]
 ok   the matched switch is disabled while an anchor is set
 ok   no console errors in look-alike mode
-ok   the look-alike headline p recomputes offline  [p=0.3389]
+ok   the look-alike headline p recomputes offline  [p=0.3179]
 ok   the anchor's own schools are never inside the look-alike groups
-ok   the school list downloads with one row per school  [113 rows, 1 same-name pairs]
+ok   the school list downloads with one row per school  [112 rows, 1 same-name pairs]
 ok   the school list carries traits and change columns
 ok   the grade filter lists the tested grades
 ok   choosing a grade re-renders the headline and names the grade  [In Washington grade 4 results, between 2021-22 and 2024-25, Leader in Me schools fell 0.0% on Percen]
-ok   whole-school measures switch off while a grade is chosen
+ok   whole-school measures switch off while a grade is chosen  [4 whole-school measures in the payload]
 ok   dark mode re-renders without errors
 ok   no horizontal overflow at 900px  [0px]
 ok   no horizontal overflow at 700px  [0px]
@@ -188,5 +246,65 @@ ok   a statewide jump is flagged on the methods page
   HEADLINE (statewide, 2022-2025, no filters): Leader in Me +1.46 pts (n=21) vs comparison +0.70 pts (n=1838), p=0.6320 -> not significant
 
 ==========================================================================
-135 of 135 checks pass · 1 skipped
+161 of 161 checks pass · 1 skipped
 ==========================================================================
+
+$ python3 /home/claude/sdf/Build/states/wa_core_verify.py --work /home/claude/sdf/Build/work/WA
+
+Washington's own measures
+--------------------------------------------------------------------------
+ok   the crosswalk reaches nearly every Leader in Me school  [44 of 44]
+ok   the crosswalk reaches nearly every school on the page  [2,153 of 2,158]
+ok   the state files' own names agree with DOMO's on nearly every crosswalked school  [2,143 of 2,153]
+ok   the name-within-district join lands on the same state id wherever it lands on one, and never elsewhere for a Leader in Me school  [agree 2,045, disagree 1, ambiguous 58]
+ok   the independent value check holds (the framework's graduation rate and ELA proficiency track DOMO's)  [graduation r=0.939 on 2,289; reading r=0.923 on 12,912]
+ok   the Leader in Me schools the crosswalk cannot reach are named on the methods page  [0 unreached]
+ok   the crosswalk reach is on the methods page
+ok   DOMO carried no chronic absence for Washington, so the state's fill overwrote nothing  [0 DOMO values]
+ok   chronic absence is offered on the page from the state's own attendance  [55,049 rows carry it]
+ok   the payload records the chronic-absence fill and nothing else was filled  [filled: {'chronic_absent': 55049}]
+ok   chronic absence sits on no closure year  [years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   the rows carry 100 minus the state's own regular attendance, rebuilt from its counts (five schools reconciled, 2025)  [5 of 5 agree]
+ok   the chronic-absence fill landed on every school-year that has a row  [16,344 of 16,344 (860 had no row to land on)]
+ok   regular attendance means the same thing every year (the same schools' rates move together outside the closures)  [r from 0.787 to 0.919]
+ok   where the state prints the share itself, the rebuilt rate matches it to a tenth of a point  [6063 of 6063 rows]
+ok   the growth median sits on the rows in the growth file's years only, closures out  [43,702 rows, years [2015, 2016, 2017, 2018, 2019, 2023, 2024, 2025]]
+ok   the growth median is offered as a measure with plain words
+ok   the rows carry the mean of the state's own ELA and math medians (five schools reconciled, 2025)  [5 of 5 agree]
+ok   the growth median is carried on both bands of a combined school
+ok   the growth file that prints counts in its percent columns is named and its shares are rebuilt from the counts  [files: ['2025']]
+ok   the card carries the five Washington measures  [reg_attend, sgp_ela, sgp_math, excl_3plus, wsif_score]
+ok   Regular attendance (missing fewer than 10% of days): Leader in Me points on three or more counted schools, recomputed, closures out  [years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025], n [6, 8, 12, 16, 16, 25, 20, 22, 22]]
+ok   Student growth percentile, English language arts (median): Leader in Me points on three or more counted schools, recomputed, closures out  [years [2015, 2016, 2017, 2018, 2019, 2023, 2024, 2025], n [3, 8, 12, 16, 16, 21, 23, 23]]
+ok   Student growth percentile, mathematics (median): Leader in Me points on three or more counted schools, recomputed, closures out  [years [2015, 2016, 2017, 2018, 2019, 2023, 2024, 2025], n [4, 8, 12, 16, 16, 21, 23, 22]]
+ok   Schools suspending or expelling 3% or more of students: Leader in Me points on three or more counted schools, recomputed, closures out  [years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025], n [6, 8, 12, 16, 16, 25, 21, 23, 22]]
+ok   School Improvement Framework score (1 to 10): Leader in Me points on three or more counted schools, recomputed, closures out  [years [2017, 2018, 2019, 2022, 2023, 2024, 2025], n [12, 16, 16, 25, 21, 23, 23]]
+ok   the card's growth chips carry no year the growth file lacks
+ok   the framework score sits on the runs' data years only  [runs [2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   the discipline flag and rate reconcile to the state's file (five published and five masked schools, 2025)
+ok   the masked discipline rate never becomes a number: no ceiling-only school carries a rate in the pack
+ok   the exclusionary discipline rate stays off the rows and the card
+ok   a ceiling above the bar leaves the flag unknown
+ok   the look-alike behavior sentence reads the discipline flag
+ok   the framework score and tier reconcile to the framework file (five schools, the 2025 run)  [5 of 5]
+ok   the framework's pooled rates fill nothing at the top of the page
+ok   the framework's year mapping is explained on the methods page
+ok   DOMO's graduation rate still stands on its own years  [{2016: 783, 2017: 777, 2018: 839, 2019: 1117, 2022: 1231, 2023: 1151, 2024: 1151, 2025: 1221}]
+ok   the research pack's per-school Washington values are keyed to schools on the page  [25,917 records]
+ok   every pack key carries a plain-English label
+ok   no label leaves a state acronym unexplained
+ok   the class of 2025 first-year enrollment (first fall only) is excluded by name
+ok   the pooled three-class ERDC rows sit under their own names
+ok   the pack carries the high-school families for schools on the page
+ok   the pack carries the framework for most schools in a run year
+ok   the pack's published section carries the state's own rows, the latest regular attendance rebuilt from the state row  [9 state rows; 2025: 72.86]
+ok   the published rows carry no closure year
+ok   the school list carries each school's state code  [2,137 schools]
+ok   the closure years are counted among the exclusions
+ok   the masked discipline school-years are counted among the exclusions
+ok   the methods page says DOMO carries no chronic absence for Washington and the state's fills it
+ok   the methods page says the discipline rate stays off the rows
+ok   the methods limits own the Washington measures
+ok   the sources name every family
+
+ALL WASHINGTON CHECKS PASS

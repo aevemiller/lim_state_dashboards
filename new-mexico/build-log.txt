@@ -1,5 +1,5 @@
 
-$ python3 /home/claude/national/Build/build_payload_core.py --state NM --core /home/claude/national/corefolder --out /home/claude/national/Build/work/NM
+$ python3 /home/claude/sdf/Build/build_payload_core.py --state NM --core /home/claude/sdf/Core --out /home/claude/sdf/Build/work/NM --data /home/claude/sdf/Build/work/NM/data
 reading the core for New Mexico ...
 [core] subjects: 52,695 school rows kept; dropped 16,294 rows with no school id and 2,085 with an id but no school record
 [core] Leader in Me roster: 201 rows
@@ -14,25 +14,29 @@ applying the cleaning rules ...
   24,539 school-year-band-subject rows · years [2014, 2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
   Leader in Me school-years counted: 41 of 230 reviewed
   no start date: 0 schools · dated exits: 10 (school-years after an exit with rows: 13) · aggregate 'All grades' rows used 1733, skipped 560
+  achievement levels as measures: no (no combination of the reported levels reproduces the proficiency rate; 0.0% of rows in years and subjects whose levels add up; not offered because no combination of the reported levels reproduces PercentMetStandard on more than 39% of rows (a five-level state whose export carries four columns, usually))
   proficiency = levels 3 and 4 on 11.5% of rows
   statewide jump: ELA 2014->2015: 47.4 -> 24.5 (-22.9)
   statewide jump: ELA 2016->2017: 27.4 -> 38.1 (+10.7)
   statewide jump: Math 2014->2015: 39.4 -> 18.7 (-20.7)
+  school type from NCES: Title I on 854 schools (681 yes), charter 121, magnet 36, alternative 29; Title I published 2017-2022, carried forward after
+  funders: 7 New Mexico schools carry a funding source (7 on the page; Kern 0, 0 on the page); latest non-blank year per school
 building matched pairs, inside each band ...
   pairs 4  by band {'Primary': {'pairs': 4, 'unmatched': 0}, 'Secondary': {'pairs': 0, 'unmatched': 0}}
   MRA: 27 surveys · 16 schools · 81 sentinel values · 1 shells
   headline 2021-22 to 2024-25: {'y0': 2022, 'y1': 2025, 'lim_n': 9, 'comp_n': 571, 'lim_change': 7.53, 'comp_change': 6.16, 'p': 0.435} · without the 0 undated schools {'y0': 2022, 'y1': 2025, 'lim_n': 9, 'comp_n': 571, 'lim_change': 7.53, 'comp_change': 6.16, 'p': 0.435}
   roster: 5 counted, 15 exited, 3 not counted yet, 0 not counted
+measures not offered (no school-year carries a value): chronic_absent
 
-wrote nm_payload.json  (9.4 MB, 24,539 rows) · page kind descriptive (9 Leader in Me schools on the headline)
-build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+wrote nm_payload.json  (10.5 MB, 24,539 rows) · page kind descriptive (9 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'fb6eaf7cb415'}
 
 $ python3 build2.py nm_payload.json NM_Dashboard.html NM_Methods.html
-payload 9.4 MB -> 0.49 MB gzip
-NM_Dashboard.html: 877 KB
-NM_Methods.html: 28 KB
+payload 10.5 MB -> 0.50 MB gzip
+NM_Dashboard.html: 942 KB
+NM_Methods.html: 35 KB
 
-$ python3 /home/claude/national/Build/verify_core.py --state NM --work /home/claude/national/Build/work/NM
+$ python3 /home/claude/sdf/Build/verify_core.py --state NM --work /home/claude/sdf/Build/work/NM
 
 --------------------------------------------------------------------------
 Tier 0 — install and input-value audit
@@ -84,10 +88,13 @@ ok   an exited school's reason names its expiration and the grace rule, or DOMO'
 ok   the headline sensitivity without the undated schools is on the methods page
 ok   size bands are the NCES categories in the payload's order
 ok   the poverty share rides on most rows for the look-alike caliper  [99%]
+ok   every offered measure is carried by at least one school-year
+ok   a measure no school-year carries is named on the methods page as not offered  [Chronic absence]
 ok   the composite flag keeps science, social studies and writing out of the no-filter view
 ok   the grade table lists tested grades in order and every school in it has a name
 ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [323 schools]
 ok   the grade table carries no school-year the rules dropped
+ok   no level measure is offered when the level structure is unconfirmed  [no combination of the reported levels reproduces PercentMetStandard on more than 39% of rows (a five-level state whose export carries four columns, usually)]
 ok   school names and start dates are in the payload for the pack
 ok   MRA by-school rows exist for the pack
 ok   the MRA respondent map names a group or a blend for every measure
@@ -100,7 +107,7 @@ ok   pairs are built inside bands
 ok   the by-band pair counts sum to the total
 ok   no comparison school is used twice
 ok   no Leader in Me school is paired twice inside a band
-ok   the signed baseline gap recomputes to the payload's  [offline +0.100 vs payload +0.120 on 4 pairs]
+skip signed baseline gap recompute  [only 4 pairs; rounding alone can move the mean]
 skip mean signed gap under one point  [only 4 pairs; the gap is +0.10]
 ok   the widest single baseline gap is inside the caliper's reach  [0.4 points]
 ok   the printed signed gap is not a negative zero  [0.12]
@@ -115,25 +122,28 @@ ok   movers are built on ten or more schools each
 Tier 2 — behaviour in a real browser
 --------------------------------------------------------------------------
 ok   the page loads and the headline renders
-ok   load time is workable  [0.4s]
+ok   load time is workable  [0.5s]
 ok   no console errors on load
 ok   chart c1 draws an svg or explains why
 ok   chart c2 draws an svg or explains why
 ok   the MRA card shows exactly when a trend line can be drawn
-ok   the Georgia discipline card stays hidden
-ok   the incidents card stays hidden (no state incident file)
-ok   the state extras card stays hidden (no state files)
+ok   the discipline card shows exactly when the payload carries a discipline trend  [payload has no discipline_ga]
+ok   the incidents card shows exactly when the payload carries an incident trend  [payload has no incidents]
+ok   the state extras card shows exactly when the payload carries state measures  [no state files]
 ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
 ok   the headline p recomputes offline  [page 0.4341 scipy 0.4341 · window 2022-2025 · LiM n=9 mean +7.53 · comparison n=571 mean +6.16]
 ok   the headline counts schools, not band slices  [page 580 vs offline 580 on 2022-2025]
 ok   the page's Leader in Me count is the builder's  [9 vs 9]
 ok   the district filter re-renders the headline  [In Las Cruces schools, between 2023-24 and 2024-25, Leader in Me schools rose 5.9% on Perc]
+ok   the school type filter is offered with the payload's kinds  [Title I schools, Not Title I, Charter schools, Magnet schools, Alternative schools]
+ok   choosing 'Title I schools' narrows the view and names it  [628 of 886 schools; In New Mexico Title I schools, between 2021-22 and 2024-25, Leader in Me schools]
+ok   every school in the 'Title I schools' view carries that attribute
+ok   Title I status is known for most schools on the page  [96.4%]
 ok   the Primary band filter re-renders without error
 ok   the Secondary band filter re-renders without error
 ok   measure 'percent_proficient' either draws or says why
 ok   measure 'percent_below' either draws or says why
 ok   measure 'standard_score' either draws or says why
-ok   measure 'chronic_absent' either draws or says why
 ok   measure 'grad_rate' either draws or says why
 ok   the matched toggle re-renders the headline  [Not enough schools match these filters to compare anything yet. Remove a filter on the lef]
 ok   the matched view shrinks or equals the Leader in Me count  [0 matched]
@@ -142,16 +152,33 @@ ok   the insights tab hides the explore view
 ok   Las Cruces generates cards or says there is nothing to report  [1 cards]
 ok   the insights tab uses the same unit and window as the explore tab  [{'p': 0.4340503874400965, 'n1': 9, 'n2': 571}]
 ok   no console errors on the insights tab
+ok   the MRA tab is offered exactly when the payload carries surveys
+ok   the MRA tab shows its own view and sidebar and hides the explore ones
+ok   the MRA summary renders a sentence  [Across 3 New Mexico Leader in Me schools surveyed in 2024-25, Leadership averaged 75.7 on the MRA sc]
+ok   MRA chart c6 draws an svg or explains why
+ok   MRA chart c7 draws an svg or explains why
+ok   MRA chart c10 draws an svg or explains why
+ok   the measure picker offers every MRA measure with data  [34 options, 34 measures with data, 37 in the catalogue]
+ok   the MRA paired test recomputes offline  [page 0.3515 scipy 0.3515 on 7 schools]
+ok   the MRA latest-year school count recomputes offline  [page 3 vs offline 3]
+ok   the MRA same-schools count is every school surveyed more than once  [page 7 vs offline 7]
+ok   choosing the submeasure 'Personal Effectiveness' re-renders the MRA summary  [Across 5 New Mexico Leader in Me schools surveyed in 2023-24, Personal Effectiveness avera]
+ok   the MRA district filter narrows to Las Cruces's surveyed schools  [15 of 16 schools]
+ok   the MRA school type filter keeps only schools with that trait  [title1_yes]
+ok   the same-schools switch keeps only schools surveyed at both ends
+ok   no console errors on the MRA tab
+ok   the MRA view downloads one row per school, year and measure  [738 rows]
+ok   leaving the MRA tab restores the explore view
 ok   export c1.pptx downloads, opens and carries the chart image  [137,671 bytes]
 ok   the pptx export is named for the state and chart  [NM_Percent_meeting_the_standard_year_by_year_New_Mexico_schools.pptx]
 ok   export c1.docx downloads, opens and carries the chart image  [135,353 bytes]
 ok   the docx export is named for the state and chart  [NM_Percent_meeting_the_standard_year_by_year_New_Mexico_schools.docx]
-ok   the research pack downloads with its sections  [8,003 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'roster']]
+ok   the research pack downloads with its sections  [8,120 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'roster']]
 ok   the pack's Leader in Me count for the district is the page's  [9 vs 9]
 skip look-alike mode  [no prospect district with three or more schools, or not a full page]
 ok   the grade filter lists the tested grades
 ok   choosing a grade re-renders the headline and names the grade  [In New Mexico grade 4 results, between 2021-22 and 2024-25, Leader in Me schools rose 15.1% on Perce]
-ok   whole-school measures switch off while a grade is chosen
+ok   whole-school measures switch off while a grade is chosen  [2 whole-school measures in the payload]
 ok   dark mode re-renders without errors
 ok   no horizontal overflow at 900px  [0px]
 ok   no horizontal overflow at 700px  [0px]
@@ -184,5 +211,5 @@ ok   a descriptive page says so on the methods page
   HEADLINE (statewide, 2022-2025, no filters): Leader in Me +7.53 pts (n=9) vs comparison +6.16 pts (n=571), p=0.4341 -> not significant
 
 ==========================================================================
-128 of 128 checks pass · 2 skipped
+150 of 150 checks pass · 3 skipped
 ==========================================================================

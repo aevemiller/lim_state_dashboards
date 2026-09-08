@@ -1,5 +1,5 @@
 
-$ python3 /home/claude/national/Build/build_payload_core.py --state WY --core /home/claude/national/corefolder --out /home/claude/national/Build/work/WY
+$ python3 /home/claude/sdf/Build/build_payload_core.py --state WY --core /home/claude/sdf/Core --out /home/claude/sdf/Build/work/WY --data /home/claude/sdf/Build/work/WY/data
 reading the core for Wyoming ...
 [core] subjects: 17,732 school rows kept; dropped 8,255 rows with no school id and 499 with an id but no school record
 [core] Leader in Me roster: 148 rows
@@ -13,22 +13,26 @@ applying the cleaning rules ...
   8,268 school-year-band-subject rows · years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
   Leader in Me school-years counted: 45 of 135 reviewed
   no start date: 0 schools · dated exits: 0 (school-years after an exit with rows: 0) · aggregate 'All grades' rows used 0, skipped 0
-  proficiency = levels 3 and 4 on 3.5% of rows
+  achievement levels as measures: yes (four levels, numbered from the top; proficiency is the top 2; 100.0% of rows in years and subjects whose levels add up)
+  proficiency = levels 3 and 4 on 100.0% of rows
+  school type from NCES: Title I on 308 schools (140 yes), charter 6, magnet 0, alternative 5; Title I published 2017-2022, carried forward after
+  funders: 1 Wyoming schools carry a funding source (1 on the page; Kern 1, 1 on the page); latest non-blank year per school
 building matched pairs, inside each band ...
   pairs 4  by band {'Primary': {'pairs': 4, 'unmatched': 0}, 'Secondary': {'pairs': 0, 'unmatched': 0}}
   MRA: 24 surveys · 13 schools · 70 sentinel values · 1 shells
   headline 2021-22 to 2024-25: {'y0': 2022, 'y1': 2025, 'lim_n': 14, 'comp_n': 250, 'lim_change': 3.12, 'comp_change': 2.38, 'p': 0.772} · without the 1 undated schools {'y0': 2022, 'y1': 2025, 'lim_n': 13, 'comp_n': 250, 'lim_change': 2.78, 'comp_change': 2.38, 'p': 0.885}
   roster: 12 counted, 2 exited, 1 not counted yet, 0 not counted
+measures not offered (no school-year carries a value): chronic_absent
 
-wrote wy_payload.json  (3.3 MB, 8,268 rows) · page kind descriptive (14 Leader in Me schools on the headline)
-build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+wrote wy_payload.json  (4.4 MB, 8,268 rows) · page kind descriptive (14 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'fb6eaf7cb415'}
 
 $ python3 build2.py wy_payload.json WY_Dashboard.html WY_Methods.html
-payload 3.3 MB -> 0.21 MB gzip
-WY_Dashboard.html: 511 KB
-WY_Methods.html: 27 KB
+payload 4.4 MB -> 0.36 MB gzip
+WY_Dashboard.html: 758 KB
+WY_Methods.html: 35 KB
 
-$ python3 /home/claude/national/Build/verify_core.py --state WY --work /home/claude/national/Build/work/WY
+$ python3 /home/claude/sdf/Build/verify_core.py --state WY --work /home/claude/sdf/Build/work/WY
 
 --------------------------------------------------------------------------
 Tier 0 — install and input-value audit
@@ -80,10 +84,19 @@ ok   an exited school's reason names its expiration and the grace rule, or DOMO'
 ok   the headline sensitivity without the undated schools is on the methods page
 ok   size bands are the NCES categories in the payload's order
 ok   the poverty share rides on most rows for the look-alike caliper  [100%]
+ok   every offered measure is carried by at least one school-year
+ok   a measure no school-year carries is named on the methods page as not offered  [Chronic absence]
 ok   the composite flag keeps science, social studies and writing out of the no-filter view
 ok   the grade table lists tested grades in order and every school in it has a name
 ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [143 schools]
 ok   the grade table carries no school-year the rules dropped
+ok   the 4 achievement levels are measures of their own  [percent_below, percent_level2, percent_level3, percent_level4]
+ok   the level shares sum to 100 on the grade rows that carry them  [13,422 grade rows, 100.0% within 1.5 points]
+ok   the levels from the proficiency cut up add up to the proficiency rate  [cut at canonical level 3 of 4; 100.0% of grade rows within 1.5]
+ok   the grade table carries the level columns
+ok   the level labels carry the state's own numbering  [Level 4: below the standard; Level 3: approaching the standard; Level 2: meeting the standard; Level 1: exceeding the standard]
+ok   the levels at or above the standard count up, the levels below count down
+ok   the proficiency label names the levels it adds
 ok   school names and start dates are in the payload for the pack
 ok   MRA by-school rows exist for the pack
 ok   the MRA respondent map names a group or a blend for every measure
@@ -96,7 +109,7 @@ ok   pairs are built inside bands
 ok   the by-band pair counts sum to the total
 ok   no comparison school is used twice
 ok   no Leader in Me school is paired twice inside a band
-ok   the signed baseline gap recomputes to the payload's  [offline +0.650 vs payload +0.630 on 4 pairs]
+skip signed baseline gap recompute  [only 4 pairs; rounding alone can move the mean]
 skip mean signed gap under one point  [only 4 pairs; the gap is +0.65]
 ok   the widest single baseline gap is inside the caliper's reach  [1.5 points]
 ok   the printed signed gap is not a negative zero  [0.63]
@@ -111,25 +124,31 @@ ok   movers are built on ten or more schools each
 Tier 2 — behaviour in a real browser
 --------------------------------------------------------------------------
 ok   the page loads and the headline renders
-ok   load time is workable  [0.3s]
+ok   load time is workable  [0.5s]
 ok   no console errors on load
 ok   chart c1 draws an svg or explains why
 ok   chart c2 draws an svg or explains why
 ok   the MRA card shows exactly when a trend line can be drawn
-ok   the Georgia discipline card stays hidden
-ok   the incidents card stays hidden (no state incident file)
-ok   the state extras card stays hidden (no state files)
+ok   the discipline card shows exactly when the payload carries a discipline trend  [payload has no discipline_ga]
+ok   the incidents card shows exactly when the payload carries an incident trend  [payload has no incidents]
+ok   the state extras card shows exactly when the payload carries state measures  [no state files]
 ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
 ok   the headline p recomputes offline  [page 0.7732 scipy 0.7732 · window 2022-2025 · LiM n=14 mean +3.12 · comparison n=250 mean +2.38]
 ok   the headline counts schools, not band slices  [page 264 vs offline 264 on 2022-2025]
 ok   the page's Leader in Me count is the builder's  [14 vs 14]
 ok   the district filter re-renders the headline  [Not enough schools match these filters to compare anything yet. Remove a filter on the lef]
+ok   the school type filter is offered with the payload's kinds  [Title I schools, Not Title I, Charter schools, Alternative schools]
+ok   choosing 'Title I schools' narrows the view and names it  [130 of 315 schools; In Wyoming Title I schools, between 2021-22 and 2024-25, Leader in Me schools ro]
+ok   every school in the 'Title I schools' view carries that attribute
+ok   Title I status is known for most schools on the page  [97.8%]
 ok   the Primary band filter re-renders without error
 ok   the Secondary band filter re-renders without error
 ok   measure 'percent_proficient' either draws or says why
+ok   measure 'percent_level4' either draws or says why
+ok   measure 'percent_level3' either draws or says why
+ok   measure 'percent_level2' either draws or says why
 ok   measure 'percent_below' either draws or says why
 ok   measure 'standard_score' either draws or says why
-ok   measure 'chronic_absent' either draws or says why
 ok   measure 'grad_rate' either draws or says why
 ok   the matched toggle re-renders the headline  [In Wyoming schools (matched to similar schools only), between 2021-22 and 2024-25, Leader ]
 ok   the matched view shrinks or equals the Leader in Me count  [4 matched]
@@ -138,16 +157,34 @@ ok   the insights tab hides the explore view
 ok   Goshen County School District #1 generates cards or says there is nothing to report  [3 cards]
 ok   the insights tab uses the same unit and window as the explore tab  [{'p': 0.7732152262325442, 'n1': 14, 'n2': 250}]
 ok   no console errors on the insights tab
-ok   export c1.pptx downloads, opens and carries the chart image  [140,908 bytes]
-ok   the pptx export is named for the state and chart  [WY_Percent_meeting_the_standard_year_by_year_Wyoming_schools.pptx]
-ok   export c1.docx downloads, opens and carries the chart image  [138,583 bytes]
-ok   the docx export is named for the state and chart  [WY_Percent_meeting_the_standard_year_by_year_Wyoming_schools.docx]
-ok   the research pack downloads with its sections  [5,251 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'roster']]
+ok   the MRA tab is offered exactly when the payload carries surveys
+ok   the MRA tab shows its own view and sidebar and hides the explore ones
+ok   the MRA summary renders a sentence  [Across 8 Wyoming Leader in Me schools surveyed in 2024-25, Leadership averaged 73.9 on the MRA scale]
+ok   MRA chart c6 draws an svg or explains why
+ok   MRA chart c7 draws an svg or explains why
+ok   MRA chart c10 draws an svg or explains why
+ok   the measure picker offers every MRA measure with data  [37 options, 37 measures with data, 37 in the catalogue]
+ok   the MRA paired test recomputes offline  [page 0.9258 scipy 0.9258 on 7 schools]
+ok   the MRA latest-year school count recomputes offline  [page 8 vs offline 8]
+ok   the MRA same-schools count is every school surveyed more than once  [page 7 vs offline 7]
+ok   choosing the submeasure 'Personal Effectiveness' re-renders the MRA summary  [Across 7 Wyoming Leader in Me schools surveyed in 2024-25, Personal Effectiveness averaged]
+ok   the MRA district filter narrows to Goshen County School District #1's surveyed schools  [6 of 13 schools]
+ok   the MRA school type filter keeps only schools with that trait  [title1_yes]
+ok   the same-schools switch keeps only schools surveyed at both ends
+ok   no console errors on the MRA tab
+ok   the MRA view downloads one row per school, year and measure  [702 rows]
+ok   leaving the MRA tab restores the explore view
+ok   export c1.pptx downloads, opens and carries the chart image  [140,930 bytes]
+ok   the pptx export is named for the state and chart  [WY_Meeting_or_exceeding_the_standard_levels_1_and_2_year_by_year_Wyoming_schools.pptx]
+ok   export c1.docx downloads, opens and carries the chart image  [138,627 bytes]
+ok   the docx export is named for the state and chart  [WY_Meeting_or_exceeding_the_standard_levels_1_and_2_year_by_year_Wyoming_schools.docx]
+ok   the research pack downloads with its sections  [11,498 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'roster']]
 skip pack count against the page  [no district with three Leader in Me and three comparison schools in the end year]
 skip look-alike mode  [no prospect district with three or more schools, or not a full page]
 ok   the grade filter lists the tested grades
-ok   choosing a grade re-renders the headline and names the grade  [In Wyoming grade 4 results, between 2021-22 and 2024-25, Leader in Me schools rose 4.5% on Percent m]
-ok   whole-school measures switch off while a grade is chosen
+ok   choosing a grade re-renders the headline and names the grade  [In Wyoming grade 4 results, between 2021-22 and 2024-25, Leader in Me schools rose 4.5% on Meeting o]
+ok   the level measures stay on while a grade is chosen
+ok   whole-school measures switch off while a grade is chosen  [2 whole-school measures in the payload]
 ok   dark mode re-renders without errors
 ok   no horizontal overflow at 900px  [0px]
 ok   no horizontal overflow at 700px  [0px]
@@ -179,5 +216,5 @@ ok   a descriptive page says so on the methods page
   HEADLINE (statewide, 2022-2025, no filters): Leader in Me +3.12 pts (n=14) vs comparison +2.38 pts (n=250), p=0.7732 -> not significant
 
 ==========================================================================
-126 of 126 checks pass · 3 skipped
+158 of 158 checks pass · 4 skipped
 ==========================================================================

@@ -2,8 +2,8 @@
  "state": "NM",
  "name": "New Mexico",
  "folder": "new-mexico",
- "built": "2026-09-04",
- "seconds": 32,
+ "built": "2026-09-08",
+ "seconds": 61,
  "builder": "build_payload_core.py",
  "page_kind": "descriptive",
  "lim_headline_n": 9,
@@ -17,45 +17,46 @@
   "subjects": {
    "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
    "bytes": 146145669,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   },
   "roster": {
    "file": "LIM Schools (Current_Active) (11).csv",
    "bytes": 12784777,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   },
   "comparison": {
-   "file": "All Other Schools (Non-LiM & Exited).csv",
-   "bytes": 132812308,
-   "modified": "2026-09-03"
+   "file": "Archive.zip/All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-04"
   },
   "mra": {
    "file": "All MRA Surveys.csv",
    "bytes": 2466245,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   }
  },
  "state_pull": {
   "subjects": {
-   "path": "/home/claude/national/Build/work/NM/data/Subjects_Tests_FINAL (8).csv",
+   "path": "/home/claude/sdf/Build/work/NM/data/Subjects_Tests_FINAL (8).csv",
    "rows": 52695
   },
   "roster": {
-   "path": "/home/claude/national/Build/work/NM/data/LIM Schools (Current_Active) (11).csv",
+   "path": "/home/claude/sdf/Build/work/NM/data/LIM Schools (Current_Active) (11).csv",
    "rows": 201
   },
   "comparison": {
-   "path": "/home/claude/national/Build/work/NM/data/All Other Schools (Non-LiM & Exited).csv",
+   "path": "/home/claude/sdf/Build/work/NM/data/All Other Schools (Non-LiM & Exited).csv",
    "rows": 6916
   },
   "mra": {
-   "path": "/home/claude/national/Build/work/NM/data/All MRA Surveys.csv",
+   "path": "/home/claude/sdf/Build/work/NM/data/All MRA Surveys.csv",
    "rows": 28
   }
  },
  "state_files": [],
+ "extras_module": null,
  "verified": true,
- "dashboard_bytes": 898461,
+ "dashboard_bytes": 964213,
  "audits": {
   "levels": {
    "rows": 52695,
@@ -64,7 +65,25 @@
    "level 4 alone": 6.9,
    "100 minus level 1": 0.3,
    "best": "levels 3 and 4",
-   "levels_sum_to_100_share": 18.6
+   "levels_sum_to_100_share": 18.6,
+   "structure": "no combination of the reported levels reproduces the proficiency rate",
+   "n_levels": null,
+   "proficient_from": null,
+   "reversed_numbering": null,
+   "coverage": 0.0,
+   "years_ok": null,
+   "years_out": null,
+   "cells_out": null,
+   "latest_year_ok": null,
+   "reason": "no combination of the reported levels reproduces PercentMetStandard on more than 39% of rows (a five-level state whose export carries four columns, usually)",
+   "combination_shares": {
+    "levels 3 and 4": 39.1,
+    "levels 2, 3 and 4": 2.1,
+    "levels 1 and 2 (1 the top)": 2.9,
+    "levels 1, 2 and 3 (1 the top)": 1.7
+   },
+   "cells": [],
+   "levels_as_measures": false
   },
   "poverty": {
    "lim": {

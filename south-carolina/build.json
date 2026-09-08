@@ -1,0 +1,775 @@
+{
+ "state": "SC",
+ "name": "South Carolina",
+ "folder": "south-carolina",
+ "built": "2026-09-08",
+ "seconds": 175,
+ "builder": "build_payload_core.py",
+ "page_kind": "full",
+ "lim_headline_n": 116,
+ "schools": 1267,
+ "years": [
+  2015,
+  2025
+ ],
+ "lim_roster_schools": 215,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-04"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-04"
+  },
+  "comparison": {
+   "file": "Archive.zip/All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-04"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-04"
+  }
+ },
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/sdf/Build/work/SC/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 97269
+  },
+  "roster": {
+   "path": "/home/claude/sdf/Build/work/SC/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 1993
+  },
+  "comparison": {
+   "path": "/home/claude/sdf/Build/work/SC/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 8844
+  },
+  "mra": {
+   "path": "/home/claude/sdf/Build/work/SC/data/All MRA Surveys.csv",
+   "rows": 283
+  }
+ },
+ "state_files": [
+  "ACCESS 2021.xlsx",
+  "ACCESS 2022.xlsx",
+  "ACCESS 2023.xlsx",
+  "ACCESS 2024.xlsx",
+  "ACCESS 2025.xlsx",
+  "ACCESS 2026.xlsx",
+  "Report Card Data_SC/",
+  "ReportCardData_forResearchers2023_3 (1).XLSx",
+  "SC Career Readiness Assessment 2023.xlsx",
+  "SC Career Readiness Assessment 2024.xlsx",
+  "SC Career Readiness Assessment 2025 (1).xlsx",
+  "SC Career Readiness Assessment 2026.xlsx"
+ ],
+ "extras_module": "sc_core_extras",
+ "verified": true,
+ "dashboard_bytes": 2941721,
+ "audits": {
+  "levels": {
+   "rows": 89762,
+   "levels 3 and 4": 58.2,
+   "levels 2, 3 and 4": 0.2,
+   "level 4 alone": 0.3,
+   "100 minus level 1": 1.9,
+   "best": "levels 3 and 4",
+   "levels_sum_to_100_share": 58.1,
+   "structure": "four levels, numbered from the bottom; proficiency is the top 2",
+   "n_levels": 4,
+   "proficient_from": 3,
+   "reversed_numbering": false,
+   "coverage": 59.3,
+   "years_ok": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "years_out": [],
+   "cells_out": [
+    "2014-15 ELA (end-of-course)",
+    "2014-15 Math (end-of-course)",
+    "2014-15 Science (end-of-course)",
+    "2014-15 Science",
+    "2014-15 Social Studies (end-of-course)",
+    "2014-15 Social Studies",
+    "2015-16 ELA (end-of-course)",
+    "2015-16 ELA",
+    "2015-16 Math (end-of-course)",
+    "2015-16 Science (end-of-course)",
+    "2015-16 Science",
+    "2015-16 Social Studies (end-of-course)",
+    "2015-16 Social Studies",
+    "2016-17 ELA (end-of-course)",
+    "2016-17 ELA",
+    "2016-17 Math (end-of-course)",
+    "2016-17 Science (end-of-course)",
+    "2016-17 Science",
+    "2016-17 Social Studies (end-of-course)",
+    "2016-17 Social Studies",
+    "2017-18 ELA (end-of-course)",
+    "2017-18 Math (end-of-course)",
+    "2017-18 Science (end-of-course)",
+    "2017-18 Science",
+    "2017-18 Social Studies (end-of-course)",
+    "2017-18 Social Studies",
+    "2018-19 ELA (end-of-course)",
+    "2018-19 Math (end-of-course)",
+    "2018-19 Science (end-of-course)",
+    "2018-19 Science",
+    "2018-19 Social Studies (end-of-course)",
+    "2018-19 Social Studies",
+    "2021-22 ELA (end-of-course)",
+    "2021-22 Math (end-of-course)",
+    "2021-22 Science (end-of-course)",
+    "2021-22 Science",
+    "2022-23 ELA (end-of-course)",
+    "2022-23 Math (end-of-course)",
+    "2022-23 Science (end-of-course)",
+    "2023-24 ELA (end-of-course)",
+    "2023-24 Math (end-of-course)",
+    "2023-24 Social Studies (end-of-course)",
+    "2024-25 ELA (end-of-course)",
+    "2024-25 Math (end-of-course)",
+    "2024-25 Social Studies (end-of-course)"
+   ],
+   "latest_year_ok": true,
+   "reason": null,
+   "combination_shares": {
+    "levels 3 and 4": 64.4,
+    "levels 2, 3 and 4": 24.8,
+    "levels 1 and 2 (1 the top)": 2.5,
+    "levels 1, 2 and 3 (1 the top)": 1.5
+   },
+   "cells": [
+    {
+     "year": 2015,
+     "subject": "ELA (end-of-course)",
+     "rows": 416,
+     "level_rows": 416,
+     "sum_to_100": 5.8,
+     "match": 0.5,
+     "ok": false
+    },
+    {
+     "year": 2015,
+     "subject": "ELA",
+     "rows": 5986,
+     "level_rows": 5986,
+     "sum_to_100": 100.0,
+     "match": 92.5,
+     "ok": true
+    },
+    {
+     "year": 2015,
+     "subject": "Math (end-of-course)",
+     "rows": 469,
+     "level_rows": 469,
+     "sum_to_100": 9.0,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2015,
+     "subject": "Math",
+     "rows": 2993,
+     "level_rows": 2993,
+     "sum_to_100": 100.0,
+     "match": 92.8,
+     "ok": true
+    },
+    {
+     "year": 2015,
+     "subject": "Science (end-of-course)",
+     "rows": 224,
+     "level_rows": 224,
+     "sum_to_100": 0.9,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2015,
+     "subject": "Science",
+     "rows": 2367,
+     "level_rows": 2367,
+     "sum_to_100": 100.0,
+     "match": 1.2,
+     "ok": false
+    },
+    {
+     "year": 2015,
+     "subject": "Social Studies (end-of-course)",
+     "rows": 223,
+     "level_rows": 223,
+     "sum_to_100": 15.2,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2015,
+     "subject": "Social Studies",
+     "rows": 2132,
+     "level_rows": 2132,
+     "sum_to_100": 100.0,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2015,
+     "subject": "Writing",
+     "rows": 2758,
+     "level_rows": 2758,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2016,
+     "subject": "ELA (end-of-course)",
+     "rows": 416,
+     "level_rows": 416,
+     "sum_to_100": 8.9,
+     "match": 0.2,
+     "ok": false
+    },
+    {
+     "year": 2016,
+     "subject": "ELA",
+     "rows": 3193,
+     "level_rows": 3193,
+     "sum_to_100": 100.0,
+     "match": 85.9,
+     "ok": false
+    },
+    {
+     "year": 2016,
+     "subject": "Math (end-of-course)",
+     "rows": 469,
+     "level_rows": 469,
+     "sum_to_100": 7.7,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2016,
+     "subject": "Math",
+     "rows": 2944,
+     "level_rows": 2944,
+     "sum_to_100": 100.0,
+     "match": 92.6,
+     "ok": true
+    },
+    {
+     "year": 2016,
+     "subject": "Science (end-of-course)",
+     "rows": 228,
+     "level_rows": 228,
+     "sum_to_100": 2.6,
+     "match": 0.4,
+     "ok": false
+    },
+    {
+     "year": 2016,
+     "subject": "Science",
+     "rows": 2357,
+     "level_rows": 2357,
+     "sum_to_100": 100.0,
+     "match": 0.8,
+     "ok": false
+    },
+    {
+     "year": 2016,
+     "subject": "Social Studies (end-of-course)",
+     "rows": 225,
+     "level_rows": 225,
+     "sum_to_100": 12.4,
+     "match": 0.4,
+     "ok": false
+    },
+    {
+     "year": 2016,
+     "subject": "Social Studies",
+     "rows": 2126,
+     "level_rows": 2126,
+     "sum_to_100": 100.0,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2017,
+     "subject": "ELA (end-of-course)",
+     "rows": 447,
+     "level_rows": 447,
+     "sum_to_100": 15.2,
+     "match": 0.4,
+     "ok": false
+    },
+    {
+     "year": 2017,
+     "subject": "ELA",
+     "rows": 3261,
+     "level_rows": 3261,
+     "sum_to_100": 100.0,
+     "match": 86.5,
+     "ok": false
+    },
+    {
+     "year": 2017,
+     "subject": "Math (end-of-course)",
+     "rows": 483,
+     "level_rows": 483,
+     "sum_to_100": 33.5,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2017,
+     "subject": "Math",
+     "rows": 3039,
+     "level_rows": 3039,
+     "sum_to_100": 100.0,
+     "match": 93.0,
+     "ok": true
+    },
+    {
+     "year": 2017,
+     "subject": "Science (end-of-course)",
+     "rows": 229,
+     "level_rows": 229,
+     "sum_to_100": 3.1,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2017,
+     "subject": "Science",
+     "rows": 2427,
+     "level_rows": 2427,
+     "sum_to_100": 100.0,
+     "match": 1.4,
+     "ok": false
+    },
+    {
+     "year": 2017,
+     "subject": "Social Studies (end-of-course)",
+     "rows": 223,
+     "level_rows": 223,
+     "sum_to_100": 8.1,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2017,
+     "subject": "Social Studies",
+     "rows": 2209,
+     "level_rows": 2209,
+     "sum_to_100": 100.0,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2018,
+     "subject": "ELA (end-of-course)",
+     "rows": 414,
+     "level_rows": 414,
+     "sum_to_100": 8.5,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2018,
+     "subject": "ELA",
+     "rows": 2711,
+     "level_rows": 2711,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2018,
+     "subject": "Math (end-of-course)",
+     "rows": 440,
+     "level_rows": 440,
+     "sum_to_100": 32.5,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2018,
+     "subject": "Math",
+     "rows": 2709,
+     "level_rows": 2709,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2018,
+     "subject": "Science (end-of-course)",
+     "rows": 220,
+     "level_rows": 220,
+     "sum_to_100": 8.6,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2018,
+     "subject": "Science",
+     "rows": 1217,
+     "level_rows": 1217,
+     "sum_to_100": 100.0,
+     "match": 0.1,
+     "ok": false
+    },
+    {
+     "year": 2018,
+     "subject": "Social Studies (end-of-course)",
+     "rows": 214,
+     "level_rows": 214,
+     "sum_to_100": 14.0,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2018,
+     "subject": "Social Studies",
+     "rows": 884,
+     "level_rows": 884,
+     "sum_to_100": 100.0,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2019,
+     "subject": "ELA (end-of-course)",
+     "rows": 428,
+     "level_rows": 428,
+     "sum_to_100": 6.8,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2019,
+     "subject": "ELA",
+     "rows": 2812,
+     "level_rows": 2812,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2019,
+     "subject": "Math (end-of-course)",
+     "rows": 455,
+     "level_rows": 455,
+     "sum_to_100": 28.4,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2019,
+     "subject": "Math",
+     "rows": 2810,
+     "level_rows": 2810,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2019,
+     "subject": "Science (end-of-course)",
+     "rows": 227,
+     "level_rows": 227,
+     "sum_to_100": 8.8,
+     "match": 0.4,
+     "ok": false
+    },
+    {
+     "year": 2019,
+     "subject": "Science",
+     "rows": 1267,
+     "level_rows": 1267,
+     "sum_to_100": 100.0,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2019,
+     "subject": "Social Studies (end-of-course)",
+     "rows": 223,
+     "level_rows": 223,
+     "sum_to_100": 10.8,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2019,
+     "subject": "Social Studies",
+     "rows": 920,
+     "level_rows": 920,
+     "sum_to_100": 100.0,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2022,
+     "subject": "ELA (end-of-course)",
+     "rows": 456,
+     "level_rows": 456,
+     "sum_to_100": 4.8,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2022,
+     "subject": "ELA",
+     "rows": 2759,
+     "level_rows": 2759,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2022,
+     "subject": "Math (end-of-course)",
+     "rows": 440,
+     "level_rows": 440,
+     "sum_to_100": 25.9,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2022,
+     "subject": "Math",
+     "rows": 2762,
+     "level_rows": 2762,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2022,
+     "subject": "Science (end-of-course)",
+     "rows": 227,
+     "level_rows": 227,
+     "sum_to_100": 5.7,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2022,
+     "subject": "Science",
+     "rows": 936,
+     "level_rows": 936,
+     "sum_to_100": 100.0,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2023,
+     "subject": "ELA (end-of-course)",
+     "rows": 473,
+     "level_rows": 473,
+     "sum_to_100": 2.1,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2023,
+     "subject": "ELA",
+     "rows": 2842,
+     "level_rows": 2842,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2023,
+     "subject": "Math (end-of-course)",
+     "rows": 454,
+     "level_rows": 454,
+     "sum_to_100": 20.5,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2023,
+     "subject": "Math",
+     "rows": 2843,
+     "level_rows": 2843,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2023,
+     "subject": "Science (end-of-course)",
+     "rows": 239,
+     "level_rows": 239,
+     "sum_to_100": 8.4,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2023,
+     "subject": "Science",
+     "rows": 963,
+     "level_rows": 963,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2024,
+     "subject": "ELA (end-of-course)",
+     "rows": 472,
+     "level_rows": 472,
+     "sum_to_100": 1.5,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2024,
+     "subject": "ELA",
+     "rows": 2837,
+     "level_rows": 2837,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2024,
+     "subject": "Math (end-of-course)",
+     "rows": 443,
+     "level_rows": 443,
+     "sum_to_100": 18.5,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2024,
+     "subject": "Math",
+     "rows": 2840,
+     "level_rows": 2840,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2024,
+     "subject": "Social Studies (end-of-course)",
+     "rows": 234,
+     "level_rows": 234,
+     "sum_to_100": 3.8,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2025,
+     "subject": "ELA (end-of-course)",
+     "rows": 475,
+     "level_rows": 475,
+     "sum_to_100": 2.7,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2025,
+     "subject": "ELA",
+     "rows": 2824,
+     "level_rows": 2824,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2025,
+     "subject": "Math (end-of-course)",
+     "rows": 425,
+     "level_rows": 425,
+     "sum_to_100": 11.8,
+     "match": 0.0,
+     "ok": false
+    },
+    {
+     "year": 2025,
+     "subject": "Math",
+     "rows": 2832,
+     "level_rows": 2832,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2025,
+     "subject": "Science",
+     "rows": 954,
+     "level_rows": 954,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2025,
+     "subject": "Social Studies (end-of-course)",
+     "rows": 237,
+     "level_rows": 237,
+     "sum_to_100": 2.5,
+     "match": 0.4,
+     "ok": false
+    }
+   ],
+   "levels_as_measures": true
+  },
+  "poverty": {
+   "lim": {
+    "schools": 215,
+    "missing": 66,
+    "at_99_or_more": 16,
+    "above_100": 0,
+    "high_poverty_share": 28.8
+   },
+   "comparison": {
+    "schools": 1071,
+    "missing": 7,
+    "at_99_or_more": 385,
+    "above_100": 256,
+    "high_poverty_share": 55.7
+   }
+  },
+  "statewide_jumps": [],
+  "sensitivity": {
+   "with": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 116,
+    "comp_n": 862,
+    "lim_change": 9.7,
+    "comp_change": 8.43,
+    "p": 0.138
+   },
+   "without": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 102,
+    "comp_n": 861,
+    "lim_change": 9.8,
+    "comp_change": 8.43,
+    "p": 0.144
+   },
+   "schools": 16
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": []
+ }
+}

@@ -2,8 +2,8 @@
  "state": "OH",
  "name": "Ohio",
  "folder": "ohio",
- "built": "2026-09-04",
- "seconds": 73,
+ "built": "2026-09-08",
+ "seconds": 215,
  "builder": "build_payload_core.py",
  "page_kind": "full",
  "lim_headline_n": 148,
@@ -17,50 +17,72 @@
   "subjects": {
    "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
    "bytes": 146145669,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   },
   "roster": {
    "file": "LIM Schools (Current_Active) (11).csv",
    "bytes": 12784777,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   },
   "comparison": {
-   "file": "All Other Schools (Non-LiM & Exited).csv",
-   "bytes": 132812308,
-   "modified": "2026-09-03"
+   "file": "Archive.zip/All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-04"
   },
   "mra": {
    "file": "All MRA Surveys.csv",
    "bytes": 2466245,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   }
  },
  "state_pull": {
   "subjects": {
-   "path": "/home/claude/national/Build/work/OH/data/Subjects_Tests_FINAL (8).csv",
+   "path": "/home/claude/sdf/Build/work/OH/data/Subjects_Tests_FINAL (8).csv",
    "rows": 257256
   },
   "roster": {
-   "path": "/home/claude/national/Build/work/OH/data/LIM Schools (Current_Active) (11).csv",
+   "path": "/home/claude/sdf/Build/work/OH/data/LIM Schools (Current_Active) (11).csv",
    "rows": 2523
   },
   "comparison": {
-   "path": "/home/claude/national/Build/work/OH/data/All Other Schools (Non-LiM & Exited).csv",
+   "path": "/home/claude/sdf/Build/work/OH/data/All Other Schools (Non-LiM & Exited).csv",
    "rows": 27381
   },
   "mra": {
-   "path": "/home/claude/national/Build/work/OH/data/All MRA Surveys.csv",
+   "path": "/home/claude/sdf/Build/work/OH/data/All MRA Surveys.csv",
    "rows": 371
   }
  },
- "state_files": [],
+ "state_files": [
+  "Academic Growth_OH/",
+  "Attendance_OH/",
+  "CCR_OH/",
+  "Discipline_OH/",
+  "PULL-MANIFEST_OH.csv",
+  "Post High School Data_OH/",
+  "School Grade_OH/"
+ ],
+ "extras_module": "oh_core_extras",
  "verified": true,
- "dashboard_bytes": 3176177,
+ "dashboard_bytes": 5769045,
  "audits": {
   "levels": {
    "rows": 233846,
    "no_levels": true,
-   "best": "the reported PercentMetStandard alone (the file carries no level percentages)"
+   "best": "the reported PercentMetStandard alone (the file carries no level percentages)",
+   "structure": "no level percentages",
+   "n_levels": null,
+   "proficient_from": null,
+   "reversed_numbering": null,
+   "coverage": 0.0,
+   "years_ok": null,
+   "years_out": null,
+   "cells_out": null,
+   "latest_year_ok": null,
+   "reason": "the file carries no level percentages",
+   "combination_shares": null,
+   "cells": [],
+   "levels_as_measures": false
   },
   "poverty": {
    "lim": {

@@ -1,5 +1,5 @@
 
-$ python3 /home/claude/national/Build/build_payload_core.py --state VA --core /home/claude/national/corefolder --out /home/claude/national/Build/work/VA
+$ python3 /home/claude/sdf/Build/build_payload_core.py --state VA --core /home/claude/sdf/Core --out /home/claude/sdf/Build/work/VA --data /home/claude/sdf/Build/work/VA/data
 reading the core for Virginia ...
 [core] subjects: 162,844 school rows kept; dropped 38,487 rows with no school id and 820 with an id but no school record
 [core] Leader in Me roster: 330 rows
@@ -14,22 +14,26 @@ applying the cleaning rules ...
   71,485 school-year-band-subject rows · years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
   Leader in Me school-years counted: 151 of 306 reviewed
   no start date: 3 schools · dated exits: 6 (school-years after an exit with rows: 19) · aggregate 'All grades' rows used 0, skipped 0
-  proficiency = levels 2, 3 and 4 on 100.0% of rows
+  achievement levels as measures: yes (three levels, numbered from the bottom; proficiency is the top 2; 100.0% of rows in years and subjects whose levels add up)
+  level values blanked on 3 year-subject cells that do not add up: 2014-15 Social Studies, 2015-16 Social Studies, 2016-17 Social Studies
+  proficiency = levels 2, 3 and 4 on 99.8% of rows
+  school type from NCES: Title I on 1,797 schools (716 yes), charter 7, magnet 119, alternative 6; Title I published 2017-2022, carried forward after
+  funders: 22 Virginia schools carry a funding source (20 on the page; Kern 8, 6 on the page); latest non-blank year per school
 building matched pairs, inside each band ...
   pairs 22  by band {'Primary': {'pairs': 19, 'unmatched': 0}, 'Secondary': {'pairs': 3, 'unmatched': 0}}
   MRA: 39 surveys · 17 schools · 125 sentinel values · 5 shells
   headline 2021-22 to 2024-25: {'y0': 2022, 'y1': 2025, 'lim_n': 23, 'comp_n': 1709, 'lim_change': 2.27, 'comp_change': 1.67, 'p': 0.734} · without the 11 undated schools {'y0': 2022, 'y1': 2025, 'lim_n': 13, 'comp_n': 1709, 'lim_change': 1.25, 'comp_change': 1.67, 'p': 0.785}
   roster: 20 counted, 10 exited, 1 not counted yet, 3 not counted
 
-wrote va_payload.json  (30.6 MB, 71,485 rows) · page kind full (23 Leader in Me schools on the headline)
-build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+wrote va_payload.json  (38.3 MB, 71,485 rows) · page kind full (23 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'fb6eaf7cb415'}
 
 $ python3 build2.py va_payload.json VA_Dashboard.html VA_Methods.html
-payload 30.6 MB -> 1.54 MB gzip
-VA_Dashboard.html: 2248 KB
-VA_Methods.html: 27 KB
+payload 38.3 MB -> 2.46 MB gzip
+VA_Dashboard.html: 3482 KB
+VA_Methods.html: 35 KB
 
-$ python3 /home/claude/national/Build/verify_core.py --state VA --work /home/claude/national/Build/work/VA
+$ python3 /home/claude/sdf/Build/verify_core.py --state VA --work /home/claude/sdf/Build/work/VA
 
 --------------------------------------------------------------------------
 Tier 0 — install and input-value audit
@@ -81,10 +85,19 @@ ok   an exited school's reason names its expiration and the grace rule, or DOMO'
 ok   the headline sensitivity without the undated schools is on the methods page
 ok   size bands are the NCES categories in the payload's order
 ok   the poverty share rides on most rows for the look-alike caliper  [100%]
+ok   every offered measure is carried by at least one school-year
 ok   the composite flag keeps science, social studies and writing out of the no-filter view
 ok   the grade table lists tested grades in order and every school in it has a name
 ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [1100 schools]
 ok   the grade table carries no school-year the rules dropped
+ok   the 3 achievement levels are measures of their own  [percent_below, percent_level2, percent_level3]
+ok   the level shares sum to 100 on the grade rows that carry them  [92,904 grade rows, 100.0% within 1.5 points]
+ok   the levels from the proficiency cut up add up to the proficiency rate  [cut at canonical level 2 of 3; 100.0% of grade rows within 1.5]
+ok   the grade table carries the level columns
+ok   the level labels carry the state's own numbering  [Level 1: below the standard; Level 2: meeting the standard; Level 3: exceeding the standard]
+ok   the levels at or above the standard count up, the levels below count down
+ok   the proficiency label names the levels it adds
+ok   years and subjects whose levels do not add up carry no level values  [3 cells set aside, 40 grade rows in them]
 ok   school names and start dates are in the payload for the pack
 ok   MRA by-school rows exist for the pack
 ok   the MRA respondent map names a group or a blend for every measure
@@ -112,22 +125,29 @@ ok   movers are built on ten or more schools each
 Tier 2 — behaviour in a real browser
 --------------------------------------------------------------------------
 ok   the page loads and the headline renders
-ok   load time is workable  [1.0s]
+ok   load time is workable  [1.4s]
 ok   no console errors on load
 ok   chart c1 draws an svg or explains why
 ok   chart c2 draws an svg or explains why
 ok   the MRA card shows exactly when a trend line can be drawn
-ok   the Georgia discipline card stays hidden
-ok   the incidents card stays hidden (no state incident file)
-ok   the state extras card stays hidden (no state files)
+ok   the discipline card shows exactly when the payload carries a discipline trend  [payload has no discipline_ga]
+ok   the incidents card shows exactly when the payload carries an incident trend  [payload has no incidents]
+ok   the state extras card shows exactly when the payload carries state measures  [no state files]
 ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
 ok   the headline p recomputes offline  [page 0.7351 scipy 0.7351 · window 2022-2025 · LiM n=23 mean +2.26 · comparison n=1709 mean +1.67]
 ok   the headline counts schools, not band slices  [page 1732 vs offline 1732 on 2022-2025]
 ok   the page's Leader in Me count is the builder's  [23 vs 23]
 ok   the district filter re-renders the headline  [In Prince William County Public Schools schools, between 2021-22 and 2024-25, Leader in Me]
+ok   the school type filter is offered with the payload's kinds  [Title I schools, Not Title I, Charter schools, Magnet schools, Alternative schools, Kern Family Foundation schools]
+ok   choosing 'Title I schools' narrows the view and names it  [725 of 1827 schools; In Virginia Title I schools, between 2021-22 and 2024-25, Leader in Me schools r]
+ok   every school in the 'Title I schools' view carries that attribute
+ok   'Kern Family Foundation schools' narrows the Leader in Me side only and keeps the comparison side whole  [In Virginia schools (Leader in Me side: Kern Family Foundation schools), between 2021-22 and 2024-25]
+ok   Title I status is known for most schools on the page  [98.4%]
 ok   the Primary band filter re-renders without error
 ok   the Secondary band filter re-renders without error
 ok   measure 'percent_proficient' either draws or says why
+ok   measure 'percent_level3' either draws or says why
+ok   measure 'percent_level2' either draws or says why
 ok   measure 'percent_below' either draws or says why
 ok   measure 'standard_score' either draws or says why
 ok   measure 'chronic_absent' either draws or says why
@@ -139,23 +159,41 @@ ok   the insights tab hides the explore view
 ok   Prince William County Public Schools generates cards or says there is nothing to report  [4 cards]
 ok   the insights tab uses the same unit and window as the explore tab  [{'p': 0.735129213533587, 'n1': 23, 'n2': 1709}]
 ok   no console errors on the insights tab
-ok   export c1.pptx downloads, opens and carries the chart image  [163,654 bytes]
-ok   the pptx export is named for the state and chart  [VA_Percent_meeting_the_standard_year_by_year_Virginia_schools.pptx]
-ok   export c1.docx downloads, opens and carries the chart image  [161,305 bytes]
-ok   the docx export is named for the state and chart  [VA_Percent_meeting_the_standard_year_by_year_Virginia_schools.docx]
-ok   the research pack downloads with its sections  [20,583 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'roster']]
+ok   the MRA tab is offered exactly when the payload carries surveys
+ok   the MRA tab shows its own view and sidebar and hides the explore ones
+ok   the MRA summary renders a sentence  [Across 7 Virginia Leader in Me schools surveyed in 2024-25, Leadership averaged 74.6 on the MRA scal]
+ok   MRA chart c6 draws an svg or explains why
+ok   MRA chart c7 draws an svg or explains why
+ok   MRA chart c10 draws an svg or explains why
+ok   the measure picker offers every MRA measure with data  [37 options, 37 measures with data, 37 in the catalogue]
+ok   the MRA paired test recomputes offline  [page 0.3149 scipy 0.3149 on 9 schools]
+ok   the MRA latest-year school count recomputes offline  [page 7 vs offline 7]
+ok   the MRA same-schools count is every school surveyed more than once  [page 9 vs offline 9]
+ok   choosing the submeasure 'Personal Effectiveness' re-renders the MRA summary  [Across 7 Virginia Leader in Me schools surveyed in 2024-25, Personal Effectiveness average]
+ok   the MRA district filter narrows to Prince William County Public Schools's surveyed schools  [7 of 17 schools]
+ok   the MRA school type filter keeps only schools with that trait  [title1_yes]
+ok   the same-schools switch keeps only schools surveyed at both ends
+ok   no console errors on the MRA tab
+ok   the MRA view downloads one row per school, year and measure  [1,011 rows]
+ok   leaving the MRA tab restores the explore view
+ok   export c1.pptx downloads, opens and carries the chart image  [163,676 bytes]
+ok   the pptx export is named for the state and chart  [VA_Meeting_or_exceeding_the_standard_levels_2_and_3_year_by_year_Virginia_schools.pptx]
+ok   export c1.docx downloads, opens and carries the chart image  [161,349 bytes]
+ok   the docx export is named for the state and chart  [VA_Meeting_or_exceeding_the_standard_levels_2_and_3_year_by_year_Virginia_schools.docx]
+ok   the research pack downloads with its sections  [36,401 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'roster']]
 ok   the pack's Leader in Me count for the district is the page's  [5 vs 5]
-ok   look-alike mode rewrites the headline around the anchor district, or says nothing matched  [In Virginia schools like Norfolk City Public Schools’, between 2021-22 and 2024-25, Leader in Me schools rose 2.2% on Pe]
-ok   the look-alike box reports both counts or says why not  [Schools like Norfolk City Public Schools’: 5 Leader in Me schools and 229 comparison schools look like Norfolk City Public Schools’ 41 schools with results in t]
+ok   look-alike mode rewrites the headline around the anchor district, or says nothing matched  [In Virginia schools like Norfolk City Public Schools’, between 2021-22 and 2024-25, Leader in Me schools rose 1.8% on Me]
+ok   the look-alike box reports both counts or says why not  [Schools like Norfolk City Public Schools’: 3 Leader in Me schools and 185 comparison schools look like Norfolk City Public Schools’ 41 schools with results in t]
 ok   the matched switch is disabled while an anchor is set
 ok   no console errors in look-alike mode
-ok   the look-alike headline p recomputes offline  [p=0.4741]
+ok   the look-alike headline p recomputes offline  [p=0.6288]
 ok   the anchor's own schools are never inside the look-alike groups
-ok   the school list downloads with one row per school  [46 rows, 0 same-name pairs]
+ok   the school list downloads with one row per school  [44 rows, 0 same-name pairs]
 ok   the school list carries traits and change columns
 ok   the grade filter lists the tested grades
-ok   choosing a grade re-renders the headline and names the grade  [In Virginia grade 4 results, between 2021-22 and 2024-25, Leader in Me schools rose 3.8% on Percent ]
-ok   whole-school measures switch off while a grade is chosen
+ok   choosing a grade re-renders the headline and names the grade  [In Virginia grade 4 results, between 2021-22 and 2024-25, Leader in Me schools rose 3.8% on Meeting ]
+ok   the level measures stay on while a grade is chosen
+ok   whole-school measures switch off while a grade is chosen  [3 whole-school measures in the payload]
 ok   dark mode re-renders without errors
 ok   no horizontal overflow at 900px  [0px]
 ok   no horizontal overflow at 700px  [0px]
@@ -186,5 +224,5 @@ ok   the undated schools are listed by name in the payload
   HEADLINE (statewide, 2022-2025, no filters): Leader in Me +2.26 pts (n=23) vs comparison +1.67 pts (n=1709), p=0.7351 -> not significant
 
 ==========================================================================
-135 of 135 checks pass
+169 of 169 checks pass
 ==========================================================================

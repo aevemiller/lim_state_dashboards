@@ -2,94 +2,64 @@
  "state": "NC",
  "name": "North Carolina",
  "folder": "north-carolina",
- "built": "2026-09-04",
- "seconds": 188,
- "builder": "build_payload_nc.py",
+ "built": "2026-09-08",
+ "seconds": 186,
+ "builder": "build_payload_core.py",
  "page_kind": "full",
- "lim_headline_n": null,
- "schools": 2751,
+ "lim_headline_n": 136,
+ "schools": 2757,
  "years": [
   2015,
   2025
  ],
  "lim_roster_schools": 195,
- "state_extras": true,
  "core_exports": {
   "subjects": {
    "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
    "bytes": 146145669,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   },
   "roster": {
    "file": "LIM Schools (Current_Active) (11).csv",
    "bytes": 12784777,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   },
   "comparison": {
-   "file": "All Other Schools (Non-LiM & Exited).csv",
-   "bytes": 132812308,
-   "modified": "2026-09-03"
+   "file": "Archive.zip/All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-04"
   },
   "mra": {
    "file": "All MRA Surveys.csv",
    "bytes": 2466245,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   }
  },
- "subject_rows_without_school_id_dropped_nationally": 20403,
  "state_pull": {
   "subjects": {
-   "path": "/home/claude/national/Build/work/NC/data/NC 15_25 Subjects_Tests_FINAL (8).csv",
+   "path": "/home/claude/sdf/Build/work/NC/data/Subjects_Tests_FINAL (8).csv",
    "rows": 173498
   },
-  "exit_rule": {
-   "source": "LIM Expiration Date column of the Leader in Me roster export",
-   "as_of": "2026-09-04",
-   "grace_days": 30,
-   "roster_schools": 195,
-   "schools_with_expiration": 169,
-   "exited": 51,
-   "inside_grace": 1,
-   "future": 117,
-   "no_expiration": 26,
-   "no_expiration_with_start": 25,
-   "exited_by_year": {
-    "2018": 2,
-    "2021": 5,
-    "2022": 6,
-    "2023": 10,
-    "2024": 15,
-    "2025": 9,
-    "2026": 4
-   }
-  },
   "roster": {
-   "path": "/home/claude/national/Build/work/NC/data/NC 15_25 LIM Schools (Current_Active and Date Exited).csv",
+   "path": "/home/claude/sdf/Build/work/NC/data/LIM Schools (Current_Active) (11).csv",
    "rows": 1865
   },
   "comparison": {
-   "path": "/home/claude/national/Build/work/NC/data/NC 15_25 All Other Schools (Non-LiM & Exited).csv",
+   "path": "/home/claude/sdf/Build/work/NC/data/All Other Schools (Non-LiM & Exited).csv",
    "rows": 22705
   },
   "mra": {
-   "path": "/home/claude/national/Build/work/NC/data/NC 15_25All MRA Surveys.csv",
+   "path": "/home/claude/sdf/Build/work/NC/data/All MRA Surveys.csv",
    "rows": 302
-  },
-  "NC 15_25LIM Schools (Current_Active) (11).csv": {
-   "path": "/home/claude/national/Build/work/NC/data/NC 15_25LIM Schools (Current_Active) (11).csv",
-   "rows": 1865,
-   "note": "copy of NC 15_25 LIM Schools (Current_Active and Date Exited).csv"
   }
  },
  "state_files": [
-  "All Other Schools (Non-LiM & Exited).csv",
-  "NC 15_25 LIM Schools (Current_Active and Date Exited) .csv",
   "src/rcd_nbpts2.csv",
   "src/rcd_acc_eds.csv",
   "src/rcd_college.csv",
   "src/rcd_location.csv",
   "src/rcd_acc_lowperf.csv",
-  "src/rcd_acc_pc_all_students.csv.gz",
+  "src/SRC_Data_Dictionary_202425.xlsx",
   "src/rcd_chronic_absent.csv",
   "src/rcd_acc_essa_desig.csv",
   "src/rcd_acc_wk.csv",
@@ -108,13 +78,76 @@
   "src/rcd_acc_cgr.csv",
   "src/rcd_sar.csv"
  ],
- "scripts": [
-  "nc_crosswalk.py",
-  "nc_extras.py",
-  "audit_nc.py",
-  "build_payload_nc.py",
-  "verify_nc.py"
- ],
+ "extras_module": "nc_core_extras",
  "verified": true,
- "dashboard_bytes": 4795613
+ "dashboard_bytes": 5762357,
+ "audits": {
+  "levels": {
+   "rows": 155946,
+   "levels 3 and 4": 5.9,
+   "levels 2, 3 and 4": 5.9,
+   "level 4 alone": 0.2,
+   "100 minus level 1": 46.8,
+   "best": "100 minus level 1",
+   "levels_sum_to_100_share": 6.4,
+   "structure": "no combination of the reported levels reproduces the proficiency rate",
+   "n_levels": null,
+   "proficient_from": null,
+   "reversed_numbering": null,
+   "coverage": 0.0,
+   "years_ok": null,
+   "years_out": null,
+   "cells_out": null,
+   "latest_year_ok": null,
+   "reason": "no combination of the reported levels reproduces PercentMetStandard on more than 11% of rows (a five-level state whose export carries four columns, usually)",
+   "combination_shares": {
+    "levels 3 and 4": 10.4,
+    "levels 2, 3 and 4": 11.1,
+    "levels 1 and 2 (1 the top)": 2.8,
+    "levels 1, 2 and 3 (1 the top)": 2.8
+   },
+   "cells": [],
+   "levels_as_measures": false
+  },
+  "poverty": {
+   "lim": {
+    "schools": 195,
+    "missing": 0,
+    "at_99_or_more": 81,
+    "above_100": 0,
+    "high_poverty_share": 69.2
+   },
+   "comparison": {
+    "schools": 2567,
+    "missing": 31,
+    "at_99_or_more": 980,
+    "above_100": 6,
+    "high_poverty_share": 69.0
+   }
+  },
+  "statewide_jumps": [],
+  "sensitivity": {
+   "with": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 136,
+    "comp_n": 2298,
+    "lim_change": 4.8,
+    "comp_change": 5.41,
+    "p": 0.358
+   },
+   "without": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 113,
+    "comp_n": 2298,
+    "lim_change": 4.68,
+    "comp_change": 5.41,
+    "p": 0.341
+   },
+   "schools": 25
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": []
+ }
 }

@@ -1,5 +1,5 @@
 
-$ python3 /home/claude/national/Build/build_payload_core.py --state ND --core /home/claude/national/corefolder --out /home/claude/national/Build/work/ND
+$ python3 /home/claude/sdf/Build/build_payload_core.py --state ND --core /home/claude/sdf/Core --out /home/claude/sdf/Build/work/ND --data /home/claude/sdf/Build/work/ND/data --extras nd_core_extras
 reading the core for North Dakota ...
 [core] subjects: 36,889 school rows kept; dropped 25,589 rows with no school id and 2,606 with an id but no school record
 [core] Leader in Me roster: 37 rows
@@ -13,22 +13,70 @@ applying the cleaning rules ...
   11,065 school-year-band-subject rows · years [2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
   Leader in Me school-years counted: 9 of 32 reviewed
   no start date: 1 schools · dated exits: 1 (school-years after an exit with rows: 3) · aggregate 'All grades' rows used 1, skipped 27
-  proficiency = levels 3 and 4 on 100.0% of rows
+  achievement levels as measures: no (four levels, numbered from the bottom; proficiency is the top 2; 0.0% of rows in years and subjects whose levels add up; not offered because the levels add up on too few rows to stand as measures)
+  level values blanked on 24 year-subject cells that do not add up: 2015-16 ELA, 2015-16 Math, 2015-16 Science, 2016-17 ELA, 2016-17 Math, 2016-17 Science, 2017-18 ELA, 2017-18 Math ...
+  proficiency = the reported PercentMetStandard alone (the file carries no level percentages) on 0% of rows
+folding in North Dakota's own measures (nd_core_extras) ...
+  state files (resolved by pattern; the log names what was set aside):
+    attendance: 12 files, 2013-14 to 2024-25
+    growth: 8 files, 2016-17 to 2024-25
+    pie: 7 files, 2016-17 to 2024-25
+    ccr: 5 files (ChoiceReady, EssentialSkills, Military, PostSecondary, Workforce)
+    cte: 24 files, 2015-16 to 2023-24
+    set aside: Insights-GrowthRate-CSV-2019-2020-v20221118.csv: the 2019-20 growth file repeats every 2018-19 school figure under a new year label (no spring 2020 testing)
+    set aside: Insights-AccountabilityPie-CSV-2019-2020-v20220915.csv: the 2019-20 accountability pie file repeats every 2018-19 value under a new year label (no spring 2020 testing)
+    set aside: Insights-ChoiceReady-ChoiceReady-Demographic-CSV-v20251202.csv: subgroup file (Choice Ready by demographic group); only the all-students file is read
+    set aside: Insights-ChoiceReady-EssentialSkills-Demographic-CSV-v20251202.csv: subgroup file (Choice Ready by demographic group); only the all-students file is read
+    set aside: Insights-ChoiceReady-Military-Demographic-CSV-v20251202.csv: subgroup file (Choice Ready by demographic group); only the all-students file is read
+    set aside: Insights-ChoiceReady-PostSecondary-Demographic-CSV-v20251202.csv: subgroup file (Choice Ready by demographic group); only the all-students file is read
+    set aside: Insights-ChoiceReady-Workforce-Demographic-CSV-v20251202.csv: subgroup file (Choice Ready by demographic group); only the all-students file is read
+    set aside: Insights-CTECourseCount-CSV-2010-2011-v20220915.csv: 2010-11 is before the page's first year
+    set aside: Insights-CTECourseCount-CSV-2011-2012-v20220915.csv: 2011-12 is before the page's first year
+    set aside: Insights-CTECourseCount-CSV-2012-2013-v20220915.csv: 2012-13 is before the page's first year
+    set aside: Insights-CTECourseCount-CSV-2013-2014-v20220915.csv: 2013-14 is before the page's first year
+    set aside: Insights-CTECourseCount-CSV-2014-2015-v20220915.csv: 2014-15 is before the page's first year
+    set aside: Insights-CTECourseCount-CSV-2024-2025-v20251113.csv: the 2024-25 CTE files are a partial posting (18 schools against 116 the year before)
+    set aside: Insights-CTEPathwayCount-CSV-2010-2011-v20220915.csv: 2010-11 is before the page's first year
+    set aside: Insights-CTEPathwayCount-CSV-2011-2012-v20220915.csv: 2011-12 is before the page's first year
+    set aside: Insights-CTEPathwayCount-CSV-2012-2013-v20220915.csv: 2012-13 is before the page's first year
+    set aside: Insights-CTEPathwayCount-CSV-2013-2014-v20220915.csv: 2013-14 is before the page's first year
+    set aside: Insights-CTEPathwayCount-CSV-2014-2015-v20220915.csv: 2014-15 is before the page's first year
+    set aside: Insights-CTEPathwayCount-CSV-2024-2025-v20251113.csv: the 2024-25 CTE files are a partial posting (18 schools against 116 the year before)
+    set aside: Insights-CTEPrimaryPathwayCount-CSV-2010-2011-v20220915.csv: 2010-11 is before the page's first year
+    set aside: Insights-CTEPrimaryPathwayCount-CSV-2011-2012-v20220915.csv: 2011-12 is before the page's first year
+    set aside: Insights-CTEPrimaryPathwayCount-CSV-2012-2013-v20220915.csv: 2012-13 is before the page's first year
+    set aside: Insights-CTEPrimaryPathwayCount-CSV-2013-2014-v20220915.csv: 2013-14 is before the page's first year
+    set aside: Insights-CTEPrimaryPathwayCount-CSV-2014-2015-v20220915.csv: 2014-15 is before the page's first year
+    set aside: Insights-CTEPrimaryPathwayCount-CSV-2024-2025-v20251113.csv: the 2024-25 CTE files are a partial posting (18 schools against 116 the year before)
+    NCES directory: 628 federal-to-state id pairs from the cache (8 CCD files unchanged)
+    ND Insights files: attendance 96,162 rows, growth 130,162 rows, pie 25,465 rows, ccr 10,045 rows, cte 45,758 rows from the cache (files unchanged)
+  ND measures per school-year: 4,778 school-years, 31 keys; closure-year values set aside 7,838; attendance_rate 2014-2025 (4,634 values); growth_ela 2017-2025 (2,022 values); growth_math 2017-2025 (2,023 values); acc_index 2017-2025 (2,912 values); choice_ready 2018-2025 (731 values); cte_courses 2016-2024 (881 values)
+  attendance: 41 exact-100% school-years set aside (Brave Center Academy, Community Alternative High School, Del Easton Alternative High School, Fargo K-8 Virtual Academy, Grant Colony School, Mandaree Elementary School, Mandaree High School, Roughrider High Virtual Academy, Round Prairie Elementary School, Souris River Campus Alternative High School, South Central Alternative High School, Southwest Community High School, Spruce Lane Colony School, West Fargo Elementary Virtual Academy, West Fargo High Virtual Academy, Wolves Center Academy, Yellowstone Virtual Academy); growth: 2 suppressed (level 0) rows set aside; accountability: 846 '< 10' rows, 475 three-year pooled rows; Choice Ready: 3910 ranges and 325 exact values
+  crosswalk: NCES's state institution id for each federal id, audited against the state files' own names and districts
+    419 of 420 schools carry a state id in NCES's directory; Leader in Me 4 of 4, comparison 415 of 416; 419 appear in at least one state file
+    names: the state files' own school name agrees with DOMO's on 423 of 424 crosswalked schools, and the district number in the state id names DOMO's district on 422 of 422; 0 pairs re-pointed to a folded id; 0 shared ids settled; 6 schools carry more than one state id across the years
+    name disagreement: DOMO 'Educational Clapp Elementary School' vs state 'ED Clapp Elementary School' (0900121041)
+  value check of the join: the state's attendance rate against DOMO's chronic absence on 1,079 school-years, r = -0.96 (two different measures that should move against each other)
+  rows gain: attendance_rate on 4,186 school-year-bands (9 Leader in Me school-years), growth_ela on 2,656 school-year-bands (8 Leader in Me school-years), growth_math on 2,655 school-year-bands (8 Leader in Me school-years); 0 school-years had no band to sit in
+  per-school North Dakota records for the pack: 3,942 (31 columns)
+  North Dakota's measures on 4,190 school-year-bands: 3,766 joined to existing rows, 424 school-year-bands added with no test rows of their own
+  school type from NCES: Title I on 412 schools (235 yes), charter 0, magnet 0, alternative 0; Title I published 2017-2022, carried forward after
 building matched pairs, inside each band ...
   pairs 3  by band {'Primary': {'pairs': 2, 'unmatched': 0}, 'Secondary': {'pairs': 1, 'unmatched': 0}}
   MRA: 0 surveys · 0 schools · 0 sentinel values · 0 shells
   headline 2021-22 to 2024-25: {'y0': 2022, 'y1': 2025, 'lim_n': 1, 'comp_n': 351, 'lim_change': -2.46, 'comp_change': -1.43, 'p': None} · without the 0 undated schools {'y0': 2022, 'y1': 2025, 'lim_n': 1, 'comp_n': 351, 'lim_change': -2.46, 'comp_change': -1.43, 'p': None}
   roster: 0 counted, 2 exited, 1 not counted yet, 1 not counted
+measures not offered (no school-year carries a value): percent_below
 
-wrote nd_payload.json  (4.3 MB, 11,065 rows) · page kind territory (1 Leader in Me schools on the headline)
-build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+wrote nd_payload.json  (6.1 MB, 11,489 rows) · page kind territory (1 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'fb6eaf7cb415'}
 
 $ python3 build2.py nd_payload.json ND_Dashboard.html ND_Methods.html
-payload 4.3 MB -> 0.22 MB gzip
-ND_Dashboard.html: 522 KB
-ND_Methods.html: 27 KB
+payload 6.1 MB -> 0.34 MB gzip
+ND_Dashboard.html: 728 KB
+ND_Methods.html: 41 KB
 
-$ python3 /home/claude/national/Build/verify_core.py --state ND --work /home/claude/national/Build/work/ND
+$ python3 /home/claude/sdf/Build/verify_core.py --state ND --work /home/claude/sdf/Build/work/ND
 
 --------------------------------------------------------------------------
 Tier 0 — install and input-value audit
@@ -80,14 +128,17 @@ ok   an exited school's reason names its expiration and the grace rule, or DOMO'
 ok   the headline sensitivity without the undated schools is on the methods page
 ok   size bands are the NCES categories in the payload's order
 ok   the poverty share rides on most rows for the look-alike caliper  [100%]
+ok   every offered measure is carried by at least one school-year
+ok   a measure no school-year carries is named on the methods page as not offered  [Percent in the lowest level]
 ok   the composite flag keeps science, social studies and writing out of the no-filter view
 ok   the grade table lists tested grades in order and every school in it has a name
 ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [204 schools]
 ok   the grade table carries no school-year the rules dropped
+ok   no level measure is offered when the level structure is unconfirmed  [the levels add up on too few rows to stand as measures]
 ok   school names and start dates are in the payload for the pack
 skip MRA pack rows  [no surveys]
 ok   look-alike settings are in the payload with their rationale
-ok   a Leader in Me school's pre-start years count in the comparison group  [37 rows]
+ok   a Leader in Me school's pre-start years count in the comparison group  [40 rows]
 ok   Lighthouse schools are inside the Leader in Me family
 ok   combined-grade schools appear in both bands  [129 schools]
 ok   the school count never exceeds the band-slice count  [352 schools vs 454 band slices]
@@ -95,7 +146,7 @@ ok   pairs are built inside bands
 ok   the by-band pair counts sum to the total
 ok   no comparison school is used twice
 ok   no Leader in Me school is paired twice inside a band
-ok   the signed baseline gap recomputes to the payload's  [offline -0.067 vs payload -0.060 on 3 pairs]
+skip signed baseline gap recompute  [only 3 pairs; rounding alone can move the mean]
 skip mean signed gap under one point  [only 3 pairs; the gap is -0.07]
 ok   the widest single baseline gap is inside the caliper's reach  [0.2 points]
 ok   the printed signed gap is not a negative zero  [-0.06]
@@ -109,39 +160,47 @@ ok   movers are built on ten or more schools each
 Tier 2 — behaviour in a real browser
 --------------------------------------------------------------------------
 ok   the page loads and the headline renders
-ok   load time is workable  [0.3s]
+ok   load time is workable  [0.4s]
 ok   no console errors on load
 ok   chart c1 draws an svg or explains why
 ok   chart c2 draws an svg or explains why
 ok   the MRA card shows exactly when a trend line can be drawn
-ok   the Georgia discipline card stays hidden
-ok   the incidents card stays hidden (no state incident file)
-ok   the state extras card stays hidden (no state files)
+ok   the discipline card shows exactly when the payload carries a discipline trend  [payload has no discipline_ga]
+ok   the incidents card shows exactly when the payload carries an incident trend  [payload has no incidents]
+ok   the state extras card shows exactly when the payload carries state measures  [no state files]
 ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
 skip headline recompute  [fewer than two schools a side]
 ok   the district filter re-renders the headline  [Not enough schools match these filters to compare anything yet. Remove a filter on the lef]
+ok   the school type filter is offered with the payload's kinds  [Title I schools, Not Title I]
+ok   choosing 'Title I schools' narrows the view and names it  [237 of 418 schools; In North Dakota Title I schools, between 2021-22 and 2024-25, schools rose 0.3% ]
+ok   every school in the 'Title I schools' view carries that attribute
+ok   Title I status is known for most schools on the page  [98.6%]
 ok   the Primary band filter re-renders without error
 ok   the Secondary band filter re-renders without error
 ok   measure 'percent_proficient' either draws or says why
-ok   measure 'percent_below' either draws or says why
 ok   measure 'standard_score' either draws or says why
 ok   measure 'chronic_absent' either draws or says why
 ok   measure 'grad_rate' either draws or says why
+ok   measure 'attendance_rate' either draws or says why
+ok   measure 'growth_ela' either draws or says why
+ok   measure 'growth_math' either draws or says why
 skip matched view  [fewer than three pairs, or a territory page]
 ok   no console errors after the filter sweep
 ok   the insights tab hides the explore view
 ok   Alexander 2 generates cards or says there is nothing to report  [1 cards]
 ok   no console errors on the insights tab
+ok   the MRA tab is offered exactly when the payload carries surveys
+skip MRA tab  [no surveys]
 ok   export c1.pptx downloads, opens and carries the chart image  [81,227 bytes]
 ok   the pptx export is named for the state and chart  [ND_Percent_meeting_the_standard_year_by_year_North_Dakota_schools.pptx]
-ok   export c1.docx downloads, opens and carries the chart image  [78,166 bytes]
+ok   export c1.docx downloads, opens and carries the chart image  [79,785 bytes]
 ok   the docx export is named for the state and chart  [ND_Percent_meeting_the_standard_year_by_year_North_Dakota_schools.docx]
-ok   the research pack downloads with its sections  [5,328 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'report_card', 'roster', 'school']]
+ok   the research pack downloads with its sections  [4,604 rows, sections ['about', 'district_published', 'field_insight', 'growth_test', 'movement', 'mra', 'report_card', 'report_card_school']]
 skip pack count against the page  [no district with three Leader in Me and three comparison schools in the end year]
 skip look-alike mode  [no prospect district with three or more schools, or not a full page]
 ok   the grade filter lists the tested grades
 ok   choosing a grade re-renders the headline and names the grade  [In North Dakota grade 4 results, between 2021-22 and 2024-25, schools rose 1.4% on Percent meeting t]
-ok   whole-school measures switch off while a grade is chosen
+ok   whole-school measures switch off while a grade is chosen  [6 whole-school measures in the payload]
 ok   dark mode re-renders without errors
 ok   no horizontal overflow at 900px  [0px]
 ok   no horizontal overflow at 700px  [0px]
@@ -171,5 +230,61 @@ ok   the undated schools are listed by name in the payload
 ok   a territory page says so on the methods page
 
 ==========================================================================
-116 of 116 checks pass · 7 skipped
+125 of 125 checks pass · 9 skipped
 ==========================================================================
+
+$ python3 /home/claude/sdf/Build/states/nd_core_verify.py --work /home/claude/sdf/Build/work/ND
+
+North Dakota's own measures
+--------------------------------------------------------------------------
+ok   the crosswalk reaches every Leader in Me school on the page  [4 of 4]
+ok   the crosswalk reaches nearly every school on the page  [419 of 420]
+ok   NCES's own id pairs anchor the crosswalk  [425 pairs for 420 schools]
+ok   the state files' own school names agree with DOMO's on nearly every crosswalked school (the second audit of the join)  [423 of 424; 1 read one by one]
+ok   the district number in the state id names DOMO's district on nearly every crosswalked school  [422 of 422]
+ok   the state's attendance rate moves against DOMO's chronic absence on the crosswalked school-years (an independent check of the join)  [r = -0.96 on 1079 school-years]
+ok   no state id is on two schools  [425 pairs, 419 schools]
+ok   the Leader in Me schools the crosswalk cannot reach are named on the page, or every one is reached and the page says so
+ok   the methods page prints the reach with NCES named as the anchor
+ok   each Leader in Me school's state id sits in the pack's state ids  [2 Leader in Me schools]
+ok   attendance 2024-25: the pack's attendance_rate is the file's own value re-read from the CSV  [412 of 412 agree (need 350)]
+ok   attendance 2024-25: the rows' attendance rate equals the pack's value  [538 of 538 rows agree]
+ok   no exact 100% attendance rate reaches the pack or the rows
+ok   growth 2024-25 (ELA): the pack's growth_ela is the file's own value re-read from the CSV  [264 of 264 agree (need 200)]
+ok   growth 2024-25 (math): the pack's growth_math is the file's own value re-read from the CSV  [264 of 264 agree (need 200)]
+ok   growth 2024-25: the rows' ELA growth percentile equals the pack's value  [389 of 389 rows agree]
+ok   a growth row marked level 0 (fewer than ten students) carries no percentile in the pack  [0 such rows in 2024-25]
+ok   accountability pie 2024-25: the pack's acc_index is the file's own value re-read from the CSV  [411 of 411 agree (need 350)]
+ok   accountability pie 2024-25 (student engagement share): the pack's acc_engagement is the file's own value re-read from the CSV  [411 of 411 agree (need 350)]
+ok   an accountability row marked '< 10' carries no value in the pack  [280 such English learner rows in 2024-25]
+ok   Choice Ready 2024-25 (range midpoint): the pack's choice_ready is the file's own value re-read from the CSV  [121 of 121 agree (need 100)]
+ok   Choice Ready 2024-25 (range width): the pack's choice_ready_range is the file's own value re-read from the CSV  [121 of 121 agree (need 100)]
+ok   Choice Ready stays off the rows and carries a range width beside every midpoint
+ok   CTE course enrollments 2023-24: the pack's cte_course_enrollments is the file's own value re-read from the CSV  [103 of 103 agree (need 80)]
+ok   no 2024-25 CTE value reaches the pack (a partial posting, excluded by name)
+ok   attendance_rate sits in no closure year on the rows and in no year past the page's last  [[2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   growth_ela sits in no closure year on the rows and in no year past the page's last  [[2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   growth_math sits in no closure year on the rows and in no year past the page's last  [[2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   the pack carries no closure year and nothing past the page's last year  [[2014, 2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   the 2019-20 growth and accountability pie files are excluded by name and counted
+ok   growth carries no value in 2019-20 or 2020-21 anywhere
+ok   the Choice Ready demographic files and the pre-page CTE files are set aside by name  [Insights-GrowthRate-CSV-2019-2020-v20221118.csv: the 2019-20 growth file repeats every 2018-19 school figure under a new year label (no spring 2020 testing); Insights-AccountabilityPie-CSV-2019-2020-v]
+ok   every exclusion is counted on the cleaning audit
+ok   the cleaning audit counts the exact-100% attendance school-years the file carries
+ok   the page is a territory page and says so
+ok   no state card is drawn on a territory page
+ok   the methods page says no Leader in Me line is drawn on a North Dakota measure
+ok   attendance rate and the growth percentiles are measures in the rows, whole-school, for every school  [416 of 418 schools carry an attendance rate]
+ok   a whole-school measure is carried on both bands of a combined school
+ok   the growth percentiles stay on one scale (1 to 99) with 50 near the middle  [median 49.0]
+ok   the school-year-bands added for measures with no test rows are counted on the cleaning audit
+ok   the research pack's per-school North Dakota values are keyed to schools on the page  [3,942 records]
+ok   every pack key carries a label
+ok   every school with a state id on the page has it in the pack  [417 of 418]
+ok   the pack's published section carries the state's own attendance rate by year and the districts' rows  [10 state rows, 1444 rows in all, 146 districts mapped]
+ok   the pack carries the accountability, Choice Ready and CTE families
+ok   the banner names the attendance, growth and accountability files
+ok   the methods page carries the growth percentile's definition and the pie's composite caveat
+ok   the methods page owns the territory limit and the range caveat
+
+ALL NORTH DAKOTA CHECKS PASS

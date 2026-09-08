@@ -1,5 +1,5 @@
 
-$ python3 /home/claude/national/Build/build_payload_core.py --state RI --core /home/claude/national/corefolder --out /home/claude/national/Build/work/RI
+$ python3 /home/claude/sdf/Build/build_payload_core.py --state RI --core /home/claude/sdf/Core --out /home/claude/sdf/Build/work/RI --data /home/claude/sdf/Build/work/RI/data --extras ri_core_extras
 reading the core for Rhode Island ...
 [core] subjects: 19,917 school rows kept; dropped 9,157 rows with no school id and 337 with an id but no school record
 [core] Leader in Me roster: 0 rows
@@ -13,22 +13,49 @@ applying the cleaning rules ...
   7,399 school-year-band-subject rows · years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
   Leader in Me school-years counted: 0 of 0 reviewed
   no start date: 0 schools · dated exits: 0 (school-years after an exit with rows: 0) · aggregate 'All grades' rows used 831, skipped 101
-  proficiency = levels 3 and 4 on 69.9% of rows
+  achievement levels as measures: yes (four levels, numbered from the bottom; proficiency is the top 2; 69.5% of rows in years and subjects whose levels add up)
+  level values blanked on 6 year-subject cells that do not add up: 2014-15 ELA, 2014-15 Math, 2015-16 ELA, 2015-16 Math, 2016-17 ELA, 2016-17 Math
+  proficiency = levels 3 and 4 on 70.3% of rows
+folding in Rhode Island's own measures (ri_core_extras) ...
+  state files (resolved by pattern; the log names what was set aside):
+    accountability: 6 files, 2017-18 to 2024-25
+    attendance: 17 files, 2010-11 to 2024-25
+    discipline: 3 files
+    postsecondary: 8 files, 2017-18 to 2024-25
+    grades: 0 files
+    set aside: 2015SchoolCISSummary.pdf: the school classification summary exists only as a PDF (the pre-star classification system); named as available in that form, not read
+    set aside: 2016SchoolClassificationSummary.pdf: the school classification summary exists only as a PDF (the pre-star classification system); named as available in that form, not read
+    NCES directory: 353 federal-to-state id triples from the cache (8 CCD files unchanged)
+    RIDE workbooks: accountability 1,851 rows, attendance 8,732 rows, pivots 8,795 rows, discipline 17,126 rows, postsecondary 629 rows from the cache (workbooks unchanged)
+  RIDE measures per school-year: 2,791 school-years, 26 keys; closure-year values set aside 4,169; chronic_absent 2018-2025 (1,787 values); attendance_rate 2015-2025 (2,681 values); truancy 2015-2024 (2,356 values); oss_per100 2018-2025 (1,849 values); teacher_chronic_absent 2018-2025 (1,680 values); grad_rate_base 2017-2024 (293 values); college_going 2017-2024 (399 values)
+  set aside: pooled multi-year rates 119; truancy values above 100% 10 (Capt. G. Harold Hunt School (2014-15: 107.5%), Sheila Skip Nowell Leadership Academy (2016-17: 102.5%), Sheila Skip Nowell Leadership Academy (2017-18: 110.1%), Sheila Skip Nowell Leadership Academy (2019-20: 110.8%), Sheila Skip Nowell Leadership Academy (2020-21: 103.6%), Sheila Skip Nowell Leadership Academy (Central Cam (2015-16: 105.5%)); truancy rows the name join could not place 6 (Charette Charter School (Charette Charter), Feinstein High School (Providence), Frank D. Spaziano Elementary School Annex (Providence), Maisie E. Quinn Elementary School (West Warwick), Margaret I. Robertson School (Central Falls), Warwick Early Learning Center at John Brown Franci (Warwick)); postsecondary shells 93; attendance years before the page 1173
+  the 2024 attendance summary pivot agrees with the yearly files within 0.05 points on 3,993 of 4,080 school-years (differences by year: {'2012': 17, '2013': 4, '2014': 1, '2015': 2, '2016': 1, '2017': 2, '2018': 2, '2019': 1, '2020': 23, '2021': 34}); the yearly files are the source
+  crosswalk: NCES's state school code for each federal id, audited against the state files' own names and districts
+    311 of 311 schools carry a state code in NCES's directory; Leader in Me 0 of 0, comparison 311 of 311; 311 appear in at least one state file
+    names: the state files' own school name agrees with DOMO's on 310 of 311 crosswalked schools, and the state's district names DOMO's on 311 of 311; 0 triples re-pointed to a folded id; 0 shared codes settled; 0 schools carry more than one state code across the years
+    name disagreement: DOMO 'RINI Middle College' vs state 'RI Nurses Institute Middle College Charter High Sc' (28607)
+  value check of the join (files the map was not built from): DOMO's graduation rate is RIDE's base cohort rate within a point on 282 of 284 school-years (within 0.15 on 281; median difference 0.033); DOMO's enrollment against membership from the attendance file on 311 schools, r = 0.997, median size difference 1.5%
+  rows gain: attendance_rate on 3,100 school-year-bands, truancy on 2,743 school-year-bands, oss_per100 on 2,073 school-year-bands, teacher_chronic_absent on 1,946 school-year-bands, college_going on 357 school-year-bands; 0 school-years had no band to sit in
+  fill: chronic absence from RIDE on 1,716 school-years for 305 schools on the page (2017-18, 2018-19, 2021-22, 2022-23, 2023-24, 2024-25; DOMO carries 0 chronic-absence values for Rhode Island); graduation: DOMO has 348 secondary school-years, RIDE adds a rate on 3 more; no DOMO value is overwritten
+  per-school Rhode Island records for the pack: 2,571 (26 columns)
+  Rhode Island's measures on 3,104 school-year-bands: 2,777 joined to existing rows, 327 school-year-bands added with no test rows of their own
+  core measures filled from Rhode Island's own files where DOMO had none: chronic_absent 4,925 rows, grad_rate 3 rows
+  school type from NCES: Title I on 304 schools (181 yes), charter 43, magnet 0, alternative 2; Title I published 2017-2022, carried forward after
 building matched pairs, inside each band ...
   pairs 0  by band {'Primary': {'pairs': 0, 'unmatched': 0}, 'Secondary': {'pairs': 0, 'unmatched': 0}}
   MRA: 0 surveys · 0 schools · 0 sentinel values · 0 shells
   headline 2021-22 to 2024-25: {'y0': 2022, 'y1': 2025, 'lim_n': 0, 'comp_n': 269, 'lim_change': None, 'comp_change': 2.18, 'p': None} · without the 0 undated schools {'y0': 2022, 'y1': 2025, 'lim_n': 0, 'comp_n': 269, 'lim_change': None, 'comp_change': 2.18, 'p': None}
   roster: 0 counted, 0 exited, 0 not counted yet, 0 not counted
 
-wrote ri_payload.json  (2.9 MB, 7,399 rows) · page kind territory (0 Leader in Me schools on the headline)
-build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+wrote ri_payload.json  (5.0 MB, 7,726 rows) · page kind territory (0 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'fb6eaf7cb415'}
 
 $ python3 build2.py ri_payload.json RI_Dashboard.html RI_Methods.html
-payload 2.9 MB -> 0.21 MB gzip
-RI_Dashboard.html: 506 KB
-RI_Methods.html: 26 KB
+payload 5.0 MB -> 0.46 MB gzip
+RI_Dashboard.html: 884 KB
+RI_Methods.html: 46 KB
 
-$ python3 /home/claude/national/Build/verify_core.py --state RI --work /home/claude/national/Build/work/RI
+$ python3 /home/claude/sdf/Build/verify_core.py --state RI --work /home/claude/sdf/Build/work/RI
 
 --------------------------------------------------------------------------
 Tier 0 — install and input-value audit
@@ -78,10 +105,19 @@ ok   the roster section's exited count matches (a school with no start date stay
 ok   the headline sensitivity without the undated schools is on the methods page
 ok   size bands are the NCES categories in the payload's order
 ok   the poverty share rides on most rows for the look-alike caliper  [100%]
+ok   every offered measure is carried by at least one school-year
 ok   the composite flag keeps science, social studies and writing out of the no-filter view
 ok   the grade table lists tested grades in order and every school in it has a name
 ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [157 schools]
 ok   the grade table carries no school-year the rules dropped
+ok   the 4 achievement levels are measures of their own  [percent_below, percent_level2, percent_level3, percent_level4]
+ok   the level shares sum to 100 on the grade rows that carry them  [8,848 grade rows, 100.0% within 1.5 points]
+ok   the levels from the proficiency cut up add up to the proficiency rate  [cut at canonical level 3 of 4; 100.0% of grade rows within 1.5]
+ok   the grade table carries the level columns
+ok   the level labels carry the state's own numbering  [Level 1: below the standard; Level 2: approaching the standard; Level 3: meeting the standard; Level 4: exceeding the standard]
+ok   the levels at or above the standard count up, the levels below count down
+ok   the proficiency label names the levels it adds
+ok   years and subjects whose levels do not add up carry no level values  [6 cells set aside, 4,650 grade rows in them]
 ok   school names and start dates are in the payload for the pack
 skip MRA pack rows  [no surveys]
 ok   look-alike settings are in the payload with their rationale
@@ -105,34 +141,49 @@ ok   no console errors on load
 ok   chart c1 draws an svg or explains why
 ok   chart c2 draws an svg or explains why
 ok   the MRA card shows exactly when a trend line can be drawn
-ok   the Georgia discipline card stays hidden
-ok   the incidents card stays hidden (no state incident file)
-ok   the state extras card stays hidden (no state files)
+ok   the discipline card shows exactly when the payload carries a discipline trend  [payload has no discipline_ga]
+ok   the incidents card shows exactly when the payload carries an incident trend  [payload has no incidents]
+ok   the state extras card shows exactly when the payload carries state measures  [no state files]
 ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
 skip headline recompute  [fewer than two schools a side]
-ok   the district filter re-renders the headline  [In Providence schools, between 2021-22 and 2024-25, schools rose 4.3% on Percent meeting t]
+ok   the district filter re-renders the headline  [In Providence schools, between 2021-22 and 2024-25, schools rose 4.3% on Meeting or exceed]
+ok   the school type filter is offered with the payload's kinds  [Title I schools, Not Title I, Charter schools]
+ok   choosing 'Title I schools' narrows the view and names it  [171 of 311 schools; In Rhode Island Title I schools, between 2021-22 and 2024-25, schools rose 3.3% ]
+ok   every school in the 'Title I schools' view carries that attribute
+ok   Title I status is known for most schools on the page  [97.7%]
 ok   the Primary band filter re-renders without error
 ok   the Secondary band filter re-renders without error
 ok   measure 'percent_proficient' either draws or says why
+ok   measure 'percent_level4' either draws or says why
+ok   measure 'percent_level3' either draws or says why
+ok   measure 'percent_level2' either draws or says why
 ok   measure 'percent_below' either draws or says why
 ok   measure 'standard_score' either draws or says why
 ok   measure 'chronic_absent' either draws or says why
 ok   measure 'grad_rate' either draws or says why
+ok   measure 'attendance_rate' either draws or says why
+ok   measure 'truancy' either draws or says why
+ok   measure 'oss_per100' either draws or says why
+ok   measure 'teacher_chronic_absent' either draws or says why
+ok   measure 'college_going' either draws or says why
 skip matched view  [fewer than three pairs, or a territory page]
 ok   no console errors after the filter sweep
 ok   the insights tab hides the explore view
 ok   Providence generates cards or says there is nothing to report  [1 cards]
 ok   no console errors on the insights tab
-ok   export c1.pptx downloads, opens and carries the chart image  [89,300 bytes]
-ok   the pptx export is named for the state and chart  [RI_Percent_meeting_the_standard_year_by_year_Rhode_Island_schools.pptx]
-ok   export c1.docx downloads, opens and carries the chart image  [86,239 bytes]
-ok   the docx export is named for the state and chart  [RI_Percent_meeting_the_standard_year_by_year_Rhode_Island_schools.docx]
-ok   the research pack downloads with its sections  [8,128 rows, sections ['about', 'field_insight', 'growth_test', 'look_alike', 'movement', 'mra', 'report_card', 'school']]
+ok   the MRA tab is offered exactly when the payload carries surveys
+skip MRA tab  [no surveys]
+ok   export c1.pptx downloads, opens and carries the chart image  [89,322 bytes]
+ok   the pptx export is named for the state and chart  [RI_Meeting_or_exceeding_the_standard_levels_3_and_4_year_by_year_Rhode_Island_schools.pptx]
+ok   export c1.docx downloads, opens and carries the chart image  [88,590 bytes]
+ok   the docx export is named for the state and chart  [RI_Meeting_or_exceeding_the_standard_levels_3_and_4_year_by_year_Rhode_Island_schools.docx]
+ok   the research pack downloads with its sections  [22,179 rows, sections ['about', 'district_published', 'field_insight', 'growth_test', 'look_alike', 'movement', 'mra', 'report_card']]
 skip pack count against the page  [no district with three Leader in Me and three comparison schools in the end year]
 skip look-alike mode  [no prospect district with three or more schools, or not a full page]
 ok   the grade filter lists the tested grades
-ok   choosing a grade re-renders the headline and names the grade  [In Rhode Island grade 4 results, between 2021-22 and 2024-25, schools rose 4.8% on Percent meeting t]
-ok   whole-school measures switch off while a grade is chosen
+ok   choosing a grade re-renders the headline and names the grade  [In Rhode Island grade 4 results, between 2021-22 and 2024-25, schools rose 4.8% on Meeting or exceed]
+ok   the level measures stay on while a grade is chosen
+ok   whole-school measures switch off while a grade is chosen  [8 whole-school measures in the payload]
 ok   dark mode re-renders without errors
 ok   no horizontal overflow at 900px  [0px]
 ok   no horizontal overflow at 700px  [0px]
@@ -162,5 +213,72 @@ ok   the undated schools are listed by name in the payload
 ok   a territory page says so on the methods page
 
 ==========================================================================
-107 of 107 checks pass · 7 skipped
+130 of 130 checks pass · 8 skipped
 ==========================================================================
+
+$ python3 /home/claude/sdf/Build/states/ri_core_verify.py --work /home/claude/sdf/Build/work/RI
+
+Rhode Island's own measures
+--------------------------------------------------------------------------
+ok   the crosswalk reaches every Leader in Me school on the page (none is on the Rhode Island roster)  [0 of 0]
+ok   the crosswalk reaches nearly every school on the page  [311 of 311]
+ok   NCES's own id triples anchor the crosswalk  [311 triples for 311 schools]
+ok   the state files' own school names agree with DOMO's on nearly every crosswalked school (the second audit of the join)  [310 of 311; 1 read one by one]
+ok   the state's district names DOMO's district on nearly every crosswalked school  [311 of 311]
+ok   DOMO's graduation rate is RIDE's base cohort rate, keyed on the class year, within a point on nearly every school-year both carry (an independent check of the join)  [282 of 284 on [2017, 2018, 2022, 2023, 2024]]
+ok   DOMO's enrollment tracks the attendance file's membership on the crosswalked schools  [r = 0.997 on 311 schools]
+ok   no state code is on two schools  [311 triples, 311 schools]
+ok   the methods page prints the reach with NCES named as the anchor and the second audit
+ok   the page says no Leader in Me line is drawn, and names the roster as empty
+ok   accountability 2024-25 (chronic absence): the pack's chronic_absent is the workbook's own value re-read from the xlsx  [283 of 283 agree (need 250)]
+ok   accountability 2024-25 (suspensions per 100 students): the pack's oss_per100 is the workbook's own value re-read from the xlsx  [283 of 283 agree (need 250)]
+ok   accountability 2024-25 (teacher chronic absence): the pack's teacher_chronic_absent is the workbook's own value re-read from the xlsx  [279 of 279 agree (need 250)]
+ok   accountability 2024-25 (base graduation rate, keyed on the class of 2024): the pack's grad_rate_base is the workbook's own value re-read from the xlsx  [59 of 59 agree (need 40)]
+ok   accountability 2024-25 (star rating): the pack's star_rating is the workbook's own value re-read from the xlsx  [283 of 283 agree (need 250)]
+ok   a rate RIDE pools over two or three years carries no value in the pack  [2 pooled values in 2024-25]
+ok   accountability 2024-25: the rows' chronic-absence measure is RIDE's value (DOMO carries none for Rhode Island)  [283 of 283 rows agree]
+ok   accountability 2024-25: the rows' suspension measure equals the pack's value  [342 of 342]
+ok   chronic absence on the rows sits only in the accountability years (2017-18, 2018-19, 2021-22 on) and never in a closure year  [[2018, 2019, 2022, 2023, 2024, 2025]]
+ok   attendance 2024-25: the pack's attendance_rate is the workbook's own value re-read from the xlsx  [283 of 283 agree (need 250)]
+ok   attendance 2024-25: the rows' attendance rate equals the pack's value  [342 of 342]
+ok   truancy 2023-24 (the summary pivot, joined by name within district): the pack's truancy is the workbook's own value re-read from the xlsx  [283 of 283 agree (need 200)]
+ok   no truancy value above 100% reaches the pack or the rows
+ok   postsecondary (class of 2024): the pack's college_going is the workbook's own value re-read from the xlsx  [61 of 61 agree (need 40)]
+ok   college-going is keyed to the graduating class, sits on the secondary band, and the closure classes are out  [[2017, 2018, 2019, 2022, 2023, 2024]]
+ok   an empty-shell postsecondary row carries no college-going value  [0 shells in the class of 2019 file]
+ok   CRDC 2021-22 (students suspended out of school, share of enrollment): the pack's crdc_oss_students is the workbook's own value re-read from the xlsx  [287 of 287 agree (need 200)]
+ok   the CRDC rates sit in the pack only, keyed on the CRDC year, with 2020-21 out
+ok   graduation: DOMO's own rate stands on every secondary school-year DOMO carries (never overwritten)  [348 of 348]
+ok   graduation: the school-years DOMO lacks carry RIDE's base cohort rate, and the audit counts them  [3 of 3 filled school-years; audit 3]
+ok   graduation sits on secondary rows only
+ok   attendance_rate sits in no closure year on the rows, not before the page's first year and not past its last  [[2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   truancy sits in no closure year on the rows, not before the page's first year and not past its last  [[2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024]]
+ok   oss_per100 sits in no closure year on the rows, not before the page's first year and not past its last  [[2018, 2019, 2022, 2023, 2024, 2025]]
+ok   teacher_chronic_absent sits in no closure year on the rows, not before the page's first year and not past its last  [[2018, 2019, 2022, 2023, 2024, 2025]]
+ok   college_going sits in no closure year on the rows, not before the page's first year and not past its last  [[2017, 2018, 2019, 2022, 2023, 2024]]
+ok   chronic_absent sits in no closure year on the rows, not before the page's first year and not past its last  [[2018, 2019, 2022, 2023, 2024, 2025]]
+ok   grad_rate sits in no closure year on the rows, not before the page's first year and not past its last  [[2017, 2018, 2019, 2022, 2023, 2024]]
+ok   the pack carries no closure year, nothing before the page's first year and nothing past its last  [[2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   the attendance workbooks before the page's first year are counted as not carried
+ok   the school classification PDFs are named as available in that form and not read
+ok   every exclusion is counted on the cleaning audit
+ok   the pooled-rate count on the cleaning audit is the audit's own
+ok   the page is a territory page and says so
+ok   no state card is drawn on a territory page
+ok   no Leader in Me row sits on the page (nothing to compare)
+ok   the five Rhode Island measures and the two fills are on the page as whole-school measures
+ok   attendance reaches nearly every school on the page  [311 of 311]
+ok   a whole-school measure is carried on both bands of a combined school
+ok   the school-year-bands added for measures with no test rows are counted on the cleaning audit
+ok   chronic absence and graduation are described as RIDE-filled in the measure text
+ok   the research pack's per-school Rhode Island values are keyed to schools on the page  [2,571 records]
+ok   every pack key carries a label
+ok   every school with a state code on the page has it in the pack  [311 of 311]
+ok   the pack's published section carries the state's own attendance rate by year and the districts' rows  [9 state rows, 367 rows in all, 62 districts mapped]
+ok   the pack carries the star rating, growth indexes, Diploma Plus measures, the postsecondary split and the CRDC rates
+ok   the banner names the accountability, attendance and postsecondary files
+ok   the methods page says the suspension rate counts suspensions, not students, and that the truancy join runs by name
+ok   the methods page carries the fill rule and the pooled-rate rule
+ok   the methods page owns the territory limit
+
+ALL RHODE ISLAND CHECKS PASS
