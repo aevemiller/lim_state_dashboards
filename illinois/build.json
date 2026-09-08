@@ -2,8 +2,8 @@
  "state": "IL",
  "name": "Illinois",
  "folder": "illinois",
- "built": "2026-09-04",
- "seconds": 80,
+ "built": "2026-09-08",
+ "seconds": 261,
  "builder": "build_payload_core.py",
  "page_kind": "full",
  "lim_headline_n": 80,
@@ -17,45 +17,53 @@
   "subjects": {
    "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
    "bytes": 146145669,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   },
   "roster": {
    "file": "LIM Schools (Current_Active) (11).csv",
    "bytes": 12784777,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   },
   "comparison": {
-   "file": "All Other Schools (Non-LiM & Exited).csv",
-   "bytes": 132812308,
-   "modified": "2026-09-03"
+   "file": "Archive.zip/All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-04"
   },
   "mra": {
    "file": "All MRA Surveys.csv",
    "bytes": 2466245,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   }
  },
  "state_pull": {
   "subjects": {
-   "path": "/home/claude/national/Build/work/IL/data/Subjects_Tests_FINAL (8).csv",
+   "path": "/home/claude/sdf/Build/work/IL/data/Subjects_Tests_FINAL (8).csv",
    "rows": 259108
   },
   "roster": {
-   "path": "/home/claude/national/Build/work/IL/data/LIM Schools (Current_Active) (11).csv",
+   "path": "/home/claude/sdf/Build/work/IL/data/LIM Schools (Current_Active) (11).csv",
    "rows": 1454
   },
   "comparison": {
-   "path": "/home/claude/national/Build/work/IL/data/All Other Schools (Non-LiM & Exited).csv",
+   "path": "/home/claude/sdf/Build/work/IL/data/All Other Schools (Non-LiM & Exited).csv",
    "rows": 31953
   },
   "mra": {
-   "path": "/home/claude/national/Build/work/IL/data/All MRA Surveys.csv",
+   "path": "/home/claude/sdf/Build/work/IL/data/All MRA Surveys.csv",
    "rows": 158
   }
  },
- "state_files": [],
+ "state_files": [
+  "Academic Growth_IL/",
+  "Climate Survey_IL/",
+  "PULL-MANIFEST_IL.csv",
+  "Postsecondary Outcomes_IL/",
+  "Report Card Data Set_IL/",
+  "Teacher Retention_IL/"
+ ],
+ "extras_module": "il_core_extras",
  "verified": true,
- "dashboard_bytes": 3929125,
+ "dashboard_bytes": 6678137,
  "audits": {
   "levels": {
    "rows": 239038,
@@ -64,7 +72,25 @@
    "level 4 alone": 31.1,
    "100 minus level 1": 0.1,
    "best": "level 4 alone",
-   "levels_sum_to_100_share": 35.6
+   "levels_sum_to_100_share": 35.6,
+   "structure": "no combination of the reported levels reproduces the proficiency rate",
+   "n_levels": null,
+   "proficient_from": null,
+   "reversed_numbering": null,
+   "coverage": 0.0,
+   "years_ok": null,
+   "years_out": null,
+   "cells_out": null,
+   "latest_year_ok": null,
+   "reason": "no combination of the reported levels reproduces PercentMetStandard on more than 6% of rows (a five-level state whose export carries four columns, usually)",
+   "combination_shares": {
+    "levels 3 and 4": 6.2,
+    "levels 2, 3 and 4": 0.6,
+    "levels 1 and 2 (1 the top)": 2.4,
+    "levels 1, 2 and 3 (1 the top)": 1.6
+   },
+   "cells": [],
+   "levels_as_measures": false
   },
   "poverty": {
    "lim": {

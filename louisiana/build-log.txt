@@ -1,5 +1,5 @@
 
-$ python3 /home/claude/national/Build/build_payload_core.py --state LA --core /home/claude/national/corefolder --out /home/claude/national/Build/work/LA
+$ python3 /home/claude/sdf/Build/build_payload_core.py --state LA --core /home/claude/sdf/Core --out /home/claude/sdf/Build/work/LA --data /home/claude/sdf/Build/work/LA/data --extras la_core_extras
 reading the core for Louisiana ...
 [core] subjects: 113,889 school rows kept; dropped 15,888 rows with no school id and 2,737 with an id but no school record
 [core] Leader in Me roster: 1,813 rows
@@ -16,23 +16,49 @@ applying the cleaning rules ...
   43,700 school-year-band-subject rows · years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
   Leader in Me school-years counted: 680 of 1764 reviewed
   no start date: 3 schools · dated exits: 73 (school-years after an exit with rows: 122) · aggregate 'All grades' rows used 0, skipped 2
-  proficiency = levels 2, 3 and 4 on 2.3% of rows
+  achievement levels as measures: no (four levels, numbered from the top; proficiency is the top 3; 5.7% of rows in years and subjects whose levels add up; not offered because the levels add up on too few rows to stand as measures)
+  level values blanked on 45 year-subject cells that do not add up: 2014-15 ELA, 2014-15 Math, 2014-15 Science, 2014-15 Social Studies, 2015-16 ELA, 2015-16 Math, 2015-16 Science, 2016-17 ELA ...
+  proficiency = levels 2, 3 and 4 on 5.6% of rows
   statewide jump: Math 2018->2019: 72.3 -> 63.5 (-8.8)
+folding in Louisiana's own measures (la_core_extras) ...
+  state files: School Performance Scores_LA 11, Academic Growth_LA 7, Attendance_LA 14, Discipline_LA 11, Cohort Credentials_LA 10, Postsecondary Enrollment_LA 17, CCR_LA 12; 53 files set aside (subgroup, scholarship, simulation, AP, ACT subgroup)
+    NCES directory: 1,542 federal-to-site id pairs from the cache (8 CCD files unchanged)
+    attendance: 16,230 site-years from the cache (14 files unchanged)
+    discipline: 15,493 site-years from the cache (11 files unchanged)
+    SPS: 12,598 site-years from the cache (11 files unchanged)
+    LEAP progress: 9,555 site-years from the cache (7 files unchanged)
+    cohort graduation: 3,523 site-years from the cache (10 files unchanged)
+    college enrollment: 3,123 site-years from the cache (17 files unchanged)
+    ACT: 3,822 site-years from the cache (12 files unchanged)
+  attendance 2014-15 to 2025-26 (excluded by name: 2014-15 a ceiling on 43.4% of sites; 2020-21 a copy of 2018-19 (100.0% of 1,367 sites identical)); discipline 2014-15 to 2024-25 (excluded by name: the 2014-15 discipline file masks every count within ten students and writes every rate under 5% as '<5%' (762 of 1,426 sites carry no out-of-school rate)); SPS 2015 to 2025; LEAP progress 2018 to 2025; cohort classes of 2016 to 2025; college classes of 2016 to 2024; ACT classes of 2015 to 2025
+  crosswalk: NCES's site code for each federal id, audited against the state files' own names
+    1,369 of 1,385 schools carry a site code (ccd 1319, name 46, name (renumbered predecessor) 4); Leader in Me 196 of 196, comparison 1,173 of 1,189; 1,369 appear in at least one Louisiana file
+    names: the state files' own site name agrees with DOMO's on 1,366 of 1,369 crosswalked schools, the system name with the page's district on 1,274 of 1,326; 0 pairs re-pointed to a folded id; 0 shared sites settled; 50 schools joined by name alone, 8 refused
+  value check of the join (files the map was not built from): the state's cohort graduation rate equals DOMO's within 0.06 on 100.0% of 1,345 school-years (2017-18, 2018-19, 2021-22, 2022-23, 2023-24, 2024-25); DOMO carries a value on 0 of the 619 cells the state writes '>95'; the attendance rate against DOMO's chronic absence on 5,534 school-years, r = -0.94
+  rows gain: attendance_rate on 12,928 school-year-bands (185 Leader in Me schools ever), pct_oss on 12,935 school-year-bands (185 Leader in Me schools ever), pct_iss on 12,935 school-year-bands (185 Leader in Me schools ever), sps on 9,195 school-year-bands (177 Leader in Me schools ever), progress_index on 9,176 school-year-bands (177 Leader in Me schools ever), college_enroll on 2,170 school-year-bands (21 Leader in Me schools ever); 0 school-years had no band to sit in
+  graduation fill (only where DOMO has none): 2015-16 255 high schools (46 '>95' cells left blank, as DOMO leaves them); 2016-17 246 high schools (59 '>95' cells left blank, as DOMO leaves them); DOMO's own years (2017-18, 2018-19, 2021-22, 2022-23, 2023-24, 2024-25) are untouched
+  card: 10 Louisiana measures, each group on each year's own membership; 85 Leader in Me school-years in 2025-26 carry the 2024-25 status forward
+  reach: attendance 196 of 196 Leader in Me and 1,120 of 1,189 comparison schools; discipline 196 of 196 Leader in Me and 1,117 of 1,189 comparison schools; sps 196 of 196 Leader in Me and 1,069 of 1,189 comparison schools; growth 195 of 196 Leader in Me and 1,085 of 1,189 comparison schools; cohort 22 of 196 Leader in Me and 316 of 1,189 comparison schools; postsec 24 of 196 Leader in Me and 324 of 1,189 comparison schools; act 24 of 196 Leader in Me and 338 of 1,189 comparison schools
+  per-school records for the pack: 14,459 school-years
+  Louisiana's measures on 12,952 school-year-bands: 11,841 joined to existing rows, 1,111 school-year-bands added with no test rows of their own
+  core measures filled from Louisiana's own files where DOMO had none: grad_rate 2,516 rows
+  school type from NCES: Title I on 1,266 schools (975 yes), charter 135, magnet 44, alternative 8; Title I published 2017-2022, carried forward after
+  funders: 104 Louisiana schools carry a funding source (103 on the page; Kern 10, 9 on the page); latest non-blank year per school
 building matched pairs, inside each band ...
   pairs 106  by band {'Primary': {'pairs': 65, 'unmatched': 0}, 'Secondary': {'pairs': 41, 'unmatched': 0}}
   MRA: 210 surveys · 100 schools · 613 sentinel values · 15 shells
   headline 2021-22 to 2024-25: {'y0': 2022, 'y1': 2025, 'lim_n': 97, 'comp_n': 910, 'lim_change': 1.32, 'comp_change': 2.03, 'p': 0.361} · without the 18 undated schools {'y0': 2022, 'y1': 2025, 'lim_n': 86, 'comp_n': 910, 'lim_change': 0.92, 'comp_change': 2.03, 'p': 0.152}
-  roster: 70 counted, 109 exited, 14 not counted yet, 3 not counted
+  roster: 81 counted, 109 exited, 3 not counted yet, 3 not counted
 
-wrote la_payload.json  (18.3 MB, 43,700 rows) · page kind full (97 Leader in Me schools on the headline)
-build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+wrote la_payload.json  (27.9 MB, 44,811 rows) · page kind full (97 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'fb6eaf7cb415'}
 
 $ python3 build2.py la_payload.json LA_Dashboard.html LA_Methods.html
-payload 18.3 MB -> 0.94 MB gzip
-LA_Dashboard.html: 1467 KB
-LA_Methods.html: 32 KB
+payload 27.9 MB -> 1.67 MB gzip
+LA_Dashboard.html: 2456 KB
+LA_Methods.html: 56 KB
 
-$ python3 /home/claude/national/Build/verify_core.py --state LA --work /home/claude/national/Build/work/LA
+$ python3 /home/claude/sdf/Build/verify_core.py --state LA --work /home/claude/sdf/Build/work/LA
 
 --------------------------------------------------------------------------
 Tier 0 — install and input-value audit
@@ -75,24 +101,26 @@ ok   no Leader in Me row counted before its full year was finished  [0 rows]
 ok   schools with no start date appear in neither group  [3 schools]
 ok   the count of undated schools is on the methods page
 ok   no row survives after a school's dated exit, in either group  [0 rows]
-ok   exited schools keep their true Leader in Me years  [101 exited schools with counted years]
+ok   exited schools keep their true Leader in Me years  [104 exited schools with counted years]
 ok   the exit counts on the methods page match the rule  [109 exited (3 from DOMO's flags)]
 ok   lim_exit carries every exited school and nothing else
 ok   the roster section lists every roster school once
-ok   the roster section's exited count matches (a school with no start date stays 'not counted')  [{'exited': 109, 'counted': 70, 'not counted yet': 14, 'not counted': 3}]
+ok   the roster section's exited count matches (a school with no start date stays 'not counted')  [{'exited': 109, 'counted': 81, 'not counted yet': 3, 'not counted': 3}]
 ok   an exited school's reason names its expiration and the grace rule, or DOMO's own flag
 ok   the headline sensitivity without the undated schools is on the methods page
 ok   size bands are the NCES categories in the payload's order
 ok   the poverty share rides on most rows for the look-alike caliper  [98%]
+ok   every offered measure is carried by at least one school-year
 ok   the composite flag keeps science, social studies and writing out of the no-filter view
 ok   the grade table lists tested grades in order and every school in it has a name
 ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [575 schools]
 ok   the grade table carries no school-year the rules dropped
+ok   no level measure is offered when the level structure is unconfirmed  [the levels add up on too few rows to stand as measures]
 ok   school names and start dates are in the payload for the pack
 ok   MRA by-school rows exist for the pack
 ok   the MRA respondent map names a group or a blend for every measure
 ok   look-alike settings are in the payload with their rationale
-ok   a Leader in Me school's pre-start years count in the comparison group  [3,840 rows]
+ok   a Leader in Me school's pre-start years count in the comparison group  [3,909 rows]
 ok   Lighthouse schools are inside the Leader in Me family
 ok   combined-grade schools appear in both bands  [498 schools]
 ok   the school count never exceeds the band-slice count  [1007 schools vs 1299 band slices]
@@ -115,19 +143,25 @@ ok   movers are built on ten or more schools each
 Tier 2 — behaviour in a real browser
 --------------------------------------------------------------------------
 ok   the page loads and the headline renders
-ok   load time is workable  [0.6s]
+ok   load time is workable  [1.1s]
 ok   no console errors on load
 ok   chart c1 draws an svg or explains why
 ok   chart c2 draws an svg or explains why
 ok   the MRA card shows exactly when a trend line can be drawn
-ok   the Georgia discipline card stays hidden
-ok   the incidents card stays hidden (no state incident file)
-ok   the state extras card stays hidden (no state files)
+ok   the discipline card shows exactly when the payload carries a discipline trend  [payload has no discipline_ga]
+ok   the incidents card shows exactly when the payload carries an incident trend  [payload has no incidents]
+ok   the state extras card shows exactly when the payload carries state measures  [10 state measures]
+ok   every state measure on the card draws a Leader in Me and a comparison line
 ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
 ok   the headline p recomputes offline  [page 0.3610 scipy 0.3610 · window 2022-2025 · LiM n=97 mean +1.32 · comparison n=910 mean +2.03]
 ok   the headline counts schools, not band slices  [page 1007 vs offline 1007 on 2022-2025]
 ok   the page's Leader in Me count is the builder's  [97 vs 97]
 ok   the district filter re-renders the headline  [In Jefferson Parish schools, between 2021-22 and 2024-25, Leader in Me schools rose 9.9% o]
+ok   the school type filter is offered with the payload's kinds  [Title I schools, Not Title I, Charter schools, Magnet schools, Alternative schools, Kern Family Foundation schools]
+ok   choosing 'Title I schools' narrows the view and names it  [933 of 1379 schools; In Louisiana Title I schools, between 2021-22 and 2024-25, Leader in Me schools ]
+ok   every school in the 'Title I schools' view carries that attribute
+ok   'Kern Family Foundation schools' narrows the Leader in Me side only and keeps the comparison side whole  [Not enough schools match these filters to compare anything yet. Remove a filter on the left and it w]
+ok   Title I status is known for most schools on the page  [91.8%]
 ok   the Primary band filter re-renders without error
 ok   the Secondary band filter re-renders without error
 ok   measure 'percent_proficient' either draws or says why
@@ -135,30 +169,53 @@ ok   measure 'percent_below' either draws or says why
 ok   measure 'standard_score' either draws or says why
 ok   measure 'chronic_absent' either draws or says why
 ok   measure 'grad_rate' either draws or says why
+ok   measure 'attendance_rate' either draws or says why
+ok   measure 'pct_oss' either draws or says why
+ok   measure 'pct_iss' either draws or says why
+ok   measure 'sps' either draws or says why
+ok   measure 'progress_index' either draws or says why
+ok   measure 'college_enroll' either draws or says why
 ok   the matched toggle re-renders the headline  [In Louisiana schools (matched to similar schools only), between 2021-22 and 2024-25, Leade]
 ok   the matched view shrinks or equals the Leader in Me count  [47 matched]
 ok   no console errors after the filter sweep
 ok   the insights tab hides the explore view
-ok   Jefferson Parish generates cards or says there is nothing to report  [6 cards]
+ok   Jefferson Parish generates cards or says there is nothing to report  [7 cards]
 ok   the insights tab uses the same unit and window as the explore tab  [{'p': 0.36100740955392796, 'n1': 97, 'n2': 910}]
 ok   no console errors on the insights tab
+ok   the MRA tab is offered exactly when the payload carries surveys
+ok   the MRA tab shows its own view and sidebar and hides the explore ones
+ok   the MRA summary renders a sentence  [Across 58 Louisiana Leader in Me schools surveyed in 2024-25, Leadership averaged 75.8 on the MRA sc]
+ok   MRA chart c6 draws an svg or explains why
+ok   MRA chart c7 draws an svg or explains why
+ok   MRA chart c10 draws an svg or explains why
+ok   the measure picker offers every MRA measure with data  [37 options, 37 measures with data, 37 in the catalogue]
+ok   the MRA paired test recomputes offline  [page 0.0553 scipy 0.0553 on 56 schools]
+ok   the MRA latest-year school count recomputes offline  [page 58 vs offline 58]
+ok   the MRA same-schools count is every school surveyed more than once  [page 56 vs offline 56]
+ok   choosing the submeasure 'Personal Effectiveness' re-renders the MRA summary  [Across 53 Louisiana Leader in Me schools surveyed in 2024-25, Personal Effectiveness avera]
+ok   the MRA district filter narrows to St. Tammany Parish's surveyed schools  [50 of 100 schools]
+ok   the MRA school type filter keeps only schools with that trait  [title1_yes]
+ok   the same-schools switch keeps only schools surveyed at both ends
+ok   no console errors on the MRA tab
+ok   the MRA view downloads one row per school, year and measure  [5,452 rows]
+ok   leaving the MRA tab restores the explore view
 ok   export c1.pptx downloads, opens and carries the chart image  [152,079 bytes]
 ok   the pptx export is named for the state and chart  [LA_Percent_meeting_the_standard_year_by_year_Louisiana_schools.pptx]
-ok   export c1.docx downloads, opens and carries the chart image  [149,809 bytes]
+ok   export c1.docx downloads, opens and carries the chart image  [153,251 bytes]
 ok   the docx export is named for the state and chart  [LA_Percent_meeting_the_standard_year_by_year_Louisiana_schools.docx]
-ok   the research pack downloads with its sections  [20,034 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'report_card', 'roster', 'school']]
+ok   the research pack downloads with its sections  [36,353 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'report_card', 'report_card_school', 'roster']]
 ok   the pack's Leader in Me count for the district is the page's  [5 vs 5]
-ok   look-alike mode rewrites the headline around the anchor district, or says nothing matched  [In Louisiana schools like Livingston Parish’s, between 2021-22 and 2024-25, Leader in Me schools fell 1.0% on Percent me]
-ok   the look-alike box reports both counts or says why not  [Schools like Livingston Parish’s: 25 Leader in Me schools and 132 comparison schools look like Livingston Parish’s 41 schools with results in these years (each ]
+ok   look-alike mode rewrites the headline around the anchor district, or says nothing matched  [In Louisiana schools like Livingston Parish’s, between 2021-22 and 2024-25, Leader in Me schools fell 0.4% on Percent me]
+ok   the look-alike box reports both counts or says why not  [Schools like Livingston Parish’s: 22 Leader in Me schools and 111 comparison schools look like Livingston Parish’s 41 schools with results in these years (each ]
 ok   the matched switch is disabled while an anchor is set
 ok   no console errors in look-alike mode
-ok   the look-alike headline p recomputes offline  [p=0.8169]
+ok   the look-alike headline p recomputes offline  [p=0.9446]
 ok   the anchor's own schools are never inside the look-alike groups
-ok   the school list downloads with one row per school  [66 rows, 0 same-name pairs]
+ok   the school list downloads with one row per school  [63 rows, 0 same-name pairs]
 ok   the school list carries traits and change columns
 ok   the grade filter lists the tested grades
 ok   choosing a grade re-renders the headline and names the grade  [In Louisiana grade 4 results, between 2021-22 and 2024-25, Leader in Me schools rose 7.0% on Percent]
-ok   whole-school measures switch off while a grade is chosen
+ok   whole-school measures switch off while a grade is chosen  [9 whole-school measures in the payload]
 ok   dark mode re-renders without errors
 ok   no horizontal overflow at 900px  [0px]
 ok   no horizontal overflow at 700px  [0px]
@@ -190,5 +247,81 @@ ok   a statewide jump is flagged on the methods page
   HEADLINE (statewide, 2022-2025, no filters): Leader in Me +1.32 pts (n=97) vs comparison +2.03 pts (n=910), p=0.3610 -> not significant
 
 ==========================================================================
-136 of 136 checks pass
+167 of 167 checks pass
 ==========================================================================
+
+$ python3 /home/claude/sdf/Build/states/la_core_verify.py --work /home/claude/sdf/Build/work/LA
+
+Louisiana's own measures
+--------------------------------------------------------------------------
+ok   the crosswalk reaches nearly every Leader in Me school  [196 of 196]
+ok   every reached Leader in Me school appears in at least one Louisiana file  [196 of 196]
+ok   the crosswalk is anchored on NCES's own id pairs (one site per federal id, shared only with a renumbered predecessor)  [1,319 NCES pairs of 1,369 reached; 4 sites shared with a renumbered predecessor]
+ok   the second-way audit: the state files' own school names agree with DOMO's on nine crosswalked schools in ten  [1,366 of 1,369]
+ok   the value check: the state's cohort graduation rate equals DOMO's on the same school-years  [100.0% of 1,345 within 0.06]
+ok   the value check: the state's attendance rate runs against DOMO's chronic absence  [r = -0.94 on 5,534]
+ok   the Louisiana row measures are offered on the page  [attendance_rate, college_enroll, pct_iss, pct_oss, progress_index, sps]
+ok   sps is carried by counted school-years  [25,942 rows]
+ok   pct_oss is carried by counted school-years  [37,738 rows]
+ok   progress_index is carried by counted school-years  [25,902 rows]
+ok   attendance_rate is carried by counted school-years  [37,754 rows]
+ok   pct_iss is carried by counted school-years  [37,738 rows]
+ok   college_enroll is carried by counted school-years  [9,618 rows]
+ok   the look-alike behavior measure is the out-of-school suspension rate
+ok   the excluded attendance years are the ceiling year and the copied year  [[2015, 2021]]
+ok   the excluded discipline year is the masked 2014-15 file  [[2015]]
+ok   no attendance rate sits on an excluded or closure year in the rows  [years [2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   no suspension rate sits on the masked 2014-15 file or a closure year in the rows  [years [2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   the SPS in the rows is the 2018 formula only (no old-formula year, no simulated year)  [years [2018, 2019, 2022, 2023, 2024, 2025]]
+ok   the SPS values in the rows sit on the 0-150 scale  [max 138.2]
+ok   Student attendance rate: no excluded or closure year on the card  [years [2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025, 2026]]
+ok   Out-of-school suspension rate: no excluded or closure year on the card  [years [2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   School Performance Score (0-150): no excluded or closure year on the card  [years [2018, 2019, 2022, 2023, 2024, 2025]]
+ok   Schools graded A or B: no excluded or closure year on the card  [years [2018, 2019, 2022, 2023, 2024, 2025]]
+ok   Progress index (0-150): no excluded or closure year on the card  [years [2018, 2019, 2022, 2023, 2024, 2025]]
+ok   Tests showing top growth (LEAP 2025 progress): no excluded or closure year on the card  [years [2018, 2019, 2022, 2023, 2024, 2025]]
+ok   Graduates earning a Basic or Advanced credential: no excluded or closure year on the card  [years [2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   Graduates enrolled in college the first fall: no excluded or closure year on the card  [years [2016, 2017, 2018, 2019, 2022, 2023, 2024]]
+ok   College enrollees still enrolled a year later: no excluded or closure year on the card  [years [2016, 2017, 2018, 2019, 2022, 2023]]
+ok   ACT composite score: no excluded or closure year on the card  [years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   the graduation fill touches only class years DOMO lacks  [filled [2016, 2017]; DOMO [2018, 2019, 2022, 2023, 2024, 2025]]
+ok   DOMO's own graduation years are untouched (they equal the state's file, as they did before the fill)  [1345 of 1345]
+ok   the filled years carry the state's own rate  [499 school-years]
+ok   a cell the state writes '>95' carries no value in the rows (read as DOMO reads it)  [0 of 845 carry a value]
+ok   attendance 2024-25: the rows carry the state's own rate for a Leader in Me school  [site 001014: file 92.4, page 92.4 (2024-2025-school-district-state-attendance-rates.xlsx)]
+ok   discipline 2024-25: the rows carry count / cumulative enrollment for a Leader in Me school  [site 001014: file 2.78, page 2.78 (2024-2025-school-district-state-discipline-rates.xlsx)]
+ok   SPS 2025: the rows carry the state's own score and progress index for a Leader in Me school  [site 001014: file 84.3/98.7, page 84.3/98.7 (2025-school-performance-scores.xlsx)]
+ok   LEAP progress 2025: the pack carries the mean of the state's ELA and math top-growth shares  [site 001001: file 24.5, pack 24.5 (2025-leap-2025-progress-school-summary.xlsx)]
+ok   cohort class of 2025: the pack carries the state's credential rate for a Leader in Me high school  [site 001005: file 72.1, pack 72.1 (2025-school-cohort-graduation-and-credential-rate-summary.xlsx)]
+ok   college enrollment class of 2024: the rows carry the state's share for a Leader in Me high school  [site 001005: file 41.4, page 41.4 (2023-2024-college-enrollment-with-subgroups.xlsx)]
+ok   ACT class of 2025: the pack carries the state's composite for a Leader in Me high school  [site 001005: file 17.1, pack 17.1 (act-class-of-2025.xlsx)]
+ok   the card's Leader in Me membership is the headline's (every counted school-year is a Leader in Me row on the page)  [0 stray of 640]
+ok   no Leader in Me school sits on a card's comparison line in a year it is counted  [0 stray]
+ok   Student attendance rate: the Leader in Me point in 2025-26 rests on at least three counted schools  [n=85]
+ok   Student attendance rate: every point on the card rests on at least three schools
+ok   Out-of-school suspension rate: the Leader in Me point in 2024-25 rests on at least three counted schools  [n=113]
+ok   Out-of-school suspension rate: every point on the card rests on at least three schools
+ok   School Performance Score (0-150): the Leader in Me point in 2024-25 rests on at least three counted schools  [n=107]
+ok   School Performance Score (0-150): every point on the card rests on at least three schools
+ok   Schools graded A or B: the Leader in Me point in 2024-25 rests on at least three counted schools  [n=107]
+ok   Schools graded A or B: every point on the card rests on at least three schools
+ok   Progress index (0-150): the Leader in Me point in 2024-25 rests on at least three counted schools  [n=107]
+ok   Progress index (0-150): every point on the card rests on at least three schools
+ok   Tests showing top growth (LEAP 2025 progress): the Leader in Me point in 2024-25 rests on at least three counted schools  [n=112]
+ok   Tests showing top growth (LEAP 2025 progress): every point on the card rests on at least three schools
+ok   Graduates earning a Basic or Advanced credential: the Leader in Me point in 2024-25 rests on at least three counted schools  [n=10]
+ok   Graduates earning a Basic or Advanced credential: every point on the card rests on at least three schools
+ok   Graduates enrolled in college the first fall: the Leader in Me point in 2023-24 rests on at least three counted schools  [n=19]
+ok   Graduates enrolled in college the first fall: every point on the card rests on at least three schools
+ok   College enrollees still enrolled a year later: the Leader in Me point in 2022-23 rests on at least three counted schools  [n=11]
+ok   College enrollees still enrolled a year later: every point on the card rests on at least three schools
+ok   ACT composite score: the Leader in Me point in 2024-25 rests on at least three counted schools  [n=11]
+ok   ACT composite score: every point on the card rests on at least three schools
+ok   the attendance line's year beyond the test files carries no more Leader in Me schools than the last classified year  [85 vs 113]
+ok   the research pack's per-school Louisiana values are keyed to schools on the page  [14,459 records]
+ok   every school with a state id on the page is a page school  [1,363 ids]
+ok   the methods page names the attendance file that copies another year's
+ok   the methods page names the graduation ceiling and the fill's reading of it
+ok   the methods page names the Leader in Me schools the crosswalk could not reach, or says there are none
+
+ALL LOUISIANA CHECKS PASS

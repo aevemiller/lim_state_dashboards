@@ -2,8 +2,8 @@
  "state": "ID",
  "name": "Idaho",
  "folder": "idaho",
- "built": "2026-09-04",
- "seconds": 28,
+ "built": "2026-09-08",
+ "seconds": 68,
  "builder": "build_payload_core.py",
  "page_kind": "descriptive",
  "lim_headline_n": 4,
@@ -17,45 +17,50 @@
   "subjects": {
    "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
    "bytes": 146145669,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   },
   "roster": {
    "file": "LIM Schools (Current_Active) (11).csv",
    "bytes": 12784777,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   },
   "comparison": {
-   "file": "All Other Schools (Non-LiM & Exited).csv",
-   "bytes": 132812308,
-   "modified": "2026-09-03"
+   "file": "Archive.zip/All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-04"
   },
   "mra": {
    "file": "All MRA Surveys.csv",
    "bytes": 2466245,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   }
  },
  "state_pull": {
   "subjects": {
-   "path": "/home/claude/national/Build/work/ID/data/Subjects_Tests_FINAL (8).csv",
+   "path": "/home/claude/sdf/Build/work/ID/data/Subjects_Tests_FINAL (8).csv",
    "rows": 30174
   },
   "roster": {
-   "path": "/home/claude/national/Build/work/ID/data/LIM Schools (Current_Active) (11).csv",
+   "path": "/home/claude/sdf/Build/work/ID/data/LIM Schools (Current_Active) (11).csv",
    "rows": 149
   },
   "comparison": {
-   "path": "/home/claude/national/Build/work/ID/data/All Other Schools (Non-LiM & Exited).csv",
+   "path": "/home/claude/sdf/Build/work/ID/data/All Other Schools (Non-LiM & Exited).csv",
    "rows": 3809
   },
   "mra": {
-   "path": "/home/claude/national/Build/work/ID/data/All MRA Surveys.csv",
+   "path": "/home/claude/sdf/Build/work/ID/data/All MRA Surveys.csv",
    "rows": 23
   }
  },
- "state_files": [],
+ "state_files": [
+  "IdahoReportCard_DataExport_Normalized_20260904_044242.csv",
+  "PULL-MANIFEST_ID.csv",
+  "Postsecondary Enrollment_ID/"
+ ],
+ "extras_module": "id_core_extras",
  "verified": true,
- "dashboard_bytes": 637403,
+ "dashboard_bytes": 732783,
  "audits": {
   "levels": {
    "rows": 28500,
@@ -64,7 +69,25 @@
    "level 4 alone": 0.5,
    "100 minus level 1": 0.2,
    "best": "levels 3 and 4",
-   "levels_sum_to_100_share": 65.8
+   "levels_sum_to_100_share": 65.8,
+   "structure": "no combination of the reported levels reproduces the proficiency rate",
+   "n_levels": null,
+   "proficient_from": null,
+   "reversed_numbering": null,
+   "coverage": 0.0,
+   "years_ok": null,
+   "years_out": null,
+   "cells_out": null,
+   "latest_year_ok": null,
+   "reason": "no combination of the reported levels reproduces PercentMetStandard on more than 58% of rows (a five-level state whose export carries four columns, usually)",
+   "combination_shares": {
+    "levels 3 and 4": 58.1,
+    "levels 2, 3 and 4": 8.0,
+    "levels 1 and 2 (1 the top)": 34.2,
+    "levels 1, 2 and 3 (1 the top)": 4.1
+   },
+   "cells": [],
+   "levels_as_measures": false
   },
   "poverty": {
    "lim": {

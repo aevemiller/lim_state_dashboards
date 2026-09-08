@@ -1,0 +1,139 @@
+{
+ "state": "MS",
+ "name": "Mississippi",
+ "folder": "mississippi",
+ "built": "2026-09-08",
+ "seconds": 82,
+ "builder": "build_payload_core.py",
+ "page_kind": "full",
+ "lim_headline_n": 33,
+ "schools": 890,
+ "years": [
+  2015,
+  2025
+ ],
+ "lim_roster_schools": 76,
+ "core_exports": {
+  "subjects": {
+   "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-04"
+  },
+  "roster": {
+   "file": "LIM Schools (Current_Active) (11).csv",
+   "bytes": 12784777,
+   "modified": "2026-09-04"
+  },
+  "comparison": {
+   "file": "Archive.zip/All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-04"
+  },
+  "mra": {
+   "file": "All MRA Surveys.csv",
+   "bytes": 2466245,
+   "modified": "2026-09-04"
+  }
+ },
+ "state_pull": {
+  "subjects": {
+   "path": "/home/claude/sdf/Build/work/MS/data/Subjects_Tests_FINAL (8).csv",
+   "rows": 53580
+  },
+  "roster": {
+   "path": "/home/claude/sdf/Build/work/MS/data/LIM Schools (Current_Active) (11).csv",
+   "rows": 689
+  },
+  "comparison": {
+   "path": "/home/claude/sdf/Build/work/MS/data/All Other Schools (Non-LiM & Exited).csv",
+   "rows": 6722
+  },
+  "mra": {
+   "path": "/home/claude/sdf/Build/work/MS/data/All MRA Surveys.csv",
+   "rows": 107
+  }
+ },
+ "state_files": [
+  "2017-2018ReportCardData.xlsx",
+  "2018-2019ReportCardData.xlsx",
+  "2019-2020ReportCardData.xlsx",
+  "2021-2022ReportCardData.xlsx",
+  "2022-2023ReportCardData.xlsx",
+  "2023-2024-ACT-Results-for-Juniors.xlsx",
+  "2023-2024ReportCardData.xlsx",
+  "2024-2025ReportCardData.xlsx",
+  "2025-ACT-Junior-Report.xlsx"
+ ],
+ "extras_module": "ms_core_extras",
+ "verified": true,
+ "dashboard_bytes": 1388375,
+ "audits": {
+  "levels": {
+   "rows": 48209,
+   "levels 3 and 4": 8.7,
+   "levels 2, 3 and 4": 0.7,
+   "level 4 alone": 13.4,
+   "100 minus level 1": 0.4,
+   "best": "level 4 alone",
+   "levels_sum_to_100_share": 22.3,
+   "structure": "no combination of the reported levels reproduces the proficiency rate",
+   "n_levels": null,
+   "proficient_from": null,
+   "reversed_numbering": null,
+   "coverage": 0.0,
+   "years_ok": null,
+   "years_out": null,
+   "cells_out": null,
+   "latest_year_ok": null,
+   "reason": "no combination of the reported levels reproduces PercentMetStandard on more than 10% of rows (a five-level state whose export carries four columns, usually)",
+   "combination_shares": {
+    "levels 3 and 4": 9.7,
+    "levels 2, 3 and 4": 1.3,
+    "levels 1 and 2 (1 the top)": 2.5,
+    "levels 1, 2 and 3 (1 the top)": 2.4
+   },
+   "cells": [],
+   "levels_as_measures": false
+  },
+  "poverty": {
+   "lim": {
+    "schools": 76,
+    "missing": 2,
+    "at_99_or_more": 54,
+    "above_100": 0,
+    "high_poverty_share": 92.1
+   },
+   "comparison": {
+    "schools": 816,
+    "missing": 21,
+    "at_99_or_more": 323,
+    "above_100": 11,
+    "high_poverty_share": 61.6
+   }
+  },
+  "statewide_jumps": [],
+  "sensitivity": {
+   "with": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 33,
+    "comp_n": 625,
+    "lim_change": 5.95,
+    "comp_change": 6.01,
+    "p": 0.966
+   },
+   "without": {
+    "y0": 2022,
+    "y1": 2025,
+    "lim_n": 25,
+    "comp_n": 625,
+    "lim_change": 5.66,
+    "comp_change": 6.01,
+    "p": 0.824
+   },
+   "schools": 11
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": []
+ }
+}

@@ -1,5 +1,5 @@
 
-$ python3 /home/claude/national/Build/build_payload_core.py --state DE --core /home/claude/national/corefolder --out /home/claude/national/Build/work/DE
+$ python3 /home/claude/sdf/Build/build_payload_core.py --state DE --core /home/claude/sdf/Core --out /home/claude/sdf/Build/work/DE --data /home/claude/sdf/Build/work/DE/data --extras de_core_extras
 reading the core for Delaware ...
 [core] subjects: 11,474 school rows kept; dropped 4,587 rows with no school id and 358 with an id but no school record
 [core] Leader in Me roster: 340 rows
@@ -14,22 +14,50 @@ applying the cleaning rules ...
   5,013 school-year-band-subject rows · years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
   Leader in Me school-years counted: 144 of 333 reviewed
   no start date: 4 schools · dated exits: 11 (school-years after an exit with rows: 19) · aggregate 'All grades' rows used 0, skipped 0
-  proficiency = levels 3 and 4 on 36.0% of rows
+  achievement levels as measures: no (four levels, numbered from the bottom; proficiency is the top 2; 32.4% of rows in years and subjects whose levels add up; not offered because the latest year's reading and math levels do not add up)
+  level values blanked on 2 year-subject cells that do not add up: 2016-17 Math, 2016-17 Science
+  proficiency = levels 3 and 4 on 31.2% of rows
+folding in Delaware's own measures (de_core_extras) ...
+  state files (Delaware Open Data exports, all-students school rows):
+    NCES directory: 250 federal-to-state id triples from the cache (8 CCD files unchanged)
+    attendance: 2,428 school-years from the cache (Student_Attendance_crb4-kdc7_school-level_all-students.csv unchanged)
+    discipline: 2,235 school-years from the cache (Student_Discipline_yr4w-jdi4_school-level_all-students.csv unchanged)
+    educator mobility: 2,636 school-years from the cache (Educator_Mobility_jdcc-w6wr_school-level_all-students.csv unchanged)
+    growth: 736 school-years from the cache (Student_Growth_kqmb-6xbs.csv unchanged)
+  crosswalk: NCES's state district and school codes for each federal id, audited against the state files' own names within district
+    200 of 200 schools carry a state school code (199 from NCES's directory, 1 by name within district); Leader in Me 37 of 37, comparison 163 of 163; 199 appear in at least one Delaware file
+    names: the state files' own school name agrees with DOMO's on 199 of 199 crosswalked schools, the district name on 193 of 196; 0 triples re-pointed to a folded id; 0 shared school codes settled; 0 NCES placeholders set aside; 0 schools carry more than one school code across the years
+  value check of the join: the state's chronic-absence rate against DOMO's on 1,257 school-years (227 at Leader in Me schools): correlation 1.0, median difference 0.05 pts, 100.0% within a tenth of a point, largest 0.09 -> the same measure (DOMO carries the state figure cut to a tenth)
+  rows gain: pct_oss on 1,675 school-year-bands (29 Leader in Me schools ever), pct_iss on 1,325 school-year-bands (28 Leader in Me schools ever), attendance_rate on 1,863 school-year-bands (32 Leader in Me schools ever), teacher_retention on 1,638 school-year-bands (32 Leader in Me schools ever); 0 school-years had no band to sit in
+  fill: the state's chronic absence on 400 school-years DOMO lacks (2014-15: 180, 2015-16: 39, 2016-17: 41, 2017-18: 42, 2018-19: 12, 2021-22: 20, 2022-23: 21, 2023-24: 21, 2024-25: 24; 5 counted Leader in Me schools); no Delaware file in the folder carries a graduation rate, so DOMO's stands untouched
+  card: 7 Delaware measures, each group on each year's own membership
+    card line teacher_retention: 8 Leader in Me points, latest 2025 n=21 (81.99)
+    card line teacher_turnover: 8 Leader in Me points, latest 2025 n=21 (10.56)
+    card line pct_oss: 9 Leader in Me points, latest 2025 n=14 (5.04)
+    card line pct_iss: 9 Leader in Me points, latest 2025 n=17 (4.21)
+    card line attendance_rate: 9 Leader in Me points, latest 2025 n=21 (94.15)
+    card line growth_ela: 4 Leader in Me points, latest 2024 n=28 (63.02)
+    card line growth_math: 4 Leader in Me points, latest 2024 n=28 (66.43)
+  per-school Delaware records for the pack: 2,041 (44 columns)
+  Delaware's measures on 1,876 school-year-bands: 1,582 joined to existing rows, 294 school-year-bands added with no test rows of their own
+  core measures filled from Delaware's own files where DOMO had none: chronic_absent 935 rows
+  school type from NCES: Title I on 193 schools (132 yes), charter 24, magnet 3, alternative 2; Title I published 2017-2022, carried forward after
+  funders: 27 Delaware schools carry a funding source (23 on the page; Kern 4, 0 on the page); latest non-blank year per school
 building matched pairs, inside each band ...
   pairs 17  by band {'Primary': {'pairs': 16, 'unmatched': 9}, 'Secondary': {'pairs': 1, 'unmatched': 1}}
   MRA: 76 surveys · 26 schools · 292 sentinel values · 4 shells
   headline 2021-22 to 2024-25: {'y0': 2022, 'y1': 2025, 'lim_n': 21, 'comp_n': 135, 'lim_change': 1.47, 'comp_change': 0.53, 'p': 0.616} · without the 3 undated schools {'y0': 2022, 'y1': 2025, 'lim_n': 18, 'comp_n': 135, 'lim_change': 0.56, 'comp_change': 0.53, 'p': 0.988}
   roster: 13 counted, 19 exited, 1 not counted yet, 4 not counted
 
-wrote de_payload.json  (2.2 MB, 5,013 rows) · page kind full (21 Leader in Me schools on the headline)
-build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+wrote de_payload.json  (4.5 MB, 5,307 rows) · page kind full (21 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'fb6eaf7cb415'}
 
 $ python3 build2.py de_payload.json DE_Dashboard.html DE_Methods.html
-payload 2.2 MB -> 0.13 MB gzip
-DE_Dashboard.html: 413 KB
-DE_Methods.html: 28 KB
+payload 4.5 MB -> 0.36 MB gzip
+DE_Dashboard.html: 760 KB
+DE_Methods.html: 53 KB
 
-$ python3 /home/claude/national/Build/verify_core.py --state DE --work /home/claude/national/Build/work/DE
+$ python3 /home/claude/sdf/Build/verify_core.py --state DE --work /home/claude/sdf/Build/work/DE
 
 --------------------------------------------------------------------------
 Tier 0 — install and input-value audit
@@ -80,16 +108,18 @@ ok   the roster section's exited count matches (a school with no start date stay
 ok   an exited school's reason names its expiration and the grace rule, or DOMO's own flag
 ok   the headline sensitivity without the undated schools is on the methods page
 ok   size bands are the NCES categories in the payload's order
-ok   the poverty share rides on most rows for the look-alike caliper  [97%]
+ok   the poverty share rides on most rows for the look-alike caliper  [96%]
+ok   every offered measure is carried by at least one school-year
 ok   the composite flag keeps science, social studies and writing out of the no-filter view
 ok   the grade table lists tested grades in order and every school in it has a name
 ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [92 schools]
 ok   the grade table carries no school-year the rules dropped
+ok   no level measure is offered when the level structure is unconfirmed  [the latest year's reading and math levels do not add up]
 ok   school names and start dates are in the payload for the pack
 ok   MRA by-school rows exist for the pack
 ok   the MRA respondent map names a group or a blend for every measure
 ok   look-alike settings are in the payload with their rationale
-ok   a Leader in Me school's pre-start years count in the comparison group  [388 rows]
+ok   a Leader in Me school's pre-start years count in the comparison group  [390 rows]
 ok   Lighthouse schools are inside the Leader in Me family
 ok   combined-grade schools appear in both bands  [26 schools]
 ok   the school count never exceeds the band-slice count  [156 schools vs 172 band slices]
@@ -112,19 +142,24 @@ ok   movers are built on ten or more schools each
 Tier 2 — behaviour in a real browser
 --------------------------------------------------------------------------
 ok   the page loads and the headline renders
-ok   load time is workable  [0.3s]
+ok   load time is workable  [0.6s]
 ok   no console errors on load
 ok   chart c1 draws an svg or explains why
 ok   chart c2 draws an svg or explains why
 ok   the MRA card shows exactly when a trend line can be drawn
-ok   the Georgia discipline card stays hidden
-ok   the incidents card stays hidden (no state incident file)
-ok   the state extras card stays hidden (no state files)
+ok   the discipline card shows exactly when the payload carries a discipline trend  [payload has no discipline_ga]
+ok   the incidents card shows exactly when the payload carries an incident trend  [payload has no incidents]
+ok   the state extras card shows exactly when the payload carries state measures  [7 state measures]
+ok   every state measure on the card draws a Leader in Me and a comparison line
 ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
 ok   the headline p recomputes offline  [page 0.6136 scipy 0.6136 · window 2022-2025 · LiM n=21 mean +1.47 · comparison n=135 mean +0.53]
 ok   the headline counts schools, not band slices  [page 156 vs offline 156 on 2022-2025]
 ok   the page's Leader in Me count is the builder's  [21 vs 21]
 ok   the district filter re-renders the headline  [In Christina School District schools, between 2021-22 and 2024-25, Leader in Me schools ro]
+ok   the school type filter is offered with the payload's kinds  [Title I schools, Not Title I, Charter schools, Magnet schools]
+ok   choosing 'Title I schools' narrows the view and names it  [136 of 196 schools; In Delaware Title I schools, between 2021-22 and 2024-25, Leader in Me schools r]
+ok   every school in the 'Title I schools' view carries that attribute
+ok   Title I status is known for most schools on the page  [98.5%]
 ok   the Primary band filter re-renders without error
 ok   the Secondary band filter re-renders without error
 ok   measure 'percent_proficient' either draws or says why
@@ -132,18 +167,39 @@ ok   measure 'percent_below' either draws or says why
 ok   measure 'standard_score' either draws or says why
 ok   measure 'chronic_absent' either draws or says why
 ok   measure 'grad_rate' either draws or says why
+ok   measure 'pct_oss' either draws or says why
+ok   measure 'pct_iss' either draws or says why
+ok   measure 'attendance_rate' either draws or says why
+ok   measure 'teacher_retention' either draws or says why
 ok   the matched toggle re-renders the headline  [In Delaware schools (matched to similar schools only), between 2021-22 and 2024-25, Leader]
 ok   the matched view shrinks or equals the Leader in Me count  [13 matched]
 ok   no console errors after the filter sweep
 ok   the insights tab hides the explore view
-ok   Christina School District generates cards or says there is nothing to report  [5 cards]
+ok   Christina School District generates cards or says there is nothing to report  [10 cards]
 ok   the insights tab uses the same unit and window as the explore tab  [{'p': 0.6136474193027295, 'n1': 21, 'n2': 135}]
 ok   no console errors on the insights tab
+ok   the MRA tab is offered exactly when the payload carries surveys
+ok   the MRA tab shows its own view and sidebar and hides the explore ones
+ok   the MRA summary renders a sentence  [Across 13 Delaware Leader in Me schools surveyed in 2024-25, Leadership averaged 75.6 on the MRA sca]
+ok   MRA chart c6 draws an svg or explains why
+ok   MRA chart c7 draws an svg or explains why
+ok   MRA chart c10 draws an svg or explains why
+ok   the measure picker offers every MRA measure with data  [34 options, 34 measures with data, 37 in the catalogue]
+ok   the MRA paired test recomputes offline  [page 0.1769 scipy 0.1769 on 23 schools]
+ok   the MRA latest-year school count recomputes offline  [page 13 vs offline 13]
+ok   the MRA same-schools count is every school surveyed more than once  [page 23 vs offline 23]
+ok   choosing the submeasure 'Personal Effectiveness' re-renders the MRA summary  [Across 14 Delaware Leader in Me schools surveyed in 2024-25, Personal Effectiveness averag]
+ok   the MRA district filter narrows to Christina School District's surveyed schools  [9 of 26 schools]
+ok   the MRA school type filter keeps only schools with that trait  [title1_yes]
+ok   the same-schools switch keeps only schools surveyed at both ends
+ok   no console errors on the MRA tab
+ok   the MRA view downloads one row per school, year and measure  [2,085 rows]
+ok   leaving the MRA tab restores the explore view
 ok   export c1.pptx downloads, opens and carries the chart image  [171,541 bytes]
 ok   the pptx export is named for the state and chart  [DE_Percent_meeting_the_standard_year_by_year_Delaware_schools.pptx]
-ok   export c1.docx downloads, opens and carries the chart image  [169,191 bytes]
+ok   export c1.docx downloads, opens and carries the chart image  [172,255 bytes]
 ok   the docx export is named for the state and chart  [DE_Percent_meeting_the_standard_year_by_year_Delaware_schools.docx]
-ok   the research pack downloads with its sections  [9,261 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'roster']]
+ok   the research pack downloads with its sections  [23,493 rows, sections ['about', 'district_published', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card']]
 ok   the pack's Leader in Me count for the district is the page's  [9 vs 9]
 ok   look-alike mode rewrites the headline around the anchor district, or says nothing matched  [In Delaware schools like Brandywine School District’s, between 2021-22 and 2024-25, Leader in Me schools rose 3.5% on Pe]
 ok   the look-alike box reports both counts or says why not  [Schools like Brandywine School District’s: 5 Leader in Me schools and 27 comparison schools look like Brandywine School District’s 15 schools with results in th]
@@ -155,7 +211,7 @@ ok   the school list downloads with one row per school  [20 rows, 0 same-name pa
 ok   the school list carries traits and change columns
 ok   the grade filter lists the tested grades
 ok   choosing a grade re-renders the headline and names the grade  [In Delaware grade 4 results, between 2021-22 and 2024-25, Leader in Me schools rose 2.8% on Percent ]
-ok   whole-school measures switch off while a grade is chosen
+ok   whole-school measures switch off while a grade is chosen  [7 whole-school measures in the payload]
 ok   dark mode re-renders without errors
 ok   no horizontal overflow at 900px  [0px]
 ok   no horizontal overflow at 700px  [0px]
@@ -186,5 +242,80 @@ ok   the undated schools are listed by name in the payload
   HEADLINE (statewide, 2022-2025, no filters): Leader in Me +1.47 pts (n=21) vs comparison +0.53 pts (n=135), p=0.6136 -> not significant
 
 ==========================================================================
-135 of 135 checks pass
+163 of 163 checks pass
 ==========================================================================
+
+$ python3 /home/claude/sdf/Build/states/de_core_verify.py --work /home/claude/sdf/Build/work/DE
+
+Delaware's own measures
+--------------------------------------------------------------------------
+ok   the crosswalk reaches nearly every Leader in Me school  [37 of 37]
+ok   the crosswalk reaches nearly every school on the page  [200 of 200]
+ok   the crosswalk was audited a second way: the state files' own names agree with DOMO's on nearly every crosswalked school  [199 of 199; disagreements read one by one: 0]
+ok   the state files' district names agree with DOMO's on nearly every crosswalked school  [193 of 196]
+ok   every Leader in Me school the crosswalk reaches appears in at least one Delaware file  [37 of 37]
+ok   no school code is claimed twice in the crosswalk  [200 triples]
+ok   every crosswalk triple is a real Delaware state id (district code, school code)
+ok   the independent value check holds: DOMO's chronic absence is the state's own figure on the same school-years  [1,257 pairs, r=1.0, 100.0% within a tenth, median |diff| 0.05]
+ok   the value check covers Leader in Me schools too  [227 Leader in Me school-years]
+ok   every Delaware file labels a school year by the year it ended (2019-20 is redacted statewide and runs 112 days)  [2020 redacted rows 219, median days enrolled 112.3 vs 157.4]
+ok   the retention year is the year retained into (the N-year base totals agree with the one-year row N-1 years earlier, and far better than under the other reading)  [2_year: 2027 of 2143 exact, 2121 within two, against 467 of 2346 the other way; 3_year: 2005 of 2143 exact, 2120 within two, against 292 of 2314 the other way; 4_year: 1519 of 1899 exact, 1667 within two, against 234 of 2272 the other way; 5_year: 1272 of 1423 exact, 1401 within two, against 202 of 2240 the other way]
+ok   the published chronic-absence rate rebuilds from the counts on every reported row  [2186 of 2186]
+ok   the published suspension rate rebuilds from the counts on every reported row  [4471 of 4471]
+ok   the state's discipline redaction floor is five students
+ok   the growth file's state row equals the student-weighted mean of its school rows to a tenth in every year
+ok   the 2023-24 educator-mobility year was found to be an empty shell and excluded by name
+ok   the four Delaware row measures are on the page  [pct_oss, pct_iss, attendance_rate, teacher_retention]
+ok   pct_oss sits on no closure year and on no year outside the page  [4,766 rows, years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   pct_oss is carried on both bands of a combined school
+ok   pct_iss sits on no closure year and on no year outside the page  [3,872 rows, years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   pct_iss is carried on both bands of a combined school
+ok   attendance_rate sits on no closure year and on no year outside the page  [5,265 rows, years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   attendance_rate is carried on both bands of a combined school
+ok   teacher_retention sits on no closure year and on no year outside the page  [4,612 rows, years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2025]]
+ok   teacher_retention is carried on both bands of a combined school
+ok   the rows carry the state's own out-of-school suspension rate (five schools reconciled to the file)  [5 of 5 agree in 2025]
+ok   the rows carry the state's own in-school suspension rate (five schools reconciled to the file)  [5 of 5 agree in 2025]
+ok   the rows carry the state's own one-year same-school teacher retention (five schools reconciled to the file)  [5 of 5 agree in 2025]
+ok   the attendance rate rebuilds from the file's own average days enrolled and absent (five schools reconciled)  [5 of 5 agree]
+ok   no attendance rate of exactly 100 or above survives (a school with no absences recorded is a shell)  [range 60.86 to 99.23]
+ok   teacher retention carries no 2023-24 value anywhere (the shell year excluded by name)  [years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2025]]
+ok   no teacher-retention value of exactly zero survives on the rows  [min 2.8]
+ok   every retention value on the rows stands on ten or more teachers  [floor 10]
+ok   no suspension rate on the rows rests on a redacted count (every one has five or more students behind it)  [0 under five in 80 checked]
+ok   the chronic-absence shells the state file carries were set aside and none was filled in as a zero  [8 shells set aside; 0 zeros in the fill; DOMO's own export carries 2 exact zeros of its own, which stand (never overwritten) and are named in the record]
+ok   the chronic-absence fill never overwrote a DOMO value  [1259 of 1,259 DOMO school-years unchanged]
+ok   the chronic-absence fill landed on every row DOMO lacked  [381 of 381 filled school-years with rows carry the state's value to a tenth (19 had no row to land on)]
+ok   the fill reaches 2014-15, the year DOMO carries no Delaware chronic absence for  [2014-15 filled on 180 school-years; 669 2014-15 rows now carry chronic absence]
+ok   the fill was declared to the page  [{'chronic_absent': 935}]
+ok   the state's chronic absence was read as the same measure before anything was filled
+ok   no graduation rate was touched (no Delaware file carries one)
+ok   the card carries the Delaware measures and stays under the dozen-chip ceiling  [7 chips: teacher_retention, teacher_turnover, pct_oss, pct_iss, attendance_rate, growth_ela, growth_math]
+ok   Teachers still at the same school a year later: Leader in Me points on three or more counted schools, recomputed; closures out  [years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2025], n [4, 5, 8, 10, 12, 27, 27, 21]]
+ok   Teachers who left Delaware public schools: Leader in Me points on three or more counted schools, recomputed; closures out  [years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2025], n [4, 5, 8, 10, 12, 27, 27, 21]]
+ok   Students suspended out of school: Leader in Me points on three or more counted schools, recomputed; closures out  [years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025], n [3, 4, 8, 9, 12, 18, 23, 21, 14]]
+ok   Students suspended in school: Leader in Me points on three or more counted schools, recomputed; closures out  [years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025], n [3, 3, 5, 7, 9, 15, 19, 21, 17]]
+ok   Attendance rate: Leader in Me points on three or more counted schools, recomputed; closures out  [years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025], n [4, 5, 8, 10, 12, 27, 27, 28, 21]]
+ok   Reading growth: share of the growth target met: Leader in Me points on three or more counted schools, recomputed; closures out  [years [2018, 2019, 2023, 2024], n [10, 12, 27, 28]]
+ok   Math growth: share of the growth target met: Leader in Me points on three or more counted schools, recomputed; closures out  [years [2018, 2019, 2023, 2024], n [10, 12, 27, 28]]
+ok   every Delaware chip says the filters do not apply and names its source
+ok   the growth chips carry the four published years only and no growth measure joins the rows  [growth years in the file [2018, 2019, 2023, 2024]]
+ok   the card's growth values are the state's own (the 2023-24 state row rebuilds from the file)
+ok   no state acronym is left unexplained on the card
+ok   the research pack's per-school Delaware values are keyed to schools on the page  [2,041 records]
+ok   every pack key carries a plain-English label
+ok   the pack carries the growth measures in the four published years only
+ok   the pack carries the retention counts beside the rates and no 2023-24 retention
+ok   the pack carries the redaction flags beside the suspension rates
+ok   a school's 2023-24 math growth in the pack is the file's own value  [Allen Frear Elementary School: file 77.6923 vs pack 77.69]
+ok   a school's 2024-25 chronic absence in the pack is the file's own value  [Allen Frear Elementary School: file 8.56 vs pack 8.56]
+ok   the pack's published section carries the state's own growth rows  [4 state rows, 144 rows in all]
+ok   the district codes the pack maps carry published growth rows  [44 districts mapped]
+ok   each school's state code is in the payload for the pack  [196 schools]
+ok   the methods page names the crosswalk reach and the value check
+ok   the methods page names the exclusions: the 2023-24 shell, exact zeros, the five-student redaction, the closure years
+ok   the methods page says the fill never overwrites DOMO
+ok   the excluded counts name the shell year, the zero retention rates and the redacted suspension rows
+ok   the look-alike behavior measure is a Delaware row measure in the pack
+
+ALL DELAWARE CHECKS PASS

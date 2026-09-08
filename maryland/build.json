@@ -2,8 +2,8 @@
  "state": "MD",
  "name": "Maryland",
  "folder": "maryland",
- "built": "2026-09-04",
- "seconds": 41,
+ "built": "2026-09-08",
+ "seconds": 125,
  "builder": "build_payload_core.py",
  "page_kind": "full",
  "lim_headline_n": 70,
@@ -17,45 +17,54 @@
   "subjects": {
    "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
    "bytes": 146145669,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   },
   "roster": {
    "file": "LIM Schools (Current_Active) (11).csv",
    "bytes": 12784777,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   },
   "comparison": {
-   "file": "All Other Schools (Non-LiM & Exited).csv",
-   "bytes": 132812308,
-   "modified": "2026-09-03"
+   "file": "Archive.zip/All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-04"
   },
   "mra": {
    "file": "All MRA Surveys.csv",
    "bytes": 2466245,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   }
  },
  "state_pull": {
   "subjects": {
-   "path": "/home/claude/national/Build/work/MD/data/Subjects_Tests_FINAL (8).csv",
+   "path": "/home/claude/sdf/Build/work/MD/data/Subjects_Tests_FINAL (8).csv",
    "rows": 90232
   },
   "roster": {
-   "path": "/home/claude/national/Build/work/MD/data/LIM Schools (Current_Active) (11).csv",
+   "path": "/home/claude/sdf/Build/work/MD/data/LIM Schools (Current_Active) (11).csv",
    "rows": 2066
   },
   "comparison": {
-   "path": "/home/claude/national/Build/work/MD/data/All Other Schools (Non-LiM & Exited).csv",
+   "path": "/home/claude/sdf/Build/work/MD/data/All Other Schools (Non-LiM & Exited).csv",
    "rows": 10350
   },
   "mra": {
-   "path": "/home/claude/national/Build/work/MD/data/All MRA Surveys.csv",
+   "path": "/home/claude/sdf/Build/work/MD/data/All MRA Surveys.csv",
    "rows": 264
   }
  },
- "state_files": [],
+ "state_files": [
+  "Attendance_MD/",
+  "CCR_MD/",
+  "Climate Survey_MD/",
+  "PULL-MANIFEST_MD.csv",
+  "Postsecondary Enrollment_MD/",
+  "Postsecondary Outcomes_MD/",
+  "Report Card Accountability_MD/"
+ ],
+ "extras_module": "md_core_extras",
  "verified": true,
- "dashboard_bytes": 1483185,
+ "dashboard_bytes": 3019973,
  "audits": {
   "levels": {
    "rows": 82993,
@@ -64,7 +73,25 @@
    "level 4 alone": 14.2,
    "100 minus level 1": 0.2,
    "best": "levels 3 and 4",
-   "levels_sum_to_100_share": 67.9
+   "levels_sum_to_100_share": 67.9,
+   "structure": "no combination of the reported levels reproduces the proficiency rate",
+   "n_levels": null,
+   "proficient_from": null,
+   "reversed_numbering": null,
+   "coverage": 0.0,
+   "years_ok": null,
+   "years_out": null,
+   "cells_out": null,
+   "latest_year_ok": null,
+   "reason": "no combination of the reported levels reproduces PercentMetStandard on more than 50% of rows (a five-level state whose export carries four columns, usually)",
+   "combination_shares": {
+    "levels 3 and 4": 49.6,
+    "levels 2, 3 and 4": 0.7,
+    "levels 1 and 2 (1 the top)": 6.6,
+    "levels 1, 2 and 3 (1 the top)": 1.2
+   },
+   "cells": [],
+   "levels_as_measures": false
   },
   "poverty": {
    "lim": {

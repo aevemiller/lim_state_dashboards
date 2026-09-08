@@ -2,8 +2,8 @@
  "state": "MN",
  "name": "Minnesota",
  "folder": "minnesota",
- "built": "2026-09-04",
- "seconds": 46,
+ "built": "2026-09-08",
+ "seconds": 123,
  "builder": "build_payload_core.py",
  "page_kind": "descriptive",
  "lim_headline_n": 13,
@@ -17,45 +17,46 @@
   "subjects": {
    "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
    "bytes": 146145669,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   },
   "roster": {
    "file": "LIM Schools (Current_Active) (11).csv",
    "bytes": 12784777,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   },
   "comparison": {
-   "file": "All Other Schools (Non-LiM & Exited).csv",
-   "bytes": 132812308,
-   "modified": "2026-09-03"
+   "file": "Archive.zip/All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-04"
   },
   "mra": {
    "file": "All MRA Surveys.csv",
    "bytes": 2466245,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   }
  },
  "state_pull": {
   "subjects": {
-   "path": "/home/claude/national/Build/work/MN/data/Subjects_Tests_FINAL (8).csv",
+   "path": "/home/claude/sdf/Build/work/MN/data/Subjects_Tests_FINAL (8).csv",
    "rows": 127992
   },
   "roster": {
-   "path": "/home/claude/national/Build/work/MN/data/LIM Schools (Current_Active) (11).csv",
+   "path": "/home/claude/sdf/Build/work/MN/data/LIM Schools (Current_Active) (11).csv",
    "rows": 193
   },
   "comparison": {
-   "path": "/home/claude/national/Build/work/MN/data/All Other Schools (Non-LiM & Exited).csv",
+   "path": "/home/claude/sdf/Build/work/MN/data/All Other Schools (Non-LiM & Exited).csv",
    "rows": 15722
   },
   "mra": {
-   "path": "/home/claude/national/Build/work/MN/data/All MRA Surveys.csv",
+   "path": "/home/claude/sdf/Build/work/MN/data/All MRA Surveys.csv",
    "rows": 30
   }
  },
  "state_files": [],
+ "extras_module": null,
  "verified": true,
- "dashboard_bytes": 1970071,
+ "dashboard_bytes": 3280155,
  "audits": {
   "levels": {
    "rows": 112852,
@@ -64,7 +65,342 @@
    "level 4 alone": 1.7,
    "100 minus level 1": 0.8,
    "best": "levels 3 and 4",
-   "levels_sum_to_100_share": 100.0
+   "levels_sum_to_100_share": 100.0,
+   "structure": "four levels, numbered from the bottom; proficiency is the top 2",
+   "n_levels": 4,
+   "proficient_from": 3,
+   "reversed_numbering": false,
+   "coverage": 100.0,
+   "years_ok": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "years_out": [],
+   "cells_out": [],
+   "latest_year_ok": true,
+   "reason": null,
+   "combination_shares": {
+    "levels 3 and 4": 100.0,
+    "levels 2, 3 and 4": 0.8,
+    "levels 1 and 2 (1 the top)": 2.9,
+    "levels 1, 2 and 3 (1 the top)": 2.0
+   },
+   "cells": [
+    {
+     "year": 2015,
+     "subject": "ELA",
+     "rows": 4478,
+     "level_rows": 4478,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2015,
+     "subject": "Math",
+     "rows": 4491,
+     "level_rows": 4491,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2015,
+     "subject": "Science (end-of-course)",
+     "rows": 467,
+     "level_rows": 467,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2015,
+     "subject": "Science",
+     "rows": 1302,
+     "level_rows": 1302,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2016,
+     "subject": "ELA",
+     "rows": 4453,
+     "level_rows": 4453,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2016,
+     "subject": "Math",
+     "rows": 4464,
+     "level_rows": 4464,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2016,
+     "subject": "Science (end-of-course)",
+     "rows": 458,
+     "level_rows": 458,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2016,
+     "subject": "Science",
+     "rows": 1290,
+     "level_rows": 1290,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2017,
+     "subject": "ELA",
+     "rows": 4504,
+     "level_rows": 4504,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2017,
+     "subject": "Math",
+     "rows": 4506,
+     "level_rows": 4506,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2017,
+     "subject": "Science (end-of-course)",
+     "rows": 461,
+     "level_rows": 461,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2017,
+     "subject": "Science",
+     "rows": 1322,
+     "level_rows": 1322,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2018,
+     "subject": "ELA",
+     "rows": 4461,
+     "level_rows": 4461,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2018,
+     "subject": "Math",
+     "rows": 4471,
+     "level_rows": 4471,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2018,
+     "subject": "Science (end-of-course)",
+     "rows": 472,
+     "level_rows": 472,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2018,
+     "subject": "Science",
+     "rows": 1301,
+     "level_rows": 1301,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2019,
+     "subject": "ELA",
+     "rows": 4588,
+     "level_rows": 4588,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2019,
+     "subject": "Math",
+     "rows": 4593,
+     "level_rows": 4593,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2019,
+     "subject": "Science (end-of-course)",
+     "rows": 462,
+     "level_rows": 462,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2019,
+     "subject": "Science",
+     "rows": 1333,
+     "level_rows": 1333,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2022,
+     "subject": "ELA",
+     "rows": 6084,
+     "level_rows": 6084,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2022,
+     "subject": "Math",
+     "rows": 6079,
+     "level_rows": 6079,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2022,
+     "subject": "Science (end-of-course)",
+     "rows": 454,
+     "level_rows": 454,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2022,
+     "subject": "Science",
+     "rows": 2782,
+     "level_rows": 2782,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2023,
+     "subject": "ELA",
+     "rows": 6075,
+     "level_rows": 6075,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2023,
+     "subject": "Math",
+     "rows": 6077,
+     "level_rows": 6077,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2023,
+     "subject": "Science (end-of-course)",
+     "rows": 454,
+     "level_rows": 454,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2023,
+     "subject": "Science",
+     "rows": 2790,
+     "level_rows": 2790,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2024,
+     "subject": "ELA",
+     "rows": 6259,
+     "level_rows": 6259,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2024,
+     "subject": "Math",
+     "rows": 6271,
+     "level_rows": 6271,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2024,
+     "subject": "Science (end-of-course)",
+     "rows": 463,
+     "level_rows": 463,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2024,
+     "subject": "Science",
+     "rows": 2858,
+     "level_rows": 2858,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2025,
+     "subject": "ELA",
+     "rows": 6168,
+     "level_rows": 6168,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    },
+    {
+     "year": 2025,
+     "subject": "Math",
+     "rows": 6161,
+     "level_rows": 6161,
+     "sum_to_100": 100.0,
+     "match": 100.0,
+     "ok": true
+    }
+   ],
+   "levels_as_measures": true
   },
   "poverty": {
    "lim": {

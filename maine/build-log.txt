@@ -1,5 +1,5 @@
 
-$ python3 /home/claude/national/Build/build_payload_core.py --state ME --core /home/claude/national/corefolder --out /home/claude/national/Build/work/ME
+$ python3 /home/claude/sdf/Build/build_payload_core.py --state ME --core /home/claude/sdf/Core --out /home/claude/sdf/Build/work/ME --data /home/claude/sdf/Build/work/ME/data
 reading the core for Maine ...
 [core] subjects: 22,892 school rows kept; dropped 13,498 rows with no school id and 1,033 with an id but no school record
 [core] Leader in Me roster: 30 rows
@@ -13,24 +13,27 @@ applying the cleaning rules ...
   10,546 school-year-band-subject rows · years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
   Leader in Me school-years counted: 0 of 27 reviewed
   no start date: 1 schools · dated exits: 2 (school-years after an exit with rows: 0) · aggregate 'All grades' rows used 4098, skipped 2163
-  proficiency = levels 3 and 4 on 12.0% of rows
+  achievement levels as measures: no (four levels, numbered from the bottom; proficiency is the top 2; 7.9% of rows in years and subjects whose levels add up; not offered because the levels add up on too few rows to stand as measures)
+  level values blanked on 6 year-subject cells that do not add up: 2021-22 ELA, 2021-22 Math, 2021-22 Science, 2022-23 ELA, 2022-23 Math, 2022-23 Science
+  proficiency = levels 3 and 4 on 7.8% of rows
   statewide jump: ELA 2022->2023: 84.0 -> 63.8 (-20.2)
   statewide jump: Math 2022->2023: 83.6 -> 50.1 (-33.4)
+  school type from NCES: Title I on 527 schools (323 yes), charter 12, magnet 1, alternative 0; Title I published 2017-2022, carried forward after
 building matched pairs, inside each band ...
   pairs 0  by band {'Primary': {'pairs': 0, 'unmatched': 0}, 'Secondary': {'pairs': 0, 'unmatched': 0}}
   MRA: 0 surveys · 0 schools · 0 sentinel values · 0 shells
   headline 2021-22 to 2024-25: {'y0': 2022, 'y1': 2025, 'lim_n': 0, 'comp_n': 265, 'lim_change': None, 'comp_change': -25.6, 'p': None} · without the 0 undated schools {'y0': 2022, 'y1': 2025, 'lim_n': 0, 'comp_n': 265, 'lim_change': None, 'comp_change': -25.6, 'p': None}
   roster: 0 counted, 2 exited, 0 not counted yet, 1 not counted
 
-wrote me_payload.json  (4.0 MB, 10,546 rows) · page kind territory (0 Leader in Me schools on the headline)
-build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+wrote me_payload.json  (4.3 MB, 10,546 rows) · page kind territory (0 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'fb6eaf7cb415'}
 
 $ python3 build2.py me_payload.json ME_Dashboard.html ME_Methods.html
-payload 4.0 MB -> 0.22 MB gzip
-ME_Dashboard.html: 519 KB
-ME_Methods.html: 27 KB
+payload 4.3 MB -> 0.22 MB gzip
+ME_Dashboard.html: 569 KB
+ME_Methods.html: 30 KB
 
-$ python3 /home/claude/national/Build/verify_core.py --state ME --work /home/claude/national/Build/work/ME
+$ python3 /home/claude/sdf/Build/verify_core.py --state ME --work /home/claude/sdf/Build/work/ME
 
 --------------------------------------------------------------------------
 Tier 0 — install and input-value audit
@@ -82,9 +85,11 @@ ok   an exited school's reason names its expiration and the grace rule, or DOMO'
 ok   the headline sensitivity without the undated schools is on the methods page
 ok   size bands are the NCES categories in the payload's order
 ok   the poverty share rides on most rows for the look-alike caliper  [100%]
+ok   every offered measure is carried by at least one school-year
 ok   the composite flag keeps science, social studies and writing out of the no-filter view
 ok   the grade table lists tested grades in order and every school in it has a name
 ok   the grade table carries no school-year the rules dropped
+ok   no level measure is offered when the level structure is unconfirmed  [the levels add up on too few rows to stand as measures]
 ok   school names and start dates are in the payload for the pack
 skip MRA pack rows  [no surveys]
 ok   look-alike settings are in the payload with their rationale
@@ -103,17 +108,21 @@ ok   movers are built on ten or more schools each
 Tier 2 — behaviour in a real browser
 --------------------------------------------------------------------------
 ok   the page loads and the headline renders
-ok   load time is workable  [0.3s]
+ok   load time is workable  [0.4s]
 ok   no console errors on load
 ok   chart c1 draws an svg or explains why
 ok   chart c2 draws an svg or explains why
 ok   the MRA card shows exactly when a trend line can be drawn
-ok   the Georgia discipline card stays hidden
-ok   the incidents card stays hidden (no state incident file)
-ok   the state extras card stays hidden (no state files)
+ok   the discipline card shows exactly when the payload carries a discipline trend  [payload has no discipline_ga]
+ok   the incidents card shows exactly when the payload carries an incident trend  [payload has no incidents]
+ok   the state extras card shows exactly when the payload carries state measures  [no state files]
 ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
 skip headline recompute  [fewer than two schools a side]
 ok   the district filter re-renders the headline  [In Portland Public Schools schools, between 2021-22 and 2024-25, schools fell 19.6% on Per]
+ok   the school type filter is offered with the payload's kinds  [Title I schools, Not Title I, Charter schools]
+ok   choosing 'Title I schools' narrows the view and names it  [157 of 540 schools; In Maine Title I schools, between 2021-22 and 2024-25, schools fell 23.3% on Per]
+ok   every school in the 'Title I schools' view carries that attribute
+ok   Title I status is known for most schools on the page  [97.6%]
 ok   the Primary band filter re-renders without error
 ok   the Secondary band filter re-renders without error
 ok   measure 'percent_proficient' either draws or says why
@@ -126,16 +135,18 @@ ok   no console errors after the filter sweep
 ok   the insights tab hides the explore view
 ok   Portland Public Schools generates cards or says there is nothing to report  [0 cards]
 ok   no console errors on the insights tab
+ok   the MRA tab is offered exactly when the payload carries surveys
+skip MRA tab  [no surveys]
 ok   export c1.pptx downloads, opens and carries the chart image  [81,043 bytes]
 ok   the pptx export is named for the state and chart  [ME_Percent_meeting_the_standard_year_by_year_Maine_schools.pptx]
 ok   export c1.docx downloads, opens and carries the chart image  [77,975 bytes]
 ok   the docx export is named for the state and chart  [ME_Percent_meeting_the_standard_year_by_year_Maine_schools.docx]
-ok   the research pack downloads with its sections  [4,403 rows, sections ['about', 'growth_test', 'look_alike', 'movement', 'mra', 'report_card', 'school', 'school_values']]
+ok   the research pack downloads with its sections  [4,275 rows, sections ['about', 'growth_test', 'look_alike', 'movement', 'mra', 'report_card', 'school', 'school_values']]
 skip pack count against the page  [no district with three Leader in Me and three comparison schools in the end year]
 skip look-alike mode  [no prospect district with three or more schools, or not a full page]
 ok   the grade filter lists the tested grades
 ok   choosing a grade re-renders the headline and names the grade  [Not enough schools match these filters to compare anything yet. Remove a filter on the left and it w]
-ok   whole-school measures switch off while a grade is chosen
+ok   whole-school measures switch off while a grade is chosen  [3 whole-school measures in the payload]
 ok   dark mode re-renders without errors
 ok   no horizontal overflow at 900px  [0px]
 ok   no horizontal overflow at 700px  [0px]
@@ -166,5 +177,5 @@ ok   a statewide jump is flagged on the methods page
 ok   a territory page says so on the methods page
 
 ==========================================================================
-109 of 109 checks pass · 7 skipped
+116 of 116 checks pass · 8 skipped
 ==========================================================================

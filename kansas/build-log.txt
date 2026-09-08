@@ -1,5 +1,5 @@
 
-$ python3 /home/claude/national/Build/build_payload_core.py --state KS --core /home/claude/national/corefolder --out /home/claude/national/Build/work/KS
+$ python3 /home/claude/sdf/Build/build_payload_core.py --state KS --core /home/claude/sdf/Core --out /home/claude/sdf/Build/work/KS --data /home/claude/sdf/Build/work/KS/data
 reading the core for Kansas ...
 [core] subjects: 103,501 school rows kept; dropped 50,385 rows with no school id and 2,529 with an id but no school record
 [core] Leader in Me roster: 745 rows
@@ -13,23 +13,27 @@ applying the cleaning rules ...
   37,516 school-year-band-subject rows · years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
   Leader in Me school-years counted: 242 of 702 reviewed
   no start date: 2 schools · dated exits: 14 (school-years after an exit with rows: 22) · aggregate 'All grades' rows used 206, skipped 8
-  proficiency = levels 3 and 4 on 97.5% of rows
+  achievement levels as measures: yes (four levels, numbered from the bottom; proficiency is the top 2; 87.7% of rows in years and subjects whose levels add up)
+  level values blanked on 6 year-subject cells that do not add up: 2014-15 ELA (end-of-course), 2014-15 ELA, 2014-15 Math (end-of-course), 2014-15 Math, 2014-15 Science (end-of-course), 2014-15 Science
+  proficiency = levels 3 and 4 on 87.8% of rows
   statewide jump: ELA 2024->2025: 33.8 -> 44.4 (+10.6)
+  school type from NCES: Title I on 1,273 schools (617 yes), charter 7, magnet 30, alternative 0; Title I published 2017-2022, carried forward after
+  funders: 28 Kansas schools carry a funding source (28 on the page; Kern 10, 10 on the page); latest non-blank year per school
 building matched pairs, inside each band ...
   pairs 44  by band {'Primary': {'pairs': 32, 'unmatched': 2}, 'Secondary': {'pairs': 12, 'unmatched': 1}}
   MRA: 169 surveys · 68 schools · 562 sentinel values · 4 shells
   headline 2021-22 to 2024-25: {'y0': 2022, 'y1': 2025, 'lim_n': 52, 'comp_n': 1079, 'lim_change': 8.62, 'comp_change': 10.9, 'p': 0.027} · without the 3 undated schools {'y0': 2022, 'y1': 2025, 'lim_n': 49, 'comp_n': 1079, 'lim_change': 8.6, 'comp_change': 10.9, 'p': 0.031}
   roster: 48 counted, 21 exited, 7 not counted yet, 2 not counted
 
-wrote ks_payload.json  (14.7 MB, 37,516 rows) · page kind full (52 Leader in Me schools on the headline)
-build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+wrote ks_payload.json  (19.5 MB, 37,516 rows) · page kind full (52 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'fb6eaf7cb415'}
 
 $ python3 build2.py ks_payload.json KS_Dashboard.html KS_Methods.html
-payload 14.7 MB -> 0.94 MB gzip
-KS_Dashboard.html: 1464 KB
-KS_Methods.html: 28 KB
+payload 19.5 MB -> 1.52 MB gzip
+KS_Dashboard.html: 2269 KB
+KS_Methods.html: 36 KB
 
-$ python3 /home/claude/national/Build/verify_core.py --state KS --work /home/claude/national/Build/work/KS
+$ python3 /home/claude/sdf/Build/verify_core.py --state KS --work /home/claude/sdf/Build/work/KS
 
 --------------------------------------------------------------------------
 Tier 0 — install and input-value audit
@@ -81,10 +85,19 @@ ok   an exited school's reason names its expiration and the grace rule, or DOMO'
 ok   the headline sensitivity without the undated schools is on the methods page
 ok   size bands are the NCES categories in the payload's order
 ok   the poverty share rides on most rows for the look-alike caliper  [100%]
+ok   every offered measure is carried by at least one school-year
 ok   the composite flag keeps science, social studies and writing out of the no-filter view
 ok   the grade table lists tested grades in order and every school in it has a name
 ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [629 schools]
 ok   the grade table carries no school-year the rules dropped
+ok   the 4 achievement levels are measures of their own  [percent_below, percent_level2, percent_level3, percent_level4]
+ok   the level shares sum to 100 on the grade rows that carry them  [53,161 grade rows, 100.0% within 1.5 points]
+ok   the levels from the proficiency cut up add up to the proficiency rate  [cut at canonical level 3 of 4; 100.0% of grade rows within 1.5]
+ok   the grade table carries the level columns
+ok   the level labels carry the state's own numbering  [Level 1: below the standard; Level 2: approaching the standard; Level 3: meeting the standard; Level 4: exceeding the standard]
+ok   the levels at or above the standard count up, the levels below count down
+ok   the proficiency label names the levels it adds
+ok   years and subjects whose levels do not add up carry no level values  [6 cells set aside, 8,100 grade rows in them]
 ok   school names and start dates are in the payload for the pack
 ok   MRA by-school rows exist for the pack
 ok   the MRA respondent map names a group or a blend for every measure
@@ -112,22 +125,30 @@ ok   movers are built on ten or more schools each
 Tier 2 — behaviour in a real browser
 --------------------------------------------------------------------------
 ok   the page loads and the headline renders
-ok   load time is workable  [0.6s]
+ok   load time is workable  [1.1s]
 ok   no console errors on load
 ok   chart c1 draws an svg or explains why
 ok   chart c2 draws an svg or explains why
 ok   the MRA card shows exactly when a trend line can be drawn
-ok   the Georgia discipline card stays hidden
-ok   the incidents card stays hidden (no state incident file)
-ok   the state extras card stays hidden (no state files)
+ok   the discipline card shows exactly when the payload carries a discipline trend  [payload has no discipline_ga]
+ok   the incidents card shows exactly when the payload carries an incident trend  [payload has no incidents]
+ok   the state extras card shows exactly when the payload carries state measures  [no state files]
 ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
 ok   the headline p recomputes offline  [page 0.0270 scipy 0.0270 · window 2022-2025 · LiM n=52 mean +8.62 · comparison n=1079 mean +10.90]
 ok   the headline counts schools, not band slices  [page 1131 vs offline 1131 on 2022-2025]
 ok   the page's Leader in Me count is the builder's  [52 vs 52]
-ok   the district filter re-renders the headline  [In Wichita schools, between 2021-22 and 2024-25, Leader in Me schools rose 6.3% on Percent]
+ok   the district filter re-renders the headline  [In Wichita schools, between 2021-22 and 2024-25, Leader in Me schools rose 6.3% on Meeting]
+ok   the school type filter is offered with the payload's kinds  [Title I schools, Not Title I, Charter schools, Magnet schools, Kern Family Foundation schools]
+ok   choosing 'Title I schools' narrows the view and names it  [587 of 1293 schools; In Kansas Title I schools, between 2021-22 and 2024-25, Leader in Me schools ros]
+ok   every school in the 'Title I schools' view carries that attribute
+ok   'Kern Family Foundation schools' narrows the Leader in Me side only and keeps the comparison side whole  [Not enough schools match these filters to compare anything yet. Remove a filter on the left and it w]
+ok   Title I status is known for most schools on the page  [98.5%]
 ok   the Primary band filter re-renders without error
 ok   the Secondary band filter re-renders without error
 ok   measure 'percent_proficient' either draws or says why
+ok   measure 'percent_level4' either draws or says why
+ok   measure 'percent_level3' either draws or says why
+ok   measure 'percent_level2' either draws or says why
 ok   measure 'percent_below' either draws or says why
 ok   measure 'standard_score' either draws or says why
 ok   measure 'chronic_absent' either draws or says why
@@ -139,23 +160,41 @@ ok   the insights tab hides the explore view
 ok   Wichita generates cards or says there is nothing to report  [5 cards]
 ok   the insights tab uses the same unit and window as the explore tab  [{'p': 0.027029286130206494, 'n1': 52, 'n2': 1079}]
 ok   no console errors on the insights tab
-ok   export c1.pptx downloads, opens and carries the chart image  [182,363 bytes]
-ok   the pptx export is named for the state and chart  [KS_Percent_meeting_the_standard_year_by_year_Kansas_schools.pptx]
-ok   export c1.docx downloads, opens and carries the chart image  [180,475 bytes]
-ok   the docx export is named for the state and chart  [KS_Percent_meeting_the_standard_year_by_year_Kansas_schools.docx]
-ok   the research pack downloads with its sections  [17,248 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'roster']]
+ok   the MRA tab is offered exactly when the payload carries surveys
+ok   the MRA tab shows its own view and sidebar and hides the explore ones
+ok   the MRA summary renders a sentence  [Across 45 Kansas Leader in Me schools surveyed in 2024-25, Leadership averaged 76.2 on the MRA scale]
+ok   MRA chart c6 draws an svg or explains why
+ok   MRA chart c7 draws an svg or explains why
+ok   MRA chart c10 draws an svg or explains why
+ok   the measure picker offers every MRA measure with data  [37 options, 37 measures with data, 37 in the catalogue]
+ok   the MRA paired test recomputes offline  [page 0.0012 scipy 0.0012 on 46 schools]
+ok   the MRA latest-year school count recomputes offline  [page 45 vs offline 45]
+ok   the MRA same-schools count is every school surveyed more than once  [page 46 vs offline 46]
+ok   choosing the submeasure 'Personal Effectiveness' re-renders the MRA summary  [Across 46 Kansas Leader in Me schools surveyed in 2024-25, Personal Effectiveness averaged]
+ok   the MRA district filter narrows to Olathe's surveyed schools  [10 of 68 schools]
+ok   the MRA school type filter keeps only schools with that trait  [title1_yes]
+ok   the same-schools switch keeps only schools surveyed at both ends
+ok   no console errors on the MRA tab
+ok   the MRA view downloads one row per school, year and measure  [4,951 rows]
+ok   leaving the MRA tab restores the explore view
+ok   export c1.pptx downloads, opens and carries the chart image  [182,385 bytes]
+ok   the pptx export is named for the state and chart  [KS_Meeting_or_exceeding_the_standard_levels_3_and_4_year_by_year_Kansas_schools.pptx]
+ok   export c1.docx downloads, opens and carries the chart image  [180,519 bytes]
+ok   the docx export is named for the state and chart  [KS_Meeting_or_exceeding_the_standard_levels_3_and_4_year_by_year_Kansas_schools.docx]
+ok   the research pack downloads with its sections  [35,016 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'roster']]
 ok   the pack's Leader in Me count for the district is the page's  [4 vs 4]
-ok   look-alike mode rewrites the headline around the anchor district, or says nothing matched  [In Kansas schools like Blue Valley’s, between 2021-22 and 2024-25, Leader in Me schools rose 8.9% on Percent meeting the]
-ok   the look-alike box reports both counts or says why not  [Schools like Blue Valley’s: 13 Leader in Me schools and 72 comparison schools look like Blue Valley’s 39 schools with results in these years (each matched at it]
+ok   look-alike mode rewrites the headline around the anchor district, or says nothing matched  [In Kansas schools like Blue Valley’s, between 2021-22 and 2024-25, Leader in Me schools rose 8.9% on Meeting or exceedin]
+ok   the look-alike box reports both counts or says why not  [Schools like Blue Valley’s: 11 Leader in Me schools and 60 comparison schools look like Blue Valley’s 39 schools with results in these years (each matched at it]
 ok   the matched switch is disabled while an anchor is set
 ok   no console errors in look-alike mode
-ok   the look-alike headline p recomputes offline  [p=0.9903]
+ok   the look-alike headline p recomputes offline  [p=0.7634]
 ok   the anchor's own schools are never inside the look-alike groups
-ok   the school list downloads with one row per school  [52 rows, 1 same-name pairs]
+ok   the school list downloads with one row per school  [50 rows, 1 same-name pairs]
 ok   the school list carries traits and change columns
 ok   the grade filter lists the tested grades
-ok   choosing a grade re-renders the headline and names the grade  [In Kansas grade 4 results, between 2021-22 and 2024-25, Leader in Me schools rose 5.6% on Percent me]
-ok   whole-school measures switch off while a grade is chosen
+ok   choosing a grade re-renders the headline and names the grade  [In Kansas grade 4 results, between 2021-22 and 2024-25, Leader in Me schools rose 5.6% on Meeting or]
+ok   the level measures stay on while a grade is chosen
+ok   whole-school measures switch off while a grade is chosen  [3 whole-school measures in the payload]
 ok   dark mode re-renders without errors
 ok   no horizontal overflow at 900px  [0px]
 ok   no horizontal overflow at 700px  [0px]
@@ -187,5 +226,5 @@ ok   a statewide jump is flagged on the methods page
   HEADLINE (statewide, 2022-2025, no filters): Leader in Me +8.62 pts (n=52) vs comparison +10.90 pts (n=1079), p=0.0270 -> significant in the comparison group's favour
 
 ==========================================================================
-136 of 136 checks pass
+171 of 171 checks pass
 ==========================================================================

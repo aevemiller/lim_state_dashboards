@@ -2,56 +2,54 @@
  "state": "FL",
  "name": "Florida",
  "folder": "florida",
- "built": "2026-09-04",
- "seconds": 335,
- "builder": "build_payload_fl.py",
+ "built": "2026-09-08",
+ "seconds": 236,
+ "builder": "build_payload_core.py",
  "page_kind": "full",
- "lim_headline_n": null,
+ "lim_headline_n": 172,
  "schools": 3885,
  "years": [
   2016,
   2026
  ],
  "lim_roster_schools": 327,
- "state_extras": true,
  "core_exports": {
   "subjects": {
    "file": "Archive.zip/Subjects_Tests_FINAL (8).csv",
    "bytes": 146145669,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   },
   "roster": {
    "file": "LIM Schools (Current_Active) (11).csv",
    "bytes": 12784777,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   },
   "comparison": {
-   "file": "All Other Schools (Non-LiM & Exited).csv",
-   "bytes": 132812308,
-   "modified": "2026-09-03"
+   "file": "Archive.zip/All Other Schools (Non-LiM & Exited).csv",
+   "bytes": 146145669,
+   "modified": "2026-09-04"
   },
   "mra": {
    "file": "All MRA Surveys.csv",
    "bytes": 2466245,
-   "modified": "2026-09-03"
+   "modified": "2026-09-04"
   }
  },
- "subject_rows_without_school_id_dropped_nationally": 28069,
  "state_pull": {
   "subjects": {
-   "path": "/home/claude/national/Build/work/FL/data/Subjects_Tests_FINAL (8).csv",
+   "path": "/home/claude/sdf/Build/work/FL/data/Subjects_Tests_FINAL (8).csv",
    "rows": 301734
   },
   "roster": {
-   "path": "/home/claude/national/Build/work/FL/data/LIM Schools (Current_Active) (11).csv",
+   "path": "/home/claude/sdf/Build/work/FL/data/LIM Schools (Current_Active) (11).csv",
    "rows": 3080
   },
   "comparison": {
-   "path": "/home/claude/national/Build/work/FL/data/All Other Schools (Non-LiM & Exited).csv",
+   "path": "/home/claude/sdf/Build/work/FL/data/All Other Schools (Non-LiM & Exited).csv",
    "rows": 31786
   },
   "mra": {
-   "path": "/home/claude/national/Build/work/FL/data/All MRA Surveys.csv",
+   "path": "/home/claude/sdf/Build/work/FL/data/All MRA Surveys.csv",
    "rows": 450
   }
  },
@@ -59,6 +57,7 @@
   "2425ABS21Days10Comparison.xlsx",
   "ADAADMSchl2425.xlsx",
   "FedGradRateCategory2425.xls",
+  "LiM Exit Date 2.csv",
   "SESIR2324a-h.xlsx",
   "SESIR2324i-z.xlsx",
   "SESIR2425a-h.xlsx",
@@ -72,6 +71,18 @@
   "SchoolGrades24.xlsx",
   "SchoolGrades25.xlsx",
   "SchoolGrades26.xlsx",
+  "Schools-of-Excellence22-Combo.xls",
+  "Schools-of-Excellence22-Elementary.xls",
+  "Schools-of-Excellence22-High.xls",
+  "Schools-of-Excellence22-Middle.xls",
+  "Schools-of-Excellence23-Combo.xls",
+  "Schools-of-Excellence23-Elementary.xls",
+  "Schools-of-Excellence23-High.xls",
+  "Schools-of-Excellence23-Middle.xls",
+  "Schools-of-Excellence24-Combo.xls",
+  "Schools-of-Excellence24-Elementary.xls",
+  "Schools-of-Excellence24-High.xls",
+  "Schools-of-Excellence24-Middle.xls",
   "Schools-of-Excellence25-Combo.xls",
   "Schools-of-Excellence25-Elementary.xls",
   "Schools-of-Excellence25-High.xls",
@@ -83,13 +94,76 @@
   "sesir2223a-h.xlsx",
   "sesir2223i-z.xlsx"
  ],
- "scripts": [
-  "fl_crosswalk.py",
-  "fl_extras.py",
-  "audit_fl.py",
-  "build_payload_fl.py",
-  "verify_fl.py"
- ],
+ "extras_module": "fl_core_extras",
  "verified": true,
- "dashboard_bytes": 4547359
+ "dashboard_bytes": 4656163,
+ "audits": {
+  "levels": {
+   "rows": 271360,
+   "levels 3 and 4": 8.3,
+   "levels 2, 3 and 4": 1.8,
+   "level 4 alone": 0.9,
+   "100 minus level 1": 2.3,
+   "best": "levels 3 and 4",
+   "levels_sum_to_100_share": 13.4,
+   "structure": "no combination of the reported levels reproduces the proficiency rate",
+   "n_levels": null,
+   "proficient_from": null,
+   "reversed_numbering": null,
+   "coverage": 0.0,
+   "years_ok": null,
+   "years_out": null,
+   "cells_out": null,
+   "latest_year_ok": null,
+   "reason": "no combination of the reported levels reproduces PercentMetStandard on more than 13% of rows (a five-level state whose export carries four columns, usually)",
+   "combination_shares": {
+    "levels 3 and 4": 13.3,
+    "levels 2, 3 and 4": 4.4,
+    "levels 1 and 2 (1 the top)": 2.2,
+    "levels 1, 2 and 3 (1 the top)": 2.6
+   },
+   "cells": [],
+   "levels_as_measures": false
+  },
+  "poverty": {
+   "lim": {
+    "schools": 327,
+    "missing": 2,
+    "at_99_or_more": 1,
+    "above_100": 0,
+    "high_poverty_share": 13.1
+   },
+   "comparison": {
+    "schools": 3599,
+    "missing": 33,
+    "at_99_or_more": 16,
+    "above_100": 1,
+    "high_poverty_share": 12.0
+   }
+  },
+  "statewide_jumps": [],
+  "sensitivity": {
+   "with": {
+    "y0": 2023,
+    "y1": 2026,
+    "lim_n": 172,
+    "comp_n": 3123,
+    "lim_change": 7.3,
+    "comp_change": 6.9,
+    "p": 0.449
+   },
+   "without": {
+    "y0": 2023,
+    "y1": 2026,
+    "lim_n": 137,
+    "comp_n": 3123,
+    "lim_change": 7.61,
+    "comp_change": 6.9,
+    "p": 0.223
+   },
+   "schools": 39
+  },
+  "subjects_by_keyword": [],
+  "subjects_excluded": []
+ }
 }

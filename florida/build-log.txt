@@ -1,247 +1,85 @@
 
-$ python3 fl_crosswalk.py
-========================================================================
-FLORIDA CROSSWALK  (FLDOE district-school number  <->  NCES id)
-========================================================================
-DOMO subject-file schools      :   3929   (LiM 327, comparison 3602)
-FLDOE report-card schools      :   3952
-Crosswalked                    :   3670   (LiM 321/327, comparison 3349/3602)
-    via district+name         :   3663
-    via district+loose name   :      7
-Comparison schools not matched :    253
-LiM schools not matched        :      6
-    - Collier Charter Academy (Collier)
-    - Jackson Alternative School (Jackson)
-    - Mater Gardens Academy Middle School (Miami-Dade)
-    - Renaissance Charter School At Palms West (Palm Beach)
-    - Somerset Oaks Academy (Miami-Dade)
-    - South Area Secondary Intensive Transition Program (Palm Beach)
-Ambiguous (same name twice in one district), left unmatched: 2
-    - Academic Solutions Academy A
-    - Bell Creek Academy
-------------------------------------------------------------------------
-INDEPENDENT AUDIT — state average daily membership vs DOMO student count
-  (neither file was used to build the crosswalk)
-  schools compared      : 3512
-  correlation           : 0.999
-  median size difference: 3.02%
-  within 25% of each other: 99.4% of schools
-========================================================================
-
-$ python3 audit_fl.py
-
-==========================================================================
-1. Subject Test file  (Subjects_Tests_FINAL)
-==========================================================================
-  rows 301,734 · schools 3,929 · years [np.int64(2016), np.int64(2017), np.int64(2018), np.int64(2019), np.int64(2021), np.int64(2022), np.int64(2023), np.int64(2024), np.int64(2025), np.int64(2026)]
-  ok: no 2020 rows — Florida cancelled that administration, as expected
-  F: 30,374 rows for test year 2021 (2020-21): excluded by rule, not interpolated
-  F: subject label switches 'Mathematics' (through 2022) to 'Math' (from 2023) — the FSA to FAST break, recoded to one Math band and never pooled in raw points across it
-  F: PercentMetStandard minus (Level3+Level4): mean 12.34, max 99 on 301,734 rows — so met standard is levels 3+4+5 and Level 5 is derivable, checked on every row
-  F: 2,790 rows go slightly negative on that subtraction (worst -1.0) — rounding in the published percentages; floored at zero and counted, never treated as data
-    grades 3-10   : rows 245,593 · met-minus-(L3+L4) mean 10.76
-    end-of-course : rows  56,141 · met-minus-(L3+L4) mean 19.27
-  ok: grades 3-10 and end-of-course sit on the same achievement-level scale (level 3 or better), unlike South Carolina, so they are not split into two subjects — the arithmetic above is the proof
-    PercentLevel1        n=301,734 null=     0 most-common=0 (15,805 rows)
-    PercentLevel2        n=301,734 null=     0 most-common=23 (14,148 rows)
-    PercentLevel3        n=301,734 null=     0 most-common=24 (15,855 rows)
-    PercentLevel4        n=301,734 null=     0 most-common=13 (11,488 rows)
-    PercentMetStandard   n=301,734 null=     0 most-common=100 (5,326 rows)
-  ok: 0 blank outcome cells — Florida suppresses under 10 tested students by omitting the row, so suppression arrives as absence and is never read as zero
-  ok: 0 duplicate school-year-grade-subject rows
-  F: 327 schools ever flagged Leader in Me; 0 ever flip true->false. The flag is a CURRENT-ROSTER SNAPSHOT stamped on every year, not a history, so it cannot date an exit and membership decides nothing — the start date and the full-year rule do
-  F: LiM_year_calc runs -8 to 17; negative values are pre-start years carried on the roster. The file's own maturity bins are built from it, so both are rebuilt from LIM Start Date rather than trusted
-  F: LIM Exit Date column present but empty on all 301,734 rows
-
-==========================================================================
-2. Leader in Me roster  (LIM Schools (Current_Active))
-==========================================================================
-  rows 3,080 · schools 327 · years [np.int64(2016), np.int64(2017), np.int64(2018), np.int64(2019), np.int64(2021), np.int64(2022), np.int64(2023), np.int64(2024), np.int64(2025), np.int64(2026)]
-  F: every row is LIM School = True (3,080 of 3,080); no status column, no exit date column
-  F: 28 schools carry no start date, so their exposure cannot be coded — excluded from the Leader in Me group entirely and named
-  F: demographics vary across years for only 0 of 327 schools — enrollment, poverty and make-up are ONE snapshot repeated on every year, so they describe the school today, not the school in 2016
-  F: '% White' exceeds 100 on 2,068 of 3,080 rows (max 1487) — it is a raw COUNT, not a percentage; converted with Student Count
-  ok: 'FRL %' is a real percentage: 0.9 to 99.0, 12 blank cells across 2 schools
-  F: Chronic Absence is populated only for [2018, 2019, 2021, 2022, 2023, 2024] — later years are absent, not zero, so this measure stops at 2024 and the page says so
-  F: Grad Rate is populated only for [2017, 2018, 2019, 2021, 2022, 2023, 2024, 2025] — later years are absent, not zero, so this measure stops at 2025 and the page says so
-  F: 44 roster rows carry an unusable low grade (['M']) covering 8 schools — grade span taken from the tested grades in the subject file instead
-
-==========================================================================
-3. Comparison file  (All Other Schools (Non-LiM & Exited))
-==========================================================================
-  rows 31,786 · schools 3,601 · years [np.int64(2016), np.int64(2017), np.int64(2018), np.int64(2019), np.int64(2021), np.int64(2022), np.int64(2023), np.int64(2024), np.int64(2025), np.int64(2026)]
-  F: the file is named '(Non-LiM & Exited)' and carries LIM Start Date and LIM Exit Date columns, but in the Florida pull BOTH ARE EMPTY on all 31,786 rows and every row is LIM School = False. No exited Florida school can be identified in either export, so any that exist sit inside the comparison group unlabelled. This is the single biggest data gap in the Florida build and is stated on the methods page
-  F: 'FRL' here is a raw COUNT (3 to 3830), while the Leader in Me file publishes a percentage — the two poverty fields are not the same field and must be reconciled before either is used
-  F: FRL count over student count exceeds 100% on 80 of 31,786 rows (median 52.2%)
-  ok: '%White Calculated' is a true percentage here (0.0 to 100.0)
-
-==========================================================================
-4. MRA surveys  (All MRA Surveys)
-==========================================================================
-  rows 450 · schools 195 · years [np.int64(2021), np.int64(2022), np.int64(2023), np.int64(2024), np.int64(2025), np.int64(2026)]
-  F: submeasure cells exactly 100.0: 971 of 11,962 (8.1%), against 159 (1.3%) anywhere in 90-99.9 and 0 between 99.0 and 100.0. Highest real value 98.0. On the published mean-75 SD-8 scale this is a sentinel, not a score — treated as not reported, the same as South Carolina, Mississippi and Alabama. Florida is the fourth state with this exact fingerprint
-    Leadership Composite   n= 407 mean=78.96 ==100: 32 90-99.9:  2 max-real=93.0
-      -> with the sentinel nulled: n=375 mean=77.17
-    Culture Composite      n= 394 mean=79.73 ==100: 26 90-99.9:  2 max-real=94.0
-      -> with the sentinel nulled: n=368 mean=78.29
-    Academics Composite    n= 393 mean=77.95 ==100: 22 90-99.9:  1 max-real=94.0
-      -> with the sentinel nulled: n=371 mean=76.65
-  F: 38 empty-shell survey rows (no student respondents and no composites) — dropped, never averaged in
-  ok: 0 duplicate school-year survey rows
-  F: 3 submeasures exist only in later administrations (Life- Readiness, Group Collaboration, Future Focus) — they cannot carry a first-to-last change and are excluded from the movers ranking
-
-==========================================================================
-5. Florida school grades  (SchoolGrades 2022-2026)
-==========================================================================
-  SchoolGrades22.xlsx    year 2022 · rows 3,409 · columns 50
-  SchoolGrades23.xlsx    year 2023 · rows 1,808 · columns 44
-  SchoolGrades24.xlsx    year 2024 · rows 3,471 · columns 54
-  SchoolGrades25.xlsx    year 2025 · rows 3,465 · columns 54
-  SchoolGrades26.xlsx    year 2026 · rows 3,466 · columns 55
-  ok: Title I is published per year in the school-grades file ({'YES': 2045, 'NO': 1421}) — a real upgrade on the 2021-22 federal directory vintage the earlier Florida study had to use, and Eve's preferred population term
-  ok: the state publishes economic disadvantage directly: n=3,452, 0.0 to 100.0, 14 blank
-
-==========================================================================
-6. SESIR safety and discipline incidents
-==========================================================================
-  10 files: ['SESIR2324a-h.xlsx', 'SESIR2324i-z.xlsx', 'SESIR2425a-h.xlsx', 'SESIR2425i-z.xlsx', 'sesir2021a-h.xls', 'sesir2021i-z.xls', 'sesir2122a-h.xlsx', 'sesir2122i-z.xlsx', 'sesir2223a-h.xlsx', 'sesir2223i-z.xlsx']
-  sheets in SESIR2324a-h.xlsx: ['State and Districts', 'Schools']
-  ok: school-year files present: ['2021', '2122', '2223', '2324', '2425'] (2019-20 absent, which is the COVID closure year and is expected)
-
-==========================================================================
-7. Where a DOMO field and a Florida file measure the same thing
-==========================================================================
-  schools with both measures: 3,326   correlation nan
-  DOMO poverty minus state economic disadvantage: mean +inf pts, median -23.4
-    LiM        : n=  299  DOMO mean  53.2  state mean  74.3  missing DOMO 1
-    comparison : n= 3027  DOMO mean   inf  state mean  69.2  missing DOMO 5
-  F: the DOMO poverty field fails its own sanity check (4 values over 100%, 6 missing) — the state's own measure wins, as in South Carolina
-
-==========================================================================
-FINDINGS SUMMARY
-==========================================================================
-  [ok] no 2020 rows — Florida cancelled that administration, as expected
-  [F] 30,374 rows for test year 2021 (2020-21): excluded by rule, not interpolated
-  [F] subject label switches 'Mathematics' (through 2022) to 'Math' (from 2023) — the FSA to FAST break, recoded to one Math band and never pooled in raw points across it
-  [F] PercentMetStandard minus (Level3+Level4): mean 12.34, max 99 on 301,734 rows — so met standard is levels 3+4+5 and Level 5 is derivable, checked on every row
-  [F] 2,790 rows go slightly negative on that subtraction (worst -1.0) — rounding in the published percentages; floored at zero and counted, never treated as data
-  [ok] grades 3-10 and end-of-course sit on the same achievement-level scale (level 3 or better), unlike South Carolina, so they are not split into two subjects — the arithmetic above is the proof
-  [ok] 0 blank outcome cells — Florida suppresses under 10 tested students by omitting the row, so suppression arrives as absence and is never read as zero
-  [ok] 0 duplicate school-year-grade-subject rows
-  [F] 327 schools ever flagged Leader in Me; 0 ever flip true->false. The flag is a CURRENT-ROSTER SNAPSHOT stamped on every year, not a history, so it cannot date an exit and membership decides nothing — the start date and the full-year rule do
-  [F] LiM_year_calc runs -8 to 17; negative values are pre-start years carried on the roster. The file's own maturity bins are built from it, so both are rebuilt from LIM Start Date rather than trusted
-  [F] LIM Exit Date column present but empty on all 301,734 rows
-  [F] every row is LIM School = True (3,080 of 3,080); no status column, no exit date column
-  [F] 28 schools carry no start date, so their exposure cannot be coded — excluded from the Leader in Me group entirely and named
-  [F] demographics vary across years for only 0 of 327 schools — enrollment, poverty and make-up are ONE snapshot repeated on every year, so they describe the school today, not the school in 2016
-  [F] '% White' exceeds 100 on 2,068 of 3,080 rows (max 1487) — it is a raw COUNT, not a percentage; converted with Student Count
-  [ok] 'FRL %' is a real percentage: 0.9 to 99.0, 12 blank cells across 2 schools
-  [F] Chronic Absence is populated only for [2018, 2019, 2021, 2022, 2023, 2024] — later years are absent, not zero, so this measure stops at 2024 and the page says so
-  [F] Grad Rate is populated only for [2017, 2018, 2019, 2021, 2022, 2023, 2024, 2025] — later years are absent, not zero, so this measure stops at 2025 and the page says so
-  [F] 44 roster rows carry an unusable low grade (['M']) covering 8 schools — grade span taken from the tested grades in the subject file instead
-  [F] the file is named '(Non-LiM & Exited)' and carries LIM Start Date and LIM Exit Date columns, but in the Florida pull BOTH ARE EMPTY on all 31,786 rows and every row is LIM School = False. No exited Florida school can be identified in either export, so any that exist sit inside the comparison group unlabelled. This is the single biggest data gap in the Florida build and is stated on the methods page
-  [F] 'FRL' here is a raw COUNT (3 to 3830), while the Leader in Me file publishes a percentage — the two poverty fields are not the same field and must be reconciled before either is used
-  [F] FRL count over student count exceeds 100% on 80 of 31,786 rows (median 52.2%)
-  [ok] '%White Calculated' is a true percentage here (0.0 to 100.0)
-  [F] submeasure cells exactly 100.0: 971 of 11,962 (8.1%), against 159 (1.3%) anywhere in 90-99.9 and 0 between 99.0 and 100.0. Highest real value 98.0. On the published mean-75 SD-8 scale this is a sentinel, not a score — treated as not reported, the same as South Carolina, Mississippi and Alabama. Florida is the fourth state with this exact fingerprint
-  [F] 38 empty-shell survey rows (no student respondents and no composites) — dropped, never averaged in
-  [ok] 0 duplicate school-year survey rows
-  [F] 3 submeasures exist only in later administrations (Life- Readiness, Group Collaboration, Future Focus) — they cannot carry a first-to-last change and are excluded from the movers ranking
-  [ok] Title I is published per year in the school-grades file ({'YES': 2045, 'NO': 1421}) — a real upgrade on the 2021-22 federal directory vintage the earlier Florida study had to use, and Eve's preferred population term
-  [ok] the state publishes economic disadvantage directly: n=3,452, 0.0 to 100.0, 14 blank
-  [ok] school-year files present: ['2021', '2122', '2223', '2324', '2425'] (2019-20 absent, which is the COVID closure year and is expected)
-  [F] the DOMO poverty field fails its own sanity check (4 values over 100%, 6 missing) — the state's own measure wins, as in South Carolina
-
-  21 findings, 10 clean checks
-
-$ python3 build_payload_fl.py
-reading core files ...
-  identity: folding 2 comparison ids into their own Leader in Me school (same name and city, no overlapping tested years)
-    Canoe Creek K-8 (Saint Cloud): 120147008947 -> 120147003892, years 2021-2026
-    Ecollier Academy (Naples): 120033007759 -> 120033008905, years 2024-2024
-  identity: Gateway Charter School (Fort Myers) keeps two ids - both report in 2016-2023, so they are two schools, not one
-  exits: 274 roster schools carry an expiration date; 127 are past it by more than 30 days (exited), 0 inside the grace window (kept), 147 in the future, 53 with no date (39 of them with a start date; 31 carry the retired Black colour)
-  crosswalk: Gateway Charter School (Lee) shares state id 36-4103 with a Leader in Me school of the same name, so it is left without Florida report-card measures
+$ python3 /home/claude/sdf/Build/build_payload_core.py --state FL --core /home/claude/sdf/Core --out /home/claude/sdf/Build/work/FL --data /home/claude/sdf/Build/work/FL/data --extras fl_core_extras
+reading the core for Florida ...
+[core] subjects: 301,734 school rows kept; dropped 28,069 rows with no school id and 2,382 with an id but no school record
+[core] Leader in Me roster: 3,080 rows
+[core] comparison schools: 31,786 rows
+[core] MRA surveys: 450 rows
+  subject rows 301,734 · roster rows 3,080 (327 schools) · comparison rows 31,786 (3601 schools) · MRA surveys 450
+  identity: Canoe Creek K-8 (Saint Cloud): 120147008947 -> 120147003892
+  identity: Ecollier Academy (Naples): 120033007759 -> 120033008905
+  identity: Gateway Charter School (Fort Myers) keeps two ids (both report in 2016-2023)
+[core] Leader in Me roster: 56,181 rows
+  crosswalk: FLDOE district and school numbers to the DOMO id (district, then name; SIR and Schools of Excellence widen the state universe)
+    DOMO schools 3,929 · state schools 3,952 · crosswalked 3,670 (district+name 3663, district+loose name 7) · Leader in Me 321 of 327
+    independent audit (state average daily membership vs DOMO enrollment, neither used to build the map): 3,512 schools, r = 0.999, median size difference 3.02%, 99.4% within 25%
+  SESIR: school rows and state totals from the cache (the files have not changed)
+  crosswalk: Gateway Charter School (Lee) shares state id 36-4103 with a Leader in Me school of the same name, so it is left without Florida measures
+  crosswalk: 2 entries re-pointed to the id the core folded them into
+  poverty: Florida's economically-disadvantaged share on 3,453 schools (314 Leader in Me), latest year per school {2022: 41, 2024: 21, 2025: 34, 2026: 3357}; against the lunch share r = 0.853 on 3,443 schools, median +23.3 points; high-poverty 57.6% of Leader in Me schools on Florida's measure vs 13.2% on the lunch share
+  poverty: Florida's own measure (Florida economically-disadvantaged share (FLDOE school grades file)) replaces the lunch share on 3,453 schools (314 Leader in Me); 473 keep DOMO's
+  exits: 274 of 327 roster schools carry an expiration date; 127 past it by more than 30 days (exited), 0 inside the grace window, 147 in the future, 53 undated (39 with a start date)
   3,926 schools · 76 districts
-  state economic-disadvantage values: 13,453 school-years for 3,453 schools
-  Title I flags: 13,455 school-years for 3,453 schools
-  2024-25 chronic absence from Florida's Survey 5 file: 3,604 schools
 applying the cleaning rules ...
   134,856 school-year-band-subject rows · years [2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025, 2026]
   Leader in Me school-years counted: 1187 of 2943 reviewed
-  schools with no start date, excluded from both groups: 28
-  schools with a dated exit: 117; school-years after an exit counted in neither group: 297 (284 of them had test rows)
-  chronic absence 2024-25 filled from the state file: 3,604 school-years
+  no start date: 28 schools · dated exits: 117 (school-years after an exit with rows: 284) · aggregate 'All grades' rows used 0, skipped 0
+  achievement levels as measures: no (no combination of the reported levels reproduces the proficiency rate; 0.0% of rows in years and subjects whose levels add up; not offered because no combination of the reported levels reproduces PercentMetStandard on more than 13% of rows (a five-level state whose export carries four columns, usually))
+  proficiency = levels 3 and 4 on 8.3% of rows
+folding in Florida's own measures (fl_core_extras) ...
+  crosswalk reach: 321 of 327 Leader in Me schools, 3,345 of 3,599 comparison schools; not reached: Collier Charter Academy (Collier); Jackson Alternative School (Jackson); Mater Gardens Academy Middle School (Miami-Dade); Renaissance Charter School At Palms West (Palm Beach); Somerset Oaks Academy (Miami-Dade); South Area Secondary Intensive Transition Program (Palm Beach)
+  report cards: 3,596 schools, years [2022, 2024, 2025, 2026] (2022-23 excluded by name) · attendance 4,136 · federal graduation 1,106 · Schools of Excellence 2022: 697 of 3,368 graded, 2024: 774 of 3,450 graded, 2025: 744 of 3,452 graded
+  SESIR: 20,740 school-years, schools by year {2021: 2853, 2022: 4449, 2023: 4490, 2024: 4488, 2025: 4460}; school rows against the state's own totals: worst difference 0 incidents across 5 years
+  card: 14 Florida measures, each group on each year's own membership
+  incidents: 8 statewide points, 261 district-year rows
+  2024-25 chronic absence from Florida's Survey 5 file: 3,604 schools joined (3,573 on the page); against DOMO's 2023-24 value r = 0.899 on 3,392 schools (means 29.3 and 31.4); the 21-days column r = 0.864, mean 17.8, so it is a different measure and is not used
+  core measures filled from Florida's own file where DOMO had none: chronic_absent 15,401 rows (filled here rather than through fill_measures; see FILL_VIA_HOOK)
+  per-school report-card records for the pack: 17,535
+  school type from NCES: Title I on 3,750 schools (1,985 yes), charter 809, magnet 566, alternative 220; Title I published 2017-2022, carried forward after
+  funders: 170 Florida schools carry a funding source (153 on the page; Kern 61, 46 on the page); latest non-blank year per school
 building matched pairs, inside each band ...
-  pairs 227  by band {'Primary': {'pairs': 149, 'unmatched': 2}, 'Secondary': {'pairs': 78, 'unmatched': 2}}
-  signed baseline gap (partner minus Leader in Me): mean -0.00 pts, median +0.00, 15% of partners start above
-building the MRA section ...
-  407 surveys · 181 schools · 1051 sentinel values nulled · 38 empty shells dropped
-  sensitivity, headline with the 39 undated-expiration schools {'lim_n': 172, 'comp_n': 3124, 'lim_change': 7.77, 'comp_change': 7.69, 'p': 0.883} · without {'lim_n': 137, 'comp_n': 3124, 'lim_change': 8.03, 'comp_change': 7.69, 'p': 0.569}
-building Florida's own report-card extras ...
-  14 report-card measures · 8 incident points · 258 district incident rows · 17,750 per-school report-card records
+  pairs 228  by band {'Primary': {'pairs': 148, 'unmatched': 3}, 'Secondary': {'pairs': 80, 'unmatched': 0}}
+  MRA: 407 surveys · 181 schools · 1051 sentinel values · 38 shells
+  headline 2022-23 to 2025-26: {'y0': 2023, 'y1': 2026, 'lim_n': 172, 'comp_n': 3123, 'lim_change': 7.3, 'comp_change': 6.9, 'p': 0.449} · without the 39 undated schools {'y0': 2023, 'y1': 2026, 'lim_n': 137, 'comp_n': 3123, 'lim_change': 7.61, 'comp_change': 6.9, 'p': 0.223}
   roster: 168 counted, 127 exited, 4 not counted yet, 28 not counted
-  grade table: 254,176 school-year-grade-subject rows for 3,885 schools
 
-wrote fl_payload.json  (60.8 MB, 134,856 rows)
-build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_fl.py', 'builder_sha': 'bf56f5828cbd'}
+wrote fl_payload.json  (66.5 MB, 134,856 rows) · page kind full (172 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'fb6eaf7cb415'}
 
 $ python3 build2.py fl_payload.json FL_Dashboard.html FL_Methods.html
-payload 60.8 MB -> 3.23 MB gzip
-FL_Dashboard.html: 4441 KB
-FL_Methods.html: 38 KB
+payload 66.5 MB -> 3.27 MB gzip
+FL_Dashboard.html: 4547 KB
+FL_Methods.html: 49 KB
 
-$ python3 verify_fl.py
+$ python3 /home/claude/sdf/Build/verify_core.py --state FL --work /home/claude/sdf/Build/work/FL
 
 --------------------------------------------------------------------------
 Tier 0 — install and input-value audit
 --------------------------------------------------------------------------
-ok   the template in use carries the brand palette and the ink helper (not the broken Aug-19 base)
+ok   the template in use carries the brand palette and the ink helper
 ok   the template carries the three-school floor in headline and movement
-ok   the template reads the payload's raw window on the insights tab (2026-08-19d fix)
+ok   the template reads the payload's raw window on the insights tab
 ok   the template honours the composite row flag
 ok   the template carries the research pack, look-alike mode and the school list
 ok   the office helper carries the Word table builder
-ok   the expiration dates come from the roster export's own column (no Florida file present)
-ok   every expiration date parsed
-ok   one expiration date per school across its years
-ok   every school with an expiration date is on the current-active roster  [0 not on it]
-ok   no expiration date precedes the school's start date
-ok   the exit rule's counts recompute from the file  [127 exited, 0 in grace, 147 future]
-ok   the grace window is the 30 days Eve set
-ok   the roster is a snapshot: the exited schools are all flagged LIM School = True in every year
-ok   the state's absent-10%-or-more share is DOMO's chronic absence measure (r >= 0.85 with 2023-24)  [r=0.900, n=3470]
-ok   the absent-21-days column is a different measure and is not used  [means 31.4 vs 17.8]
-ok   suppressed absence rows arrive as asterisks and are read as absence
-ok   subject file is Florida only
-ok   no 2019-20 rows exist in the subject file
-ok   2020-21 rows exist and were excluded from the payload
+ok   the subject pull is one state's (federal id state code)
+ok   the roster and comparison pulls are one state's
+ok   2019-20 rows, if the file has any, are excluded from the payload  [0 rows in the file]
 ok   no duplicate school-year-grade-subject rows
-ok   met standard is levels 3+4+5, proved on every row  [min -1.0 mean 12.34 on 301,734 rows]
-ok   the only negatives are rounding, worst under one point  [2,790 rows, worst -1.0]
-ok   no test value outside 0-100
-ok   suppression arrives as absence, never as a zero cell
-ok   the FSA-to-FAST break shows in the subject label  ['Mathematics' through 2022, 'Math' from 2023]
-ok   the Leader in Me flag never flips true->false: it is a snapshot, not a history  [327 flagged schools, 0 flips]
-ok   no exit date anywhere in the subject file
-ok   no exit date or start date anywhere in the comparison file
-ok   every comparison row is LIM School = False
+ok   no test value above 100
+ok   negatives, if any, are sentinels under one point  [{'PercentLevel1': 0.0, 'PercentLevel2': 0.0, 'PercentLevel3': 0.0, 'PercentLevel4': 0.0, 'PercentMetStandard': 0.0}]
+ok   the Leader in Me flag never flips true->false in the roster (a snapshot)
+ok   every comparison row is LIM School = false
+ok   comparison rows for roster schools sit only in years the roster does not carry  [0 roster schools have comparison rows]
 ok   the roster's '% White' is a count, not a percentage
-ok   the comparison file's FRL is a count, not a percentage
-ok   MRA exact-100 is a sentinel, not a score  [971 at exactly 100 vs 159 in 90-99.9, nothing in 99-100, highest real 98.0]
-ok   MRA empty-shell rows exist and were counted
-ok   crosswalk covers nearly every Leader in Me school  [321 of 327]
-ok   crosswalk covers most comparison schools  [3346 of 3,601]
-ok   crosswalk school ids are unique on the DOMO side
-ok   the raw crosswalk did contain a state id claimed by two schools  [3 duplicate state ids before resolution]
-ok   the resolved crosswalk attaches each state id to exactly one school  [0 duplicates remain]
-ok   name-and-city collisions between the two groups were found and handled  [3 comparison ids share a name and city with a Leader in Me school]
-ok   ids folded into their Leader in Me school no longer stand as their own school  [folded ['120147008947', '120033007759']]
-ok   folded id 120147008947 shares no tested year with its Leader in Me id  [[2021, 2022, 2023, 2024, 2025, 2026] vs [2016, 2017, 2018, 2019]]
-ok   folded id 120033007759 shares no tested year with its Leader in Me id  [[2024] vs [2021, 2022]]
-ok   a genuine same-name pair is kept apart rather than merged  [kept apart: ['120108003955']]
-ok   the pair kept apart really does report in the same years  [overlap [2016, 2017, 2018, 2019, 2021, 2022, 2023]]
-ok   no Leader in Me school sits in both groups in the same year
+ok   one expiration date per roster school
+ok   every expiration date parsed
+ok   an expiration date that precedes the school's start date is set aside as stale, and counted  [0 stale]
+ok   the exit rule's counts recompute from the roster  [127 exited, 0 in grace, 147 future]
+ok   the grace window is the 30 days Eve set
+ok   MRA exact-100 values were counted as sentinels  [80 composite cells at 100, 5 in 90-99.9]
+ok   name-and-city collisions between the two groups were handled (folded or kept apart)  [3 collisions]
+ok   no school appears in both groups in the same year
 
 --------------------------------------------------------------------------
 Tier 1 — rules and maths
@@ -250,111 +88,73 @@ ok   lim_rules.py self-tests pass
 ok   skill_version.py self-tests pass
 ok   payload carries a build stamp
 ok   years exclude both COVID years
-ok   the straight-numbers window starts in the first FAST year
-ok   the long window is scored relative to the state, not in raw points
-ok   the long window's caution names the test change
+ok   the straight-numbers window starts in 2022 or later
+ok   the long window is scored relative to the state
 ok   no Leader in Me row counted before its full year was finished  [0 rows]
 ok   schools with no start date appear in neither group  [28 schools]
-ok   the count of undated schools is on the methods page  [28]
+ok   the count of undated schools is on the methods page
 ok   no row survives after a school's dated exit, in either group  [0 rows]
 ok   exited schools keep their true Leader in Me years  [105 exited schools with counted years]
-ok   the exit counts on the methods page match the rule
+ok   the exit counts on the methods page match the rule  [127 exited (0 from DOMO's flags)]
 ok   lim_exit carries every exited school and nothing else
 ok   the roster section lists every roster school once
-ok   the roster section's exited count matches  [{'counted': 168, 'exited': 127, 'not counted': 28, 'not counted yet': 4}]
-ok   an exited school's reason names its expiration date and the grace rule
-ok   the headline sensitivity without the undated-expiration schools is on the methods page
-ok   Title I rides on the rows as a true/false flag
+ok   the roster section's exited count matches (a school with no start date stays 'not counted')  [{'counted': 168, 'exited': 127, 'not counted': 28, 'not counted yet': 4}]
+ok   an exited school's reason names its expiration and the grace rule, or DOMO's own flag
+ok   the headline sensitivity without the undated schools is on the methods page
 ok   size bands are the NCES categories in the payload's order
-ok   the poverty share rides on the rows for the look-alike caliper
-ok   Leader in Me Title I share agrees with the extras card (within 10 points)  [64.9%]
-ok   chronic absence now reaches 2024-25  [3409 schools]
-ok   the 2024-25 chronic absence values are the state file's, to the tenth  [10 checked]
-ok   the 2024-25 chronic absence count is on the methods page
-ok   the grade table carries the nine tested grades in order
-ok   the grade table is large and every school in it has a name
+ok   the poverty share rides on most rows for the look-alike caliper  [100%]
+ok   every offered measure is carried by at least one school-year
+ok   the composite flag keeps science, social studies and writing out of the no-filter view
+ok   the grade table lists tested grades in order and every school in it has a name
 ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [2136 schools]
 ok   the grade table carries no school-year the rules dropped
+ok   no level measure is offered when the level structure is unconfirmed  [no combination of the reported levels reproduces PercentMetStandard on more than 13% of rows (a five-level state whose export carries four columns, usually)]
 ok   school names and start dates are in the payload for the pack
-ok   per-school report-card records carry the incident rate and the letter grade
-ok   extras_school is one record per school-year
 ok   MRA by-school rows exist for the pack
 ok   the MRA respondent map names a group or a blend for every measure
 ok   look-alike settings are in the payload with their rationale
 ok   a Leader in Me school's pre-start years count in the comparison group  [4,811 rows]
 ok   Lighthouse schools are inside the Leader in Me family
-ok   no school appears in both groups in the same year
 ok   combined-grade schools appear in both bands  [962 schools]
-ok   the school count is lower than the band-slice count, as it must be  [3296 schools vs 3898 band slices]
-ok   pairs are built inside each band
-ok   every band carries three or more pairs  [{'Primary': {'pairs': 149, 'unmatched': 2}, 'Secondary': {'pairs': 78, 'unmatched': 2}}]
-ok   the by-band pair counts sum to the total  [227 vs 227]
+ok   the school count never exceeds the band-slice count  [3295 schools vs 3897 band slices]
+ok   pairs are built inside bands
+ok   the by-band pair counts sum to the total
 ok   no comparison school is used twice
 ok   no Leader in Me school is paired twice inside a band
-ok   every pair carries the band it was formed in
-ok   the signed baseline gap recomputes to the payload's  [offline -0.000 vs payload +0.000 on 227 pairs]
-ok   the mean signed baseline gap is under one point  [-0.000 points]
-ok   partners start above in roughly half of the pairs that are not exact ties  [15% above, 66% exact ties, 43% of non-ties]
-ok   most pairs start on exactly the same score, which is why the above-share is low  [66% exact ties, widest gap 4.0 points]
-ok   the widest single baseline gap is small  [4.0 points]
-ok   the printed signed gap is not a negative zero  [0.0]
-ok   special-purpose schools are excluded from the matched pool and named  [17 schools]
-ok   no excluded special-purpose school appears as a partner
-ok   locale is not claimed as a matching trait, because Florida does not publish it
-ok   the matched secondary view carries three or more records a side  [{'pairs': 78, 'unmatched': 2}]
-ok   every extras metric has a trend with both groups
-ok   no extras cell is built on fewer than three schools
-ok   the two composition measures cannot fire an insight
-ok   2022-23 school grades are excluded by name, not silently
-ok   the incidents card carries a four-year trend for both groups
-ok   2020-21 is off the incidents chart
-ok   SESIR school rows reconcile to Florida's own published state totals  [worst difference 0 incidents across 5 years]
-ok   the poverty source switch changes the picture materially  [high poverty: 58% on Florida's measure vs 11% on DOMO's]
-ok   poverty_help tells the reader which measure is on screen
-ok   the payload's poverty bands come from the state measure  [2083 of 3885 schools]
+ok   the signed baseline gap recomputes to the payload's  [offline -0.052 vs payload -0.050 on 228 pairs]
+ok   the mean signed baseline gap is under one point  [-0.052]
+ok   the widest single baseline gap is inside the caliper's reach  [2.9 points]
+ok   the printed signed gap is not a negative zero  [-0.05]
 ok   no MRA value of exactly 100 survives into the payload
 ok   every MRA value sits on the published scale
 ok   the MRA trend stays inside one instrument version
 ok   every promised MRA group either draws or is explained with real counts  [drawn=['all', 'early', 'established', 'lighthouse'] absent=[]]
-ok   the MRA note names the published quality band  [ on Leadership, inside the moderately effective, 70-79 band.]
 ok   movers are built on ten or more schools each
+  demo district: Miami-Dade · prospect district: Pasco
 
 --------------------------------------------------------------------------
 Tier 2 — behaviour in a real browser
 --------------------------------------------------------------------------
 ok   the page loads and the headline renders
-ok   load time is workable for a 41 MB payload  [2.8s]
+ok   load time is workable  [3.5s]
 ok   no console errors on load
-ok   chart c1 draws an svg
-ok   chart c2 draws an svg
-ok   chart c8 draws an svg
-ok   chart c9 draws an svg
-ok   chart c6 draws an svg
-ok   the MRA card is visible
-ok   the Georgia discipline card stays hidden
-ok   the incidents card is visible
-ok   the Florida extras card is visible
-ok   one extras chip per payload metric  [14 vs 14]
-ok   extras metric draws with a note: ela_gains  [In 2025-26, 63.2% of students in Leader in Me schools made reading lea]
-ok   extras metric draws with a note: ela_gains_l25  [In 2025-26, 59.9% of the lowest-scoring quarter in Leader in Me school]
-ok   extras metric draws with a note: math_gains  [In 2025-26, 62.8% of students in Leader in Me schools made math learni]
-ok   extras metric draws with a note: math_gains_l25  [In 2025-26, 55.0% of the lowest-scoring quarter in Leader in Me school]
-ok   extras metric draws with a note: grade_points  [In 2025-26, Leader in Me schools earned 62.9% of the possible school-g]
-ok   extras metric draws with a note: grade_ab  [In 2025-26, 78.7% of Leader in Me schools were graded A or B, against ]
-ok   extras metric draws with a note: ms_accel  [In 2025-26, 79.5% of middle schoolers in Leader in Me schools accelera]
-ok   extras metric draws with a note: cc_accel  [In 2025-26, 71.2% of graduates from Leader in Me high schools accelera]
-ok   extras metric draws with a note: bully_per1k  [In 2024-25, Leader in Me schools reported 0.95 bullying incidents per ]
-ok   extras metric draws with a note: attendance  [In 2024-25, students in Leader in Me schools attended 92.2% of their e]
-ok   extras metric draws with a note: grad_ed  [In 2024-25, 90.3% of low-income students at Leader in Me high schools ]
-ok   extras metric draws with a note: soe  [In 2024-25, 16.4% of Leader in Me schools held the Schools of Excellen]
-ok   extras metric draws with a note: ed_share  [In 2025-26, 73.9% of students in Leader in Me schools were economicall]
-ok   extras metric draws with a note: title1  [In 2025-26, 65.1% of Leader in Me schools operated a Title I program, ]
-ok   no console errors after the extras sweep
+ok   chart c1 draws an svg or explains why
+ok   chart c2 draws an svg or explains why
+ok   the MRA card shows exactly when a trend line can be drawn
+ok   the discipline card shows exactly when the payload carries a discipline trend  [payload has no discipline_ga]
+ok   the incidents card shows exactly when the payload carries an incident trend  [payload has incidents]
+ok   the state extras card shows exactly when the payload carries state measures  [14 state measures]
+ok   every state measure on the card draws a Leader in Me and a comparison line
 ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
-ok   the headline p recomputes offline  [page 0.8795 scipy 0.8795 · window 2023-2026 · LiM n=172 mean +7.78 · comparison n=3124 mean +7.69]
-ok   the headline counts schools, not band slices  [page 3296 vs offline 3296]
-ok   the district filter re-renders the headline
-ok   the district filter re-renders the chart title
+ok   the headline p recomputes offline  [page 0.4445 scipy 0.4445 · window 2023-2026 · LiM n=172 mean +7.31 · comparison n=3123 mean +6.90]
+ok   the headline counts schools, not band slices  [page 3295 vs offline 3295 on 2023-2026]
+ok   the page's Leader in Me count is the builder's  [172 vs 172]
+ok   the district filter re-renders the headline  [In Miami-Dade schools, between 2022-23 and 2025-26, Leader in Me schools rose 8.7% on Perc]
+ok   the school type filter is offered with the payload's kinds  [Title I schools, Not Title I, Charter schools, Magnet schools, Alternative schools, Kern Family Foundation schools]
+ok   choosing 'Title I schools' narrows the view and names it  [2046 of 3885 schools; In Florida Title I schools, between 2022-23 and 2025-26, Leader in Me schools ro]
+ok   every school in the 'Title I schools' view carries that attribute
+ok   'Kern Family Foundation schools' narrows the Leader in Me side only and keeps the comparison side whole  [In Florida schools (Leader in Me side: Kern Family Foundation schools), between 2022-23 and 2025-26,]
+ok   Title I status is known for most schools on the page  [96.5%]
 ok   the Primary band filter re-renders without error
 ok   the Secondary band filter re-renders without error
 ok   measure 'percent_proficient' either draws or says why
@@ -362,76 +162,50 @@ ok   measure 'percent_below' either draws or says why
 ok   measure 'standard_score' either draws or says why
 ok   measure 'chronic_absent' either draws or says why
 ok   measure 'grad_rate' either draws or says why
-ok   the matched toggle re-renders the headline
-ok   the matched view shrinks the Leader in Me count  [120 matched vs 172 unmatched]
-ok   the matched Secondary view runs on real secondary pairs, not remnants  [42 secondary matched records]
-ok   a filter combination with almost nothing in it says so kindly
-ok   no console errors after the empty-state probe
+ok   the matched toggle re-renders the headline  [In Florida schools (matched to similar schools only), between 2022-23 and 2025-26, Leader ]
+ok   the matched view shrinks or equals the Leader in Me count  [120 matched]
+ok   no console errors after the filter sweep
 ok   the insights tab hides the explore view
-ok   statewide insights generate cards  [4 cards]
-ok   Collier generates its own cards  [7 cards]
-ok   insight cards carry a topic link
-ok   internal-only cards are labelled as prep
-ok   the New school (CP) audience filter runs
-ok   the Retention (ESP) audience filter runs
-ok   the Coaching audience filter runs
-ok   the insights tab uses the same unit and window as the explore tab  [insights {'p': 0.8794779311314642, 'n1': 172, 'n2': 3124, 'y0': 2023, 'y1': 2026} vs explore n1=172 n2=3124 p=0.8795]
-ok   export c1.pptx downloads, opens and carries the chart image  [176,881 bytes, 1 media parts]
-ok   export c1.docx downloads, opens and carries the chart image  [174,599 bytes, 1 media parts]
-ok   export c9.pptx downloads, opens and carries the chart image  [109,782 bytes, 1 media parts]
-ok   export c8.docx downloads, opens and carries the chart image  [99,186 bytes, 1 media parts]
-ok   the worked example is a district with no Leader in Me schools  [Baker]
-ok   the Title I filter is offered because Florida publishes the flag
-ok   the size filter lists the six NCES bands in order
-ok   choosing Title I schools re-renders the headline and names the filter
-ok   choosing a size band re-renders the headline and names it
-ok   look-alike mode rewrites the headline around the anchor district  [In Florida schools like Baker’s, between 2022-23 and 2025-26, Leader in Me schools rose 6.2% on Percent at or above grad]
-ok   the look-alike box reports both counts  [Schools like Baker’s: 11 Leader in Me schools and 192 comparison schools look like Baker’s 7 schools with results in these years (each matched at its first year]
-ok   three or more Leader in Me schools look like the prospect's schools  [11]
-ok   the box says which traits were matched on and what the anchor line is
+ok   Miami-Dade generates cards or says there is nothing to report  [7 cards]
+ok   the insights tab uses the same unit and window as the explore tab  [{'p': 0.444474020156129, 'n1': 172, 'n2': 3123}]
+ok   no console errors on the insights tab
+ok   the MRA tab is offered exactly when the payload carries surveys
+ok   the MRA tab shows its own view and sidebar and hides the explore ones
+ok   the MRA summary renders a sentence  [Across 99 Florida Leader in Me schools surveyed in 2025-26, Leadership averaged 78.3 on the MRA scal]
+ok   MRA chart c6 draws an svg or explains why
+ok   MRA chart c7 draws an svg or explains why
+ok   MRA chart c10 draws an svg or explains why
+ok   the measure picker offers every MRA measure with data  [37 options, 37 measures with data, 37 in the catalogue]
+ok   the MRA paired test recomputes offline  [page 0.0003 scipy 0.0003 on 100 schools]
+ok   the MRA latest-year school count recomputes offline  [page 99 vs offline 99]
+ok   the MRA same-schools count is every school surveyed more than once  [page 100 vs offline 100]
+ok   choosing the submeasure 'Personal Effectiveness' re-renders the MRA summary  [Across 95 Florida Leader in Me schools surveyed in 2025-26, Personal Effectiveness average]
+ok   the MRA district filter narrows to Collier's surveyed schools  [29 of 181 schools]
+ok   the MRA school type filter keeps only schools with that trait  [title1_yes]
+ok   the same-schools switch keeps only schools surveyed at both ends
+ok   no console errors on the MRA tab
+ok   the MRA view downloads one row per school, year and measure  [12,003 rows]
+ok   leaving the MRA tab restores the explore view
+ok   export c1.pptx downloads, opens and carries the chart image  [184,063 bytes]
+ok   the pptx export is named for the state and chart  [FL_Percent_meeting_the_standard_year_by_year_Florida_schools.pptx]
+ok   export c1.docx downloads, opens and carries the chart image  [183,991 bytes]
+ok   the docx export is named for the state and chart  [FL_Percent_meeting_the_standard_year_by_year_Florida_schools.docx]
+ok   the research pack downloads with its sections  [99,279 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'report_card_school']]
+ok   the pack's Leader in Me count for the district is the page's  [9 vs 9]
+ok   look-alike mode rewrites the headline around the anchor district, or says nothing matched  [In Florida schools like Pasco’s, between 2022-23 and 2025-26, Leader in Me schools rose 7.2% on Percent meeting the stan]
+ok   the look-alike box reports both counts or says why not  [Schools like Pasco’s: 54 Leader in Me schools and 860 comparison schools look like Pasco’s 100 schools with results in these years (each matched at its first ye]
 ok   the matched switch is disabled while an anchor is set
-ok   the trend chart draws the anchor's own schools as a reference line
-ok   the anchor shows as a chip
 ok   no console errors in look-alike mode
-ok   the look-alike headline p recomputes offline  [p=0.3240]
+ok   the look-alike headline p recomputes offline  [p=0.7257]
 ok   the anchor's own schools are never inside the look-alike groups
-ok   look-alike Leader in Me count in the box equals the schools tested
-ok   every look-alike shares its anchor school's grade band and poverty band at the match year  [203 checked]
-ok   the school list downloads with one row per school  [18 rows]
-ok   the school list carries the anchor's own schools and the look-alike Leader in Me schools
-ok   the school list carries traits and start-end-change columns
-ok   the school list's look-alike count matches the box
-ok   the Word school list opens and its table has a row per school plus a header
-ok   the pack carries a look_alike section when an anchor is set  [693 rows]
-ok   the pack's look-alike tests cover every measure, band and window
-ok   the pack's look-alike headline agrees with the page
-ok   the pack names the members with their closest anchor school
-ok   the pack's other sections ran without the look-alike filter (statewide Leader in Me count)
-ok   clear all filters clears the anchor and re-enables the matched switch
-ok   a district pack for a prospect adds the look-alike section on its own
-ok   a district pack for a district with Leader in Me schools carries no look-alike section
-ok   the prospect district gets a schools-like-yours card  [4 cards]
-ok   the card carries the p-value and the school counts
-ok   the card routes the reader to the Explore tab and the school list
-ok   no console errors after the insights probe
-ok   the grade filter lists the nine tested grades
-ok   choosing a grade re-renders the headline and names the grade
-ok   choosing a grade sets the band radio to the grade's band
-ok   whole-school measures switch off while a grade is chosen
-ok   the grade-4 headline p recomputes offline  [p=0.6260, 144 vs 1917]
-ok   the grade-4 Leader in Me change recomputes from the grade table  [3.11 vs 3.11, 144 schools]
-ok   the grade view runs on the relative window without errors
-ok   clearing the grade restores the band view
-ok   a Word export is named for its chart  [FL_Inside_Leader_in_Me_schools_what_the_MRA_is_measuring_Leadership.docx]
-ok   the Word export carries the chart at a readable size (6.5 inches wide)  [6.50 in]
-ok   a chart downloads on its own as a picture named for the chart
-ok   a PowerPoint export is named for its chart  [FL_Does_Percent_at_or_above_grade_level_keep_improving_the_longer_a_school_stays_with_it_Flor.pptx]
-ok   the statewide chronic absence headline reaches 2024-25  [In Florida primary schools (PreK-5), between 2022-23 and 2024-25, Leader in Me schools fell 2.2% on ]
-ok   dark mode re-renders the charts
-ok   no console errors in dark mode
+ok   the school list downloads with one row per school  [154 rows, 0 same-name pairs]
+ok   the school list carries traits and change columns
+ok   the grade filter lists the tested grades
+ok   choosing a grade re-renders the headline and names the grade  [In Florida grade 4 results, between 2022-23 and 2025-26, Leader in Me schools rose 3.1% on Percent m]
+ok   whole-school measures switch off while a grade is chosen  [3 whole-school measures in the payload]
+ok   dark mode re-renders without errors
 ok   no horizontal overflow at 900px  [0px]
 ok   no horizontal overflow at 700px  [0px]
-ok   a full-page screenshot was taken for eyes-on review
 ok   the methods page loads
 ok   no console errors on the methods page
 
@@ -439,30 +213,98 @@ ok   no console errors on the methods page
 Tier 3 — honesty
 --------------------------------------------------------------------------
 ok   the build declares itself real, not a prototype
-ok   the banner names the FAST source
-ok   the banner names the SESIR source
-ok   the banner names the MRA source
-ok   the banner names the school grades source
+ok   the banner names the Subject Test source
+ok   the banner names the roster source
+ok   the banner names the expiration source
 ok   the methods page owns the 'exit' limitation
 ok   the methods page owns the 'snapshot' limitation
-ok   the methods page owns the 'locale' limitation
-ok   the methods page owns the 'suppress' limitation
-ok   the methods page owns the 'Chronic absence' limitation
-ok   the methods page states the poverty-source switch
-ok   the methods page names the method rather than asserting it
-ok   the earlier propensity study is cited as the robustness check
-ok   the crosswalk audit is on the methods page
-ok   the identity finding is on the methods page
-ok   the six unmatched Leader in Me schools are named, not counted
+ok   the methods page owns the 'Title I' limitation
+ok   the methods page owns the 'observational' limitation
+ok   the methods page owns the 'both ends' limitation
+ok   poverty_help names the state's own poverty measure  [Florida economically-disadvantaged share (FLDOE school grades file)]
+ok   the methods page says poverty comes from the state's own measure
+ok   the methods page names the matching method rather than asserting it
+ok   the level audit is on the methods page
+ok   the subject mapping is on the methods page
+ok   the poverty audit is on the methods page
+ok   the methods page carries the exit-dating box
 ok   the methods page carries the look-alike section
-ok   the methods page carries the exit-dating box and names the exited schools
-ok   the methods page carries the two new filters
-ok   the banner names the expiration and absence sources
 ok   the undated schools are listed by name in the payload
 
-  HEADLINE (statewide, 2023-2026, no filters): Leader in Me +7.78 pts (n=172) vs comparison +7.69 pts (n=3124), p=0.8795 -> not significant
-ok   the headline verdict is internally consistent
+  HEADLINE (statewide, 2023-2026, no filters): Leader in Me +7.31 pts (n=172) vs comparison +6.90 pts (n=3123), p=0.4445 -> not significant
 
 ==========================================================================
-252 of 252 checks pass
+161 of 161 checks pass
 ==========================================================================
+
+$ python3 /home/claude/sdf/Build/states/fl_core_verify.py --work /home/claude/sdf/Build/work/FL
+
+Florida's own measures
+--------------------------------------------------------------------------
+ok   the crosswalk reaches nearly every Leader in Me school  [321 of 327]
+ok   the crosswalk reaches most comparison schools  [3,345 of 3,599]
+ok   the independent audit holds (state average daily membership vs DOMO enrollment)  [n=3512, r=0.999, 99.4% within 25%]
+ok   the resolved crosswalk attaches each DOMO id to one state id and each state id to one school  [3,667 rows]
+ok   a state id claimed by two DOMO schools, if any, was resolved rather than joined twice  [3 shared ids in the raw map; set aside: ['Gateway Charter School (Lee)']]
+ok   every Leader in Me school the crosswalk cannot reach is named on the methods page  [6 unreached, 6 named]
+ok   the crosswalk reach is printed on the methods page
+ok   every school-year on a card's Leader in Me line is one the page counts as Leader in Me  [0 disagreements across 877 school-years with rows]
+ok   every school-year on a card's comparison line is one the page counts as comparison  [0 disagreements]
+ok   a school-year on a card without test rows is a roster school the rules count, or a comparison school  [13 counted Leader in Me school-years without test rows]
+ok   a roster school with no start date sits on no card, on either line  [28 undated schools]
+ok   no school-year after a dated exit sits on any card, on either line  [0 school-years across 127 exited schools]
+ok   an exited school keeps its true Leader in Me years on the cards  [100 exited schools with counted years on a card]
+ok   reading learning gains 2026, lim: the card's mean and count recompute from the state's file  [file 63.14 (n=170) vs card 63.14 (n=170)]
+ok   reading learning gains 2026, comparison: the card's mean and count recompute from the state's file  [file 62.01 (n=3016) vs card 62.01 (n=3016)]
+ok   the school-grade means are unweighted means of schools, three or more a side
+ok   2022-23 school grades are excluded by name, not silently  [years on the card: [2022, 2024, 2025, 2026]]
+ok   the 2022-23 Schools of Excellence list is left out with the 2022-23 grades  [years [2022, 2024, 2025]]
+ok   2021-22 learning gains (the FSA year) are kept and the note says why
+ok   the two composition measures cannot fire an insight
+ok   the excluded counts name the grade year, the SESIR year and the unreached schools
+ok   the incidents card carries both groups in every charted year  [years [2022, 2023, 2024, 2025]]
+ok   2020-21 is off the incidents chart (read for the reconciliation only)
+ok   SESIR school rows reconcile to Florida's own published state totals  [worst difference 0 incidents across 5 years]
+ok   incidents per 100 students 2025, lim: the card recomputes from the SESIR rows and DOMO enrollment  [2.83 on 171 schools vs card 2.83 on 171]
+ok   incidents per 100 students 2025, comparison: the card recomputes from the SESIR rows and DOMO enrollment  [3.72 on 3316 schools vs card 3.72 on 3316]
+ok   the district incident frame uses the payload's own district labels  [261 district-years]
+ok   the incidents note names the reconciliation and the 2020-21 exclusion
+ok   chronic absence reaches 2024-25 on the page  [3,409 schools]
+ok   the 2024-25 chronic absence values are the state file's, to the tenth  [3,409 checked]
+ok   no 2024-25 chronic absence value sits on a school the crosswalk does not reach  [0 off the map]
+ok   2023-24 chronic absence is still DOMO's own value (nothing overwritten)  [3,482 schools]
+ok   the state's absent-10%-or-more share is DOMO's measure (r >= 0.85 with 2023-24), and the 21-days column is not used  [r=0.899 on 3392 schools; means 29.3 vs 17.8 (21 days)]
+ok   the chronic absence measure and a methods note say where 2024-25 comes from
+ok   the 2024-25 fill is one of the cleaning rules
+ok   the research pack's per-school Florida values are keyed to schools on the page  [17,535 records]
+ok   extras_school is one record per school-year
+ok   per-school records carry the incident rate, the letter grade and the learning gains  [14,176 incident rates, 13,346 letters]
+ok   look-alike mode names the SESIR rate as its behavior measure, and the records carry it
+ok   every per-school key has a label for the school list  [unlabelled: []]
+ok   the state school code is in the payload for the pack
+ok   Reading learning gains: the Leader in Me point in 2026 rests on at least three counted schools  [n=170]
+ok   Reading gains, lowest 25%: the Leader in Me point in 2026 rests on at least three counted schools  [n=170]
+ok   Math learning gains: the Leader in Me point in 2026 rests on at least three counted schools  [n=170]
+ok   Math gains, lowest 25%: the Leader in Me point in 2026 rests on at least three counted schools  [n=170]
+ok   School grade score: the Leader in Me point in 2026 rests on at least three counted schools  [n=171]
+ok   Share graded A or B: the Leader in Me point in 2026 rests on at least three counted schools  [n=171]
+ok   Middle school acceleration: the Leader in Me point in 2026 rests on at least three counted schools  [n=58]
+ok   College and career acceleration: the Leader in Me point in 2026 rests on at least three counted schools  [n=13]
+ok   Bullying incidents per 1,000 students: the Leader in Me point in 2025 rests on at least three counted schools  [n=171]
+ok   Attendance rate: the Leader in Me point in 2025 rests on at least three counted schools  [n=172]
+ok   Graduation rate, low-income students: the Leader in Me point in 2025 rests on at least three counted schools  [n=12]
+ok   Schools of Excellence: the Leader in Me point in 2025 rests on at least three counted schools  [n=170]
+ok   Economic disadvantage (context): the Leader in Me point in 2026 rests on at least three counted schools  [n=171]
+ok   Title I schools (context): the Leader in Me point in 2026 rests on at least three counted schools  [n=171]
+ok   the fourteen Florida measures are on the card  [attendance, bully_per1k, cc_accel, ed_share, ela_gains, ela_gains_l25, grad_ed, grade_ab, grade_points, math_gains, math_gains_l25, ms_accel, soe, title1]
+ok   every card's unfavorable gap travels with the poverty context line
+ok   the methods page owns the Title I-source limitation
+ok   the payload names Florida's own measure as the poverty source  [Florida economically-disadvantaged share (FLDOE school grades file)]
+ok   the rows' poverty share is the state's latest published value for every school the file reaches, to the tenth  [3,422 schools]
+ok   the poverty share covers nearly every Leader in Me school  [314 of 327]
+ok   the poverty source switch changes the picture materially (high-poverty Leader in Me share)  [57% on Florida's measure vs 13% on the lunch share]
+ok   the core's methods note on the state's own poverty measure carries the coverage and the audit
+ok   no module text still claims the page uses the lunch share
+ok   the banner names the Florida sources
+
+ALL FLORIDA CHECKS PASS

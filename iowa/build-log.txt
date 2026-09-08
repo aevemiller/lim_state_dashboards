@@ -1,5 +1,5 @@
 
-$ python3 /home/claude/national/Build/build_payload_core.py --state IA --core /home/claude/national/corefolder --out /home/claude/national/Build/work/IA
+$ python3 /home/claude/sdf/Build/build_payload_core.py --state IA --core /home/claude/sdf/Core --out /home/claude/sdf/Build/work/IA --data /home/claude/sdf/Build/work/IA/data
 reading the core for Iowa ...
 [core] subjects: 72,500 school rows kept; dropped 54,368 rows with no school id and 1,058 with an id but no school record
 [core] Leader in Me roster: 1,762 rows
@@ -13,23 +13,27 @@ applying the cleaning rules ...
   30,628 school-year-band-subject rows · years [2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
   Leader in Me school-years counted: 694 of 1683 reviewed
   no start date: 6 schools · dated exits: 23 (school-years after an exit with rows: 42) · aggregate 'All grades' rows used 0, skipped 0
-  proficiency = 100 minus level 1 on 37.4% of rows
+  achievement levels as measures: no (2 levels, numbered from the bottom; proficiency is the top 1; 27.6% of rows in years and subjects whose levels add up; not offered because the latest year's reading and math levels do not add up)
+  level values blanked on 2 year-subject cells that do not add up: 2014-15 ELA, 2014-15 Math
+  proficiency = 100 minus level 1 on 27.8% of rows
   statewide jump: Math 2018->2019: 78.1 -> 69.8 (-8.4)
+  school type from NCES: Title I on 1,247 schools (538 yes), charter 5, magnet 0, alternative 13; Title I published 2017-2022, carried forward after
+  funders: 100 Iowa schools carry a funding source (97 on the page; Kern 81, 78 on the page); latest non-blank year per school
 building matched pairs, inside each band ...
   pairs 119  by band {'Primary': {'pairs': 72, 'unmatched': 2}, 'Secondary': {'pairs': 47, 'unmatched': 0}}
   MRA: 327 surveys · 123 schools · 1037 sentinel values · 7 shells
   headline 2021-22 to 2024-25: {'y0': 2022, 'y1': 2025, 'lim_n': 134, 'comp_n': 924, 'lim_change': 4.14, 'comp_change': 4.28, 'p': 0.815} · without the 4 undated schools {'y0': 2022, 'y1': 2025, 'lim_n': 131, 'comp_n': 924, 'lim_change': 4.27, 'comp_change': 4.28, 'p': 0.98}
   roster: 122 counted, 42 exited, 17 not counted yet, 6 not counted
 
-wrote ia_payload.json  (12.9 MB, 30,628 rows) · page kind full (134 Leader in Me schools on the headline)
-build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+wrote ia_payload.json  (13.9 MB, 30,628 rows) · page kind full (134 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'fb6eaf7cb415'}
 
 $ python3 build2.py ia_payload.json IA_Dashboard.html IA_Methods.html
-payload 12.9 MB -> 0.74 MB gzip
-IA_Dashboard.html: 1195 KB
-IA_Methods.html: 29 KB
+payload 13.9 MB -> 0.74 MB gzip
+IA_Dashboard.html: 1249 KB
+IA_Methods.html: 36 KB
 
-$ python3 /home/claude/national/Build/verify_core.py --state IA --work /home/claude/national/Build/work/IA
+$ python3 /home/claude/sdf/Build/verify_core.py --state IA --work /home/claude/sdf/Build/work/IA
 
 --------------------------------------------------------------------------
 Tier 0 — install and input-value audit
@@ -81,10 +85,12 @@ ok   an exited school's reason names its expiration and the grace rule, or DOMO'
 ok   the headline sensitivity without the undated schools is on the methods page
 ok   size bands are the NCES categories in the payload's order
 ok   the poverty share rides on most rows for the look-alike caliper  [100%]
+ok   every offered measure is carried by at least one school-year
 ok   the composite flag keeps science, social studies and writing out of the no-filter view
 ok   the grade table lists tested grades in order and every school in it has a name
 ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [553 schools]
 ok   the grade table carries no school-year the rules dropped
+ok   no level measure is offered when the level structure is unconfirmed  [the latest year's reading and math levels do not add up]
 ok   school names and start dates are in the payload for the pack
 ok   MRA by-school rows exist for the pack
 ok   the MRA respondent map names a group or a blend for every measure
@@ -112,19 +118,24 @@ ok   movers are built on ten or more schools each
 Tier 2 — behaviour in a real browser
 --------------------------------------------------------------------------
 ok   the page loads and the headline renders
-ok   load time is workable  [0.5s]
+ok   load time is workable  [0.8s]
 ok   no console errors on load
 ok   chart c1 draws an svg or explains why
 ok   chart c2 draws an svg or explains why
 ok   the MRA card shows exactly when a trend line can be drawn
-ok   the Georgia discipline card stays hidden
-ok   the incidents card stays hidden (no state incident file)
-ok   the state extras card stays hidden (no state files)
+ok   the discipline card shows exactly when the payload carries a discipline trend  [payload has no discipline_ga]
+ok   the incidents card shows exactly when the payload carries an incident trend  [payload has no incidents]
+ok   the state extras card shows exactly when the payload carries state measures  [no state files]
 ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
 ok   the headline p recomputes offline  [page 0.8179 scipy 0.8179 · window 2022-2025 · LiM n=134 mean +4.15 · comparison n=924 mean +4.28]
 ok   the headline counts schools, not band slices  [page 1058 vs offline 1058 on 2022-2025]
 ok   the page's Leader in Me count is the builder's  [134 vs 134]
 ok   the district filter re-renders the headline  [In Des Moines Independent Community School District schools, between 2021-22 and 2024-25, ]
+ok   the school type filter is offered with the payload's kinds  [Title I schools, Not Title I, Charter schools, Alternative schools, Kern Family Foundation schools]
+ok   choosing 'Title I schools' narrows the view and names it  [530 of 1292 schools; In Iowa Title I schools, between 2021-22 and 2024-25, Leader in Me schools rose ]
+ok   every school in the 'Title I schools' view carries that attribute
+ok   'Kern Family Foundation schools' narrows the Leader in Me side only and keeps the comparison side whole  [In Iowa schools (Leader in Me side: Kern Family Foundation schools), between 2021-22 and 2024-25, Le]
+ok   Title I status is known for most schools on the page  [96.5%]
 ok   the Primary band filter re-renders without error
 ok   the Secondary band filter re-renders without error
 ok   measure 'percent_proficient' either draws or says why
@@ -139,23 +150,40 @@ ok   the insights tab hides the explore view
 ok   Des Moines Independent Community School District generates cards or says there is nothing to report  [6 cards]
 ok   the insights tab uses the same unit and window as the explore tab  [{'p': 0.8178773754983882, 'n1': 134, 'n2': 924}]
 ok   no console errors on the insights tab
+ok   the MRA tab is offered exactly when the payload carries surveys
+ok   the MRA tab shows its own view and sidebar and hides the explore ones
+ok   the MRA summary renders a sentence  [Across 85 Iowa Leader in Me schools surveyed in 2024-25, Leadership averaged 75.6 on the MRA scale, ]
+ok   MRA chart c6 draws an svg or explains why
+ok   MRA chart c7 draws an svg or explains why
+ok   MRA chart c10 draws an svg or explains why
+ok   the measure picker offers every MRA measure with data  [37 options, 37 measures with data, 37 in the catalogue]
+ok   the MRA paired test recomputes offline  [page 0.0000 scipy 0.0000 on 89 schools]
+ok   the MRA latest-year school count recomputes offline  [page 85 vs offline 85]
+ok   the MRA same-schools count is every school surveyed more than once  [page 89 vs offline 89]
+ok   choosing the submeasure 'Personal Effectiveness' re-renders the MRA summary  [Across 78 Iowa Leader in Me schools surveyed in 2024-25, Personal Effectiveness averaged 8]
+ok   the MRA district filter narrows to Ankeny Community School District's surveyed schools  [12 of 123 schools]
+ok   the MRA school type filter keeps only schools with that trait  [title1_yes]
+ok   the same-schools switch keeps only schools surveyed at both ends
+ok   no console errors on the MRA tab
+ok   the MRA view downloads one row per school, year and measure  [9,179 rows]
+ok   leaving the MRA tab restores the explore view
 ok   export c1.pptx downloads, opens and carries the chart image  [184,967 bytes]
 ok   the pptx export is named for the state and chart  [IA_Percent_meeting_the_standard_year_by_year_Iowa_schools.pptx]
 ok   export c1.docx downloads, opens and carries the chart image  [182,610 bytes]
 ok   the docx export is named for the state and chart  [IA_Percent_meeting_the_standard_year_by_year_Iowa_schools.docx]
-ok   the research pack downloads with its sections  [8,944 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'report_card', 'roster', 'school']]
+ok   the research pack downloads with its sections  [8,882 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'report_card', 'roster', 'school']]
 ok   the pack's Leader in Me count for the district is the page's  [6 vs 6]
-ok   look-alike mode rewrites the headline around the anchor district, or says nothing matched  [In Iowa schools like Iowa City Community School District’s, between 2021-22 and 2024-25, Leader in Me schools rose 4.1% ]
-ok   the look-alike box reports both counts or says why not  [Schools like Iowa City Community School District’s: 59 Leader in Me schools and 242 comparison schools look like Iowa City Community School District’s 29 school]
+ok   look-alike mode rewrites the headline around the anchor district, or says nothing matched  [In Iowa schools like Iowa City Community School District’s, between 2021-22 and 2024-25, Leader in Me schools rose 4.4% ]
+ok   the look-alike box reports both counts or says why not  [Schools like Iowa City Community School District’s: 34 Leader in Me schools and 139 comparison schools look like Iowa City Community School District’s 29 school]
 ok   the matched switch is disabled while an anchor is set
 ok   no console errors in look-alike mode
-ok   the look-alike headline p recomputes offline  [p=0.5564]
+ok   the look-alike headline p recomputes offline  [p=0.4188]
 ok   the anchor's own schools are never inside the look-alike groups
-ok   the school list downloads with one row per school  [88 rows, 0 same-name pairs]
+ok   the school list downloads with one row per school  [63 rows, 0 same-name pairs]
 ok   the school list carries traits and change columns
 ok   the grade filter lists the tested grades
 ok   choosing a grade re-renders the headline and names the grade  [In Iowa grade 4 results, between 2021-22 and 2024-25, Leader in Me schools rose 2.4% on Percent meet]
-ok   whole-school measures switch off while a grade is chosen
+ok   whole-school measures switch off while a grade is chosen  [3 whole-school measures in the payload]
 ok   dark mode re-renders without errors
 ok   no horizontal overflow at 900px  [0px]
 ok   no horizontal overflow at 700px  [0px]
@@ -187,5 +215,5 @@ ok   a statewide jump is flagged on the methods page
   HEADLINE (statewide, 2022-2025, no filters): Leader in Me +4.15 pts (n=134) vs comparison +4.28 pts (n=924), p=0.8179 -> not significant
 
 ==========================================================================
-136 of 136 checks pass
+160 of 160 checks pass
 ==========================================================================

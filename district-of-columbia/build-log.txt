@@ -1,5 +1,5 @@
 
-$ python3 /home/claude/national/Build/build_payload_core.py --state DC --core /home/claude/national/corefolder --out /home/claude/national/Build/work/DC
+$ python3 /home/claude/sdf/Build/build_payload_core.py --state DC --core /home/claude/sdf/Core --out /home/claude/sdf/Build/work/DC --data /home/claude/sdf/Build/work/DC/data --extras dc_core_extras
 reading the core for District of Columbia ...
 [core] subjects: 12,429 school rows kept; dropped 3,588 rows with no school id and 544 with an id but no school record
 [core] Leader in Me roster: 58 rows
@@ -13,24 +13,100 @@ applying the cleaning rules ...
   4,760 school-year-band-subject rows · years [2014, 2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024, 2025]
   Leader in Me school-years counted: 16 of 60 reviewed
   no start date: 0 schools · dated exits: 1 (school-years after an exit with rows: 1) · aggregate 'All grades' rows used 4, skipped 4
+  achievement levels as measures: no (no combination of the reported levels reproduces the proficiency rate; 0.0% of rows in years and subjects whose levels add up; not offered because no combination of the reported levels reproduces PercentMetStandard on more than 16% of rows (a five-level state whose export carries four columns, usually))
   proficiency = level 4 alone on 25.5% of rows
   statewide jump: ELA 2014->2015: 47.7 -> 22.5 (-25.2)
   statewide jump: Math 2014->2015: 51.1 -> 19.9 (-31.2)
+folding in District of Columbia's own measures (dc_core_extras) ...
+  state files (resolved by pattern; the log names the sheet each year came from):
+    enrollment 2018: 2018 DC School Report Card and STAR Framework Public Data_2.xlsx :: Enrollment
+    report_card 2018: 2018 DC School Report Card and STAR Framework Public Data_2.xlsx :: School Report Card Scores
+    star 2018: 2018 DC School Report Card and STAR Framework Public Data_2.xlsx :: STAR Scores
+    enrollment 2019: 2019 DC School Report Card Aggregate Public Data_.xlsx :: Enrollment
+    star 2019: 2019 DC School Report Card Aggregate Public Data_.xlsx :: STAR Scores
+    graduation 2020: 2020 DC School Report Card Public Data - Metric Scores.xlsx :: School Metric Scores
+    advanced 2021: 2021 DC School Report Card AP IB and SAT Metrics.xlsx :: School Metric Scores
+    attendance 2021: 2021 DC School Report Card Attendance Metrics (1).xlsx :: School Metric Scores
+    graduation 2021: 2021 DC School Report Card Graduation and College Enrollment Metrics.xlsx :: School Metric Scores
+    teachers 2021: 2021 DC School Report Card Teacher and School Leader Metrics.xlsx :: Teacher and School Leader Staff
+    advanced 2022: 2122 DC School Report Card AP IB and SAT - Metric Scores.xlsx :: School Overall Scores
+    attendance 2022: 2122 DC School Report Card Attendance - Metric Scores.xlsx :: School Overall Scores
+    discipline 2022: 2122 DC School Report Card Discipline - Metric Scores.xlsx :: School Overall Scores
+    enrollment 2022: 2122 DC School Report Card Aggregate Public Data.xlsx :: Enrollment
+    graduation 2022: 2122 DC School Report Card Graduation and College Enrollment - Metric Scores.xlsx :: School Overall Scores
+    star 2022: 2122 DC School Report Card Aggregate Public Data.xlsx :: School Scores
+    teachers 2022: 2122 DC School Report Card Teachers and School Leaders - Metric Scores.xlsx :: Teacher and School Leader Staff
+    advanced 2023: 2223 DC School Report Card AP IB and SAT - Metric Scores_0.xlsx :: School Overall Scores
+    assessment 2023: 2023 DC School Report Card Assessment- Metric Scores.xlsx :: School Overall Scores
+    attendance 2023: 2223 DC School Report Card Attendance - Metric Scores.xlsx :: School Overall Scores
+    discipline 2023: DC School Report Card Discipline Data (2023).xlsx :: School Overall Scores
+    enrollment 2023: 2223 DC School Report Card Aggregate Public Data_1.xlsx :: Enrollment
+    graduation 2023: 2223 DC School Report Card Graduation and College Enrollment - Metric Scores_0.xlsx :: School Overall Scores
+    star 2023: 2223 DC School Report Card Aggregate Public Data_1.xlsx :: School Scores
+    summative 2023: DC School Report Card - Summative Score Data (2023).xlsx :: All Schools
+    advanced 2024: DC School Report Card Advanced Coursework and SAT - Metric Scores (2024).xlsx :: School Overall Scores
+    assessment 2024: DC School Report Card Assessment - Metric Scores (2024).xlsx :: School Overall Scores
+    attendance 2024: DC School Report Card Attendance - Metric Scores (2024).xlsx :: School Overall Scores
+    discipline 2024: DC School Report Card Discipline - Metric Scores (2024).xlsx :: School Overall Scores
+    graduation 2024: DC School Report Card Graduation and College Enrollment - Metric Scores (2024).xlsx :: School Overall Scores
+    star 2024: DC School Report Card Accountability Scores (2024).xlsx :: School Scores
+    advanced 2025: DC School Report Card Advanced Coursework and SAT - Metric Scores (2025).xlsx :: School Overall Scores
+    assessment 2025: DC School Report Card Assessment - Metric Scores (2025).xlsx :: School Overall Scores
+    attendance 2025: DC School Report Card Attendance - Metric Scores (2025).xlsx :: School Overall Scores
+    discipline 2025: DC School Report Card Discipline - Metric Scores (2025).xlsx :: School Overall Scores
+    graduation 2025: DC School Report Card Graduation and College Enrollment - Metric Scores (2025).xlsx :: School Overall Scores
+    says_family 2025: DC School Report Card – DC SAYS Grades PK-12 Family Metric Scores (2025)v3.xlsx :: School Overall Scores
+    says_staff 2025: DC School Report Card – DC SAYS Grades PK-12 Staff Metric Scores (2025)v3.xlsx :: School Overall Scores
+    says_student 2025: DC School Report Card – DC SAYS Grades 3-12 Student Metric Scores (2025)v3.xlsx :: School Gradeband Scores
+    star 2025: DC School Report Card Accountability Scores (2025).xlsx :: School Scores
+    workforce retention 2022: Educator_Data_May_2022.xlsx :: Retention_School (2020-21 to 2021-22)
+    workforce retention 2023: Educator Data Flat File SY 2022-23 (3).xlsx :: Retention_overall_sch (2021-22 to 2022-23)
+    workforce retention 2024: 2024 Educator Workforce Data Files (Oct 28)_1.xlsx :: Retention_overall_SCH (2022-23 to 2023-24)
+    workforce retention 2025: 2025 Educator Data Flat File (All Files).xlsx :: Retention_overall_SCH (2023-24 to 2024-25)
+    workforce retention 2026: 2025-26 Educator Workforce Data Files.xlsx :: Retention_overall_SCH (2024-25 to 2025-26)
+    set aside: DC School Report Card – DC SAYS Adult Student and Staff Metric Scores (2025)v3.xlsx: adult-education LEAs only (each is one adult school); not on this page
+    NCES directory: 270 federal-to-state id triples from the cache (8 CCD files unchanged)
+    OSSE workbooks: 41,537 school-metric rows and 1,269 retention rows from the cache (workbooks unchanged)
+  OSSE measures per school-year: 1,517 school-years, 70 measure keys; closure-year values set aside 1,189; chronic_absenteeism 2022-2025 (922 values); in_seat_attendance 2018-2022 (441 values); pct_oss 2018-2025 (806 values); teacher_retention 2022-2025 (982 values); mgp_ela 2018-2025 (670 values); grad_rate_4yr 2017-2025 (211 values)
+  crosswalk: NCES's OSSE LEA and school codes for each federal id, audited against the OSSE files' own names
+    223 of 234 schools carry an OSSE code in NCES's directory; Leader in Me 6 of 6, comparison 217 of 228; 222 appear in at least one OSSE file
+    names: the OSSE files' own school name agrees with DOMO's on 223 of 223 crosswalked schools; 0 triples re-pointed to a folded id; 0 shared codes settled; 1 school carries more than one OSSE code across the years
+  membership: Leader in Me schools counted per year on the cards {2022: 3, 2023: 3, 2024: 5, 2025: 5} (the core's own status)
+  value check of the join (files the map was not built from): DOMO's graduation rate is OSSE's four-year rate within a point on 101 of 101 school-years (within 0.15 on 83); DOMO's enrollment against OSSE's on 214 schools, r = 0.954, median size difference 7.3%
+  fill: chronic absence from OSSE on 828 school-years for 208 schools on the page (2021-22 to 2024-25; DOMO carries 0 chronic-absence values for the District of Columbia); graduation: DOMO has 122 secondary school-years, OSSE adds a rate on 76 more; no DOMO value is overwritten
+  rows gain: in_seat_attendance on 607 school-year-bands (3 Leader in Me schools ever), teacher_retention on 1,265 school-year-bands (6 Leader in Me schools ever); 0 school-years had no band to sit in
+  card: 11 District of Columbia measures, each group on each year's own membership
+    card line chronic_absenteeism: 4 Leader in Me points, latest 2025 n=5 (42.4)
+    card line oss_5plus: 4 Leader in Me points, latest 2025 n=5 (40.0)
+    card line teacher_retention: 4 Leader in Me points, latest 2025 n=5 (81.0)
+    card line mgp_ela: 3 Leader in Me points, latest 2025 n=5 (53.4)
+    card line mgp_math: 3 Leader in Me points, latest 2025 n=5 (44.8)
+    card line says_s35_belonging: 1 Leader in Me point, latest 2025 n=3 (74.33)
+    card line says_s35_self_efficacy: 1 Leader in Me point, latest 2025 n=3 (68.33)
+    card line says_s35_perseverance: 1 Leader in Me point, latest 2025 n=3 (76.0)
+    card line says_s35_school_safety: 1 Leader in Me point, latest 2025 n=3 (52.67)
+    card line says_fam_family_engagement: 1 Leader in Me point, latest 2025 n=3 (73.33)
+    card line says_fam_school_fit: 1 Leader in Me point, latest 2025 n=3 (80.0)
+  per-school District of Columbia records for the pack: 1,263 (69 columns, 35 of them DC SAYS)
+  District of Columbia's measures on 1,571 school-year-bands: 1,191 joined to existing rows, 380 school-year-bands added with no test rows of their own
+  core measures filled from District of Columbia's own files where DOMO had none: chronic_absent 2,400 rows, grad_rate 199 rows
+  school type from NCES: Title I on 221 schools (188 yes), charter 110, magnet 6, alternative 3; Title I published 2017-2022, carried forward after
+  funders: 2 District of Columbia schools carry a funding source (2 on the page; Kern 2, 2 on the page); latest non-blank year per school
 building matched pairs, inside each band ...
   pairs 1  by band {'Primary': {'pairs': 0, 'unmatched': 0}, 'Secondary': {'pairs': 1, 'unmatched': 1}}
   MRA: 2 surveys · 2 schools · 1 sentinel values · 4 shells
   headline 2022-23 to 2024-25: {'y0': 2023, 'y1': 2025, 'lim_n': 5, 'comp_n': 178, 'lim_change': 7.2, 'comp_change': 2.66, 'p': 0.048} · without the 0 undated schools {'y0': 2023, 'y1': 2025, 'lim_n': 5, 'comp_n': 178, 'lim_change': 7.2, 'comp_change': 2.66, 'p': 0.048}
   roster: 2 counted, 4 exited, 0 not counted yet, 0 not counted
 
-wrote dc_payload.json  (2.0 MB, 4,760 rows) · page kind descriptive (5 Leader in Me schools on the headline)
-build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'b15c98984313'}
+wrote dc_payload.json  (3.0 MB, 5,140 rows) · page kind descriptive (5 Leader in Me schools on the headline)
+build stamp: {'skill_version': '2026-08-19', 'rules_fingerprint': '88ba249d83ae', 'rules_files': ['lim_rules.py', 'analysis.py'], 'builder': 'build_payload_core.py', 'builder_sha': 'fb6eaf7cb415'}
 
 $ python3 build2.py dc_payload.json DC_Dashboard.html DC_Methods.html
-payload 2.0 MB -> 0.14 MB gzip
-DC_Dashboard.html: 420 KB
-DC_Methods.html: 28 KB
+payload 3.0 MB -> 0.22 MB gzip
+DC_Dashboard.html: 577 KB
+DC_Methods.html: 52 KB
 
-$ python3 /home/claude/national/Build/verify_core.py --state DC --work /home/claude/national/Build/work/DC
+$ python3 /home/claude/sdf/Build/verify_core.py --state DC --work /home/claude/sdf/Build/work/DC
 
 --------------------------------------------------------------------------
 Tier 0 — install and input-value audit
@@ -68,6 +144,7 @@ ok   skill_version.py self-tests pass
 ok   payload carries a build stamp
 ok   years exclude both COVID years
 ok   the straight-numbers window starts in 2022 or later
+note the headline window settles on 2023-2025 (the window's edges are 2022-2025)
 ok   the long window is scored relative to the state
 ok   no Leader in Me row counted before its full year was finished  [0 rows]
 ok   schools with no start date appear in neither group  [0 schools]
@@ -81,26 +158,28 @@ ok   the roster section's exited count matches (a school with no start date stay
 ok   an exited school's reason names its expiration and the grace rule, or DOMO's own flag
 ok   the headline sensitivity without the undated schools is on the methods page
 ok   size bands are the NCES categories in the payload's order
-ok   the poverty share rides on most rows for the look-alike caliper  [92%]
+ok   the poverty share rides on most rows for the look-alike caliper  [91%]
+ok   every offered measure is carried by at least one school-year
 ok   the composite flag keeps science, social studies and writing out of the no-filter view
 ok   the grade table lists tested grades in order and every school in it has a name
 ok   grade-4 reading values in the grade table equal the subject file's, to the tenth  [121 schools]
 ok   the grade table carries no school-year the rules dropped
+ok   no level measure is offered when the level structure is unconfirmed  [no combination of the reported levels reproduces PercentMetStandard on more than 16% of rows (a five-level state whose export carries four columns, usually)]
 ok   school names and start dates are in the payload for the pack
 ok   MRA by-school rows exist for the pack
 ok   the MRA respondent map names a group or a blend for every measure
 ok   look-alike settings are in the payload with their rationale
-ok   a Leader in Me school's pre-start years count in the comparison group  [91 rows]
+ok   a Leader in Me school's pre-start years count in the comparison group  [99 rows]
 ok   Lighthouse schools are inside the Leader in Me family
 ok   combined-grade schools appear in both bands  [120 schools]
-ok   the school count never exceeds the band-slice count  [153 schools vs 192 band slices]
+ok   the school count never exceeds the band-slice count  [183 schools vs 224 band slices]
 ok   pairs are built inside bands
 ok   the by-band pair counts sum to the total
 ok   no comparison school is used twice
 ok   no Leader in Me school is paired twice inside a band
-ok   the signed baseline gap recomputes to the payload's  [offline -0.300 vs payload -0.330 on 1 pairs]
-skip mean signed gap under one point  [only 1 pairs; the gap is -0.30]
-ok   the widest single baseline gap is inside the caliper's reach  [0.3 points]
+skip signed baseline gap recompute  [only 1 pairs; rounding alone can move the mean]
+skip mean signed gap under one point  [only 1 pairs; the gap is +21.60]
+skip widest baseline gap  [only 1 pairs; the matched view is not offered under three]
 ok   the printed signed gap is not a negative zero  [-0.33]
 ok   no MRA value of exactly 100 survives into the payload
 ok   every MRA value sits on the published scale
@@ -117,14 +196,19 @@ ok   no console errors on load
 ok   chart c1 draws an svg or explains why
 ok   chart c2 draws an svg or explains why
 ok   the MRA card shows exactly when a trend line can be drawn
-ok   the Georgia discipline card stays hidden
-ok   the incidents card stays hidden (no state incident file)
-ok   the state extras card stays hidden (no state files)
+ok   the discipline card shows exactly when the payload carries a discipline trend  [payload has no discipline_ga]
+ok   the incidents card shows exactly when the payload carries an incident trend  [payload has no incidents]
+ok   the state extras card shows exactly when the payload carries state measures  [11 state measures]
+ok   every state measure on the card draws a Leader in Me and a comparison line
 ok   the in-page Welch test matches scipy on 25 random samples  [worst |dp| 1.14e-08]
 ok   the headline p recomputes offline  [page 0.0481 scipy 0.0481 · window 2023-2025 · LiM n=5 mean +7.20 · comparison n=178 mean +2.66]
 ok   the headline counts schools, not band slices  [page 183 vs offline 183 on 2023-2025]
 ok   the page's Leader in Me count is the builder's  [5 vs 5]
 ok   the district filter re-renders the headline  [In District of Columbia Public Schools schools, between 2022-23 and 2024-25, Leader in Me ]
+ok   the school type filter is offered with the payload's kinds  [Title I schools, Not Title I, Charter schools, Magnet schools, Alternative schools]
+ok   choosing 'Title I schools' narrows the view and names it  [173 of 234 schools; In District of Columbia Title I schools, between 2022-23 and 2024-25, Leader in ]
+ok   every school in the 'Title I schools' view carries that attribute
+ok   Title I status is known for most schools on the page  [94.4%]
 ok   the Primary band filter re-renders without error
 ok   the Secondary band filter re-renders without error
 ok   measure 'percent_proficient' either draws or says why
@@ -132,22 +216,38 @@ ok   measure 'percent_below' either draws or says why
 ok   measure 'standard_score' either draws or says why
 ok   measure 'chronic_absent' either draws or says why
 ok   measure 'grad_rate' either draws or says why
+ok   measure 'in_seat_attendance' either draws or says why
+ok   measure 'teacher_retention' either draws or says why
 skip matched view  [fewer than three pairs, or a territory page]
 ok   no console errors after the filter sweep
 ok   the insights tab hides the explore view
-ok   District of Columbia Public Schools generates cards or says there is nothing to report  [4 cards]
+ok   District of Columbia Public Schools generates cards or says there is nothing to report  [9 cards]
 ok   the insights tab uses the same unit and window as the explore tab  [{'p': 0.048090676816257595, 'n1': 5, 'n2': 178}]
 ok   no console errors on the insights tab
+ok   the MRA tab is offered exactly when the payload carries surveys
+ok   the MRA tab shows its own view and sidebar and hides the explore ones
+ok   the MRA summary renders a sentence  [Fewer than three District of Columbia Leader in Me schools have a survey with Leadership in this ran]
+ok   MRA chart c6 draws an svg or explains why
+ok   MRA chart c7 draws an svg or explains why
+ok   MRA chart c10 draws an svg or explains why
+ok   the measure picker offers every MRA measure with data  [23 options, 23 measures with data, 37 in the catalogue]
+skip MRA paired test recompute  [under three schools surveyed more than once]
+ok   choosing the submeasure 'Personal Effectiveness' re-renders the MRA summary  [Fewer than three District of Columbia Leader in Me schools have a survey with Personal Eff]
+ok   the MRA school type filter keeps only schools with that trait  [title1_yes]
+ok   the same-schools switch keeps only schools surveyed at both ends
+ok   no console errors on the MRA tab
+ok   the MRA view downloads one row per school, year and measure  [29 rows]
+ok   leaving the MRA tab restores the explore view
 ok   export c1.pptx downloads, opens and carries the chart image  [114,207 bytes]
 ok   the pptx export is named for the state and chart  [DC_Percent_meeting_the_standard_year_by_year_District_of_Columbia_schools.pptx]
-ok   export c1.docx downloads, opens and carries the chart image  [111,907 bytes]
+ok   export c1.docx downloads, opens and carries the chart image  [114,985 bytes]
 ok   the docx export is named for the state and chart  [DC_Percent_meeting_the_standard_year_by_year_District_of_Columbia_schools.docx]
-ok   the research pack downloads with its sections  [11,737 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'roster']]
+ok   the research pack downloads with its sections  [24,066 rows, sections ['about', 'field_insight', 'growth_test', 'movement', 'mra', 'mra_school', 'report_card', 'report_card_school']]
 ok   the pack's Leader in Me count for the district is the page's  [5 vs 5]
 skip look-alike mode  [no prospect district with three or more schools, or not a full page]
 ok   the grade filter lists the tested grades
 ok   choosing a grade re-renders the headline and names the grade  [Not enough schools match these filters to compare anything yet. Remove a filter on the left and it w]
-ok   whole-school measures switch off while a grade is chosen
+ok   whole-school measures switch off while a grade is chosen  [5 whole-school measures in the payload]
 ok   dark mode re-renders without errors
 ok   no horizontal overflow at 900px  [0px]
 ok   no horizontal overflow at 700px  [0px]
@@ -180,5 +280,103 @@ ok   a descriptive page says so on the methods page
   HEADLINE (statewide, 2023-2025, no filters): Leader in Me +7.20 pts (n=5) vs comparison +2.66 pts (n=178), p=0.0481 -> significant
 
 ==========================================================================
-125 of 125 checks pass · 3 skipped
+145 of 145 checks pass · 6 skipped
 ==========================================================================
+
+$ python3 /home/claude/sdf/Build/states/dc_core_verify.py --work /home/claude/sdf/Build/work/DC
+
+The District of Columbia's own measures
+--------------------------------------------------------------------------
+ok   the crosswalk reaches every Leader in Me school  [6 of 6]
+ok   the crosswalk reaches most comparison schools  [217 of 228]
+ok   NCES's own id triples anchor the crosswalk  [224 triples for 234 schools]
+ok   the OSSE files' own school names agree with DOMO's on nearly every crosswalked school  [223 of 223; 0 read one by one]
+ok   DOMO's graduation rate is OSSE's four-year rate within a point on nearly every school-year both carry (an independent check of the join)  [101 of 101]
+ok   DOMO's enrollment tracks OSSE's on the crosswalked schools  [r = 0.954 on 214 schools]
+ok   no OSSE code is on two schools  [224 triples, 223 schools]
+ok   the Leader in Me schools the crosswalk cannot reach are named on the page, or every one is reached and the page says so
+ok   the join note on the card carries the reach
+ok   each Leader in Me school's OSSE code sits in the pack's state ids  [6 Leader in Me schools]
+ok   attendance 2024-25: the pack's chronic_absenteeism is the workbook's own value re-read from the xlsx  [207 of 207 agree (need 150); 6 Leader in Me schools among them]
+ok   attendance 2024-25: the rows' chronic-absence measure is OSSE's value (DOMO carries none for the District)  [206 of 206 rows agree]
+ok   chronic absence on the rows sits only in the years OSSE published it (2021-22 on) and never in a closure year  [[2022, 2023, 2024, 2025]]
+ok   attendance 2021-22: the pack's in_seat_attendance is the workbook's own value re-read from the xlsx  [198 of 198 agree (need 150); 6 Leader in Me schools among them]
+ok   attendance 2021-22: the rows' in-seat attendance equals the pack's value  [305 of 305]
+ok   discipline 2024-25: the pack's pct_oss is the workbook's own value re-read from the xlsx  [147 of 147 agree (need 100); 5 Leader in Me schools among them]
+ok   discipline 2017-18 (whole-number shares): the pack's pct_oss is the workbook's own value re-read from the xlsx  [197 of 197 agree (need 150); 6 Leader in Me schools among them]
+ok   discipline 2024-25: the 5%-or-more flag reads a bottom-coded rate as under and a published rate of 5 or more as at-or-above  [61 bottom-coded and 82 at-or-above schools on the page]
+ok   the published suspension rates sit in the pack and not on the card or the rows
+ok   assessment 2024-25: the pack's mgp_ela is the workbook's own value re-read from the xlsx  [170 of 170 agree (need 120); 6 Leader in Me schools among them]
+ok   graduation 2024-25: the pack's grad_rate_4yr is the workbook's own value re-read from the xlsx  [34 of 34 agree (need 25); 0 Leader in Me schools among them]
+ok   graduation: DOMO's own rate stands on every secondary school-year DOMO carries (never overwritten)  [122 of 122]
+ok   graduation: the school-years DOMO lacks carry OSSE's four-year rate  [102 of 102 filled school-years]
+ok   graduation sits on secondary rows only
+ok   teacher retention 2024-25: the pack's teacher_retention is the workbook's own value re-read from the xlsx  [208 of 208 agree (need 180); 6 Leader in Me schools among them]
+ok   teacher retention 2024-25: the rows' measure equals the pack's value  [318 of 318]
+ok   no retention value in the pack is exactly zero, and the zeros OSSE flags as closed or misattributed carry no value  [7 zeros, all flagged]
+ok   a retention rate on fewer than five teachers carries no value in the pack  [1 such school-years on the page]
+ok   the 2021-22 report card's own retention column agrees with the workforce file
+ok   DC SAYS 2024-25 (students, grades 3-5): the pack's says_s35_belonging is the workbook's own value re-read from the xlsx  [137 of 137 agree (need 100); 3 Leader in Me schools among them]
+ok   DC SAYS 2024-25 (families): the pack's says_fam_family_engagement is the workbook's own value re-read from the xlsx  [63 of 63 agree (need 50); 4 Leader in Me schools among them]
+ok   DC SAYS 2024-25 (staff): the pack's says_staff_belonging is the workbook's own value re-read from the xlsx  [109 of 109 agree (need 80); 3 Leader in Me schools among them]
+ok   Chronic absenteeism: the latest Leader in Me point recomputes from the long table and the membership file  [2025: payload 42.4 (n=5) vs offline 42.4 (n=5)]
+ok   Schools suspending 5% or more of students: the latest Leader in Me point recomputes from the long table and the membership file  [2025: payload 40.0 (n=5) vs offline 40.0 (n=5)]
+ok   Teachers retained from the year before: the latest Leader in Me point recomputes from the long table and the membership file  [2025: payload 81.0 (n=5) vs offline 81.0 (n=5)]
+ok   Median growth percentile, ELA: the latest Leader in Me point recomputes from the long table and the membership file  [2025: payload 53.4 (n=5) vs offline 53.4 (n=5)]
+ok   DC SAYS: belonging (students, grades 3-5): the latest Leader in Me point recomputes from the long table and the membership file  [2025: payload 74.33 (n=3) vs offline 74.33 (n=3)]
+ok   the closure years are on no District of Columbia card  [[2018, 2022, 2023, 2024, 2025]]
+ok   no card year sits past the core's last year  [2025 vs 2025]
+ok   in_seat_attendance sits in no closure year on the rows  [[2018, 2022]]
+ok   teacher_retention sits in no closure year on the rows  [[2022, 2023, 2024, 2025]]
+ok   chronic_absent sits in no closure year on the rows  [[2022, 2023, 2024, 2025]]
+ok   grad_rate sits in no closure year on the rows  [[2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   the pack carries no closure year and nothing past the page's last year  [[2017, 2018, 2019, 2022, 2023, 2024, 2025]]
+ok   the 2021-22 attendance-growth column ("<1%" for six schools in ten) carries no value in the pack, and the later years do
+ok   the 2021-22 school score (a modified framework) carries no value in the pack, and 2022-23 on does
+ok   the STAR score is 2017-18 and 2018-19 only
+ok   retention into 2025-26 (after the page's last year) is held out
+ok   the 2017-18 "90% Attendance" column is kept under its own name and never read as chronic absenteeism
+ok   college enrollment is keyed to the graduating class with the closure classes out
+ok   the summative-score workbook of 2022-23 was checked against the aggregate file rather than read twice, and the revised schools are named  [192 of 199 within 0.1; 7 revised]
+ok   the adult-education DC SAYS workbook was set aside by name  [DC School Report Card – DC SAYS Adult Student and Staff Metric Scores (2025)v3.xlsx: adult-education LEAs only (each is one adult school); not on this page]
+ok   every exclusion is counted on the cleaning audit
+ok   the card membership is the core's own status wherever a school has rows that year  [0 mismatches over 1,384 school-years]
+ok   no Leader in Me card member is a school-year the core dropped  [16 Leader in Me school-years on the cards]
+ok   every Leader in Me card member is a school the headline's roster counts  [6 schools]
+ok   no card member sits past the core's last year  [2025 vs 2025]
+ok   Chronic absenteeism: the Leader in Me point in 2025 rests on at least three counted schools and a comparison line exists  [n=5]
+ok   Schools suspending 5% or more of students: the Leader in Me point in 2025 rests on at least three counted schools and a comparison line exists  [n=5]
+ok   Teachers retained from the year before: the Leader in Me point in 2025 rests on at least three counted schools and a comparison line exists  [n=5]
+ok   Median growth percentile, ELA: the Leader in Me point in 2025 rests on at least three counted schools and a comparison line exists  [n=5]
+ok   Median growth percentile, math: the Leader in Me point in 2025 rests on at least three counted schools and a comparison line exists  [n=5]
+ok   DC SAYS: belonging (students, grades 3-5): the Leader in Me point in 2025 rests on at least three counted schools and a comparison line exists  [n=3]
+ok   DC SAYS: self-efficacy (students, grades 3-5): the Leader in Me point in 2025 rests on at least three counted schools and a comparison line exists  [n=3]
+ok   DC SAYS: perseverance (students, grades 3-5): the Leader in Me point in 2025 rests on at least three counted schools and a comparison line exists  [n=3]
+ok   DC SAYS: school safety (students, grades 3-5): the Leader in Me point in 2025 rests on at least three counted schools and a comparison line exists  [n=3]
+ok   DC SAYS: family engagement (families): the Leader in Me point in 2025 rests on at least three counted schools and a comparison line exists  [n=3]
+ok   DC SAYS: school fit (families): the Leader in Me point in 2025 rests on at least three counted schools and a comparison line exists  [n=3]
+ok   every card measure carries the poverty context line
+ok   the card stays at a dozen measures or fewer  [11 on the card]
+ok   a line the Leader in Me side cannot fill is off the card and explained in the note  [thin: []]
+ok   the page says no Leader in Me point is drawn before 2021-22 and why
+ok   DC SAYS topics are on the card for students in grades 3-5 and for families  [says_s35_belonging, says_s35_self_efficacy, says_s35_perseverance, says_s35_school_safety, says_fam_family_engagement, says_fam_school_fit]
+ok   DC SAYS: belonging (students, grades 3-5): one year (2024-25), the respondent group named, the topic quoted, and the caption says there is no trend
+ok   DC SAYS: self-efficacy (students, grades 3-5): one year (2024-25), the respondent group named, the topic quoted, and the caption says there is no trend
+ok   DC SAYS: perseverance (students, grades 3-5): one year (2024-25), the respondent group named, the topic quoted, and the caption says there is no trend
+ok   DC SAYS: school safety (students, grades 3-5): one year (2024-25), the respondent group named, the topic quoted, and the caption says there is no trend
+ok   DC SAYS: family engagement (families): one year (2024-25), the respondent group named, the topic quoted, and the caption says there is no trend
+ok   DC SAYS: school fit (families): one year (2024-25), the respondent group named, the topic quoted, and the caption says there is no trend
+ok   the grades 6-12 student topics and the staff topics are in the pack, not on the card, and the note says why
+ok   the research pack carries every DC SAYS topic with the respondent group and topic in its label  [35 DC SAYS columns]
+ok   the DC SAYS card lines are single points, never a trend sentence
+ok   in-seat attendance and teacher retention are measures in the rows with Leader in Me school-years behind them  [16 Leader in Me retention school-years]
+ok   chronic absence and graduation are described as OSSE-filled in the measure text
+ok   the research pack's per-school District of Columbia values are keyed to schools on the page  [1,263 records]
+ok   every school with an OSSE code on the page has it in the pack  [223 of 234]
+ok   look-alike mode names the share of schools suspending 5% or more as its behavior measure
+ok   the banner names OSSE's report card, the DC SAYS survey and the workforce files
+ok   the methods page owns the descriptive limit for the District's cards
+ok   the methods page carries the chronic-absence threshold change and the graduation fill rule
+ok   the measures the card can carry are on it  [11 on the card]
+
+ALL DC CHECKS PASS
