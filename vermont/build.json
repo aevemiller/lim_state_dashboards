@@ -61,6 +61,19 @@
  "extras_module": "vt_core_extras",
  "verified": true,
  "dashboard_bytes": 760923,
+ "latest_results": {
+  "year": 2025,
+  "label": "2024-25",
+  "status": "complete",
+  "subjects": [
+   "ELA",
+   "Math",
+   "Science"
+  ],
+  "missing": [],
+  "rows_share_of_prior": 0.96,
+  "prior_year": 2024
+ },
  "audits": {
   "levels": {
    "rows": 14082,

@@ -11,17 +11,20 @@
     --surface-1:#fcfcfb; --plane:#f9f9f7; --text-primary:#0b0b0b; --text-secondary:#52514e;
     --text-muted:#898781; --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
     --accent:#3373df; --tile-live:#3373df; --tile-live-ink:#ffffff;
+    --tile-new:#62bb46; --tile-new-ink:#0b0b0b; --tile-part:#ffc635; --tile-part-ink:#0b0b0b;
     --wash-1:rgba(42,120,214,0.10); --ghost:rgba(11,11,11,0.045);
   }
   @media (prefers-color-scheme:dark){ :root:where(:not([data-theme="light"])){
     --surface-1:#1a1a19; --plane:#0d0d0d; --text-primary:#fff; --text-secondary:#c3c2b7;
     --text-muted:#898781; --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
     --accent:#4384f2; --tile-live:#4384f2; --tile-live-ink:#0d0d0d;
+    --tile-new:#62bb46; --tile-new-ink:#0b0b0b; --tile-part:#ffc635; --tile-part-ink:#0b0b0b;
     --wash-1:rgba(57,135,229,0.16); --ghost:rgba(255,255,255,0.06); } }
   :root[data-theme="dark"]{
     --surface-1:#1a1a19; --plane:#0d0d0d; --text-primary:#fff; --text-secondary:#c3c2b7;
     --text-muted:#898781; --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
     --accent:#4384f2; --tile-live:#4384f2; --tile-live-ink:#0d0d0d;
+    --tile-new:#62bb46; --tile-new-ink:#0b0b0b; --tile-part:#ffc635; --tile-part-ink:#0b0b0b;
     --wash-1:rgba(57,135,229,0.16); --ghost:rgba(255,255,255,0.06); }
 
   html,body{margin:0;padding:0}
@@ -52,6 +55,8 @@
   .legend span{display:inline-flex;align-items:center;gap:6px}
   .lg-sw{width:11px;height:11px;border-radius:3px;flex-shrink:0}
   .lg-live{background:var(--tile-live)}
+  .lg-new{background:var(--tile-new)}
+  .lg-part{background:var(--tile-part)}
   .lg-none{background:transparent;border:1.5px solid var(--axis)}
 
   #map{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;max-width:640px;margin:0 auto}
@@ -60,6 +65,8 @@
     border:1.5px solid var(--grid);color:var(--text-muted);background:transparent;
     font-variant-numeric:tabular-nums}
   .tile.live{background:var(--tile-live);border-color:var(--tile-live);color:var(--tile-live-ink)}
+  .tile.live.newest{background:var(--tile-new);border-color:var(--tile-new);color:var(--tile-new-ink)}
+  .tile.live.partial{background:var(--tile-part);border-color:var(--tile-part);color:var(--tile-part-ink)}
   .tile.live:hover,.tile.live:focus-visible{outline:2px solid var(--text-primary);outline-offset:2px}
   .tile:not(.live){cursor:default}
   .maphint{font-size:12px;color:var(--text-muted);text-align:center;margin:14px 0 0}
@@ -84,6 +91,9 @@
     break-inside:avoid}
   #index .dot{width:7px;height:7px;border-radius:50%;background:var(--tile-live);flex-shrink:0}
   #index .dot.off{background:transparent;border:1.5px solid var(--grid)}
+  #index .dot.newest{background:var(--tile-new)}
+  #index .dot.partial{background:var(--tile-part)}
+  .card .meta .lg-sw{display:inline-block;vertical-align:-1px;margin-right:6px}
   #index a{color:var(--accent);text-decoration:none;font-weight:600}
   #index a:hover{text-decoration:underline}
   #index .off-name{color:var(--text-muted)}
@@ -108,14 +118,11 @@
 
 <div class="mapcard">
   <div class="maphead">
-    <span class="counter"><b id="countBuilt">0</b> of 51 dashboards built</span>
-    <span class="legend">
-      <span><i class="lg-sw lg-live"></i>Dashboard ready</span>
-      <span><i class="lg-sw lg-none"></i>Not built yet</span>
-    </span>
+    <span class="counter"><b id="countBuilt">0</b> of 51 dashboards built<span id="countNew"></span></span>
+    <span class="legend" id="legend"></span>
   </div>
   <div id="map" role="list" aria-label="United States, one tile per state"></div>
-  <p class="maphint">Blue states are clickable. Everything else is waiting on a build.</p>
+  <p class="maphint" id="maphint">Every state is clickable.</p>
 </div>
 
 <h2 class="sec">Open a dashboard</h2>
@@ -136,257 +143,308 @@
 const BUILT = {
   AK: {
     folder:   "alaska",
-    meta:     "387 schools · 2013-14 through 2024-25 · rebuilt 8 Sep 2026 · territory page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "387 schools · 2013-14 through 2024-25 · rebuilt 8 Sep 2026 · territory page · latest results 2024-25",
     blurb:    "The state's own numbers by district and school (proficiency, chronic absence, graduation), the single-grade filter, the school list and the research pack. 0 Leader in Me schools with results in the window, so no Leader in Me comparison is drawn yet."
   },
   AL: {
     folder:   "alabama",
-    meta:     "1,327 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "1,327 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   AR: {
     folder:   "arkansas",
-    meta:     "1,137 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "1,137 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   AZ: {
     folder:   "arizona",
-    meta:     "2,044 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "2,044 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   CA: {
     folder:   "california",
-    meta:     "10,518 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Writing"], "missing": []},
+    meta:     "10,518 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   CO: {
     folder:   "colorado",
-    meta:     "1,733 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "1,733 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   CT: {
     folder:   "connecticut",
-    meta:     "964 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "964 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, worded as descriptive throughout: 3 Leader in Me schools have results at both ends of the window, too few for a significance verdict. Same page, same filters, downloads and research pack."
   },
   DC: {
     folder:   "district-of-columbia",
-    meta:     "234 schools · 2013-14 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "234 schools · 2013-14 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, worded as descriptive throughout: 5 Leader in Me schools have results at both ends of the window, too few for a significance verdict. Same page, same filters, downloads and research pack."
   },
   DE: {
     folder:   "delaware",
-    meta:     "196 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies"], "missing": []},
+    meta:     "196 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   FL: {
     folder:   "florida",
-    meta:     "3,885 schools · 2015-16 through 2025-26 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2026, "label": "2025-26", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies"], "missing": []},
+    meta:     "3,885 schools · 2015-16 through 2025-26 · rebuilt 8 Sep 2026 · latest results 2025-26",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   GA: {
     folder:   "georgia",
-    meta:     "2,320 schools · 2014-15 through 2025-26 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2026, "label": "2025-26", "status": "partial", "subjects": ["Math"], "missing": ["ELA", "Science", "Social Studies"]},
+    meta:     "2,320 schools · 2014-15 through 2025-26 · rebuilt 8 Sep 2026 · latest results 2025-26 in part (math only)",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   HI: {
     folder:   "hawaii",
-    meta:     "291 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "partial", "subjects": ["ELA", "Math", "Science"], "missing": ["ELA", "Math"]},
+    meta:     "291 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page · latest results 2024-25 in part (still waiting on ELA and math)",
     blurb:    "Leader in Me growth against state comparison schools, worded as descriptive throughout: 6 Leader in Me schools have results at both ends of the window, too few for a significance verdict. Same page, same filters, downloads and research pack."
   },
   IA: {
     folder:   "iowa",
-    meta:     "1,292 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "1,292 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   ID: {
     folder:   "idaho",
-    meta:     "623 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "623 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, worded as descriptive throughout: 4 Leader in Me schools have results at both ends of the window, too few for a significance verdict. Same page, same filters, downloads and research pack."
   },
   IL: {
     folder:   "illinois",
-    meta:     "3,603 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "3,603 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   IN: {
     folder:   "indiana",
-    meta:     "1,906 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies"], "missing": []},
+    meta:     "1,906 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   KS: {
     folder:   "kansas",
-    meta:     "1,293 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "1,293 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   KY: {
     folder:   "kentucky",
-    meta:     "1,290 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies", "Writing"], "missing": []},
+    meta:     "1,290 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   LA: {
     folder:   "louisiana",
-    meta:     "1,379 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies"], "missing": []},
+    meta:     "1,379 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   MA: {
     folder:   "massachusetts",
-    meta:     "1,689 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies"], "missing": []},
+    meta:     "1,689 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, worded as descriptive throughout: 10 Leader in Me schools have results at both ends of the window, too few for a significance verdict. Same page, same filters, downloads and research pack."
   },
   MD: {
     folder:   "maryland",
-    meta:     "1,359 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies"], "missing": []},
+    meta:     "1,359 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   ME: {
     folder:   "maine",
-    meta:     "540 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · territory page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "540 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · territory page · latest results 2024-25",
     blurb:    "The state's own numbers by district and school (proficiency, chronic absence, graduation), the single-grade filter, the school list and the research pack. 0 Leader in Me schools with results in the window, so no Leader in Me comparison is drawn yet."
   },
   MI: {
     folder:   "michigan",
-    meta:     "3,203 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies"], "missing": []},
+    meta:     "3,203 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   MN: {
     folder:   "minnesota",
-    meta:     "1,919 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "partial", "subjects": ["ELA", "Math"], "missing": ["Science"]},
+    meta:     "1,919 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page · latest results 2024-25 in part (still waiting on science)",
     blurb:    "Leader in Me growth against state comparison schools, worded as descriptive throughout: 13 Leader in Me schools have results at both ends of the window, too few for a significance verdict. Same page, same filters, downloads and research pack."
   },
   MO: {
     folder:   "missouri",
-    meta:     "2,053 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies"], "missing": []},
+    meta:     "2,053 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   MS: {
     folder:   "mississippi",
-    meta:     "890 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies"], "missing": []},
+    meta:     "890 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   MT: {
     folder:   "montana",
-    meta:     "614 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "614 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, worded as descriptive throughout: 6 Leader in Me schools have results at both ends of the window, too few for a significance verdict. Same page, same filters, downloads and research pack."
   },
   NC: {
     folder:   "north-carolina",
-    meta:     "2,757 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math"], "missing": []},
+    meta:     "2,757 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   ND: {
     folder:   "north-dakota",
-    meta:     "418 schools · 2015-16 through 2024-25 · rebuilt 8 Sep 2026 · territory page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "418 schools · 2015-16 through 2024-25 · rebuilt 8 Sep 2026 · territory page · latest results 2024-25",
     blurb:    "The state's own numbers by district and school (proficiency, chronic absence, graduation), the single-grade filter, the school list and the research pack. 1 Leader in Me schools with results in the window, so no Leader in Me comparison is drawn yet."
   },
   NE: {
     folder:   "nebraska",
-    meta:     "919 schools · 2015-16 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "partial", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "919 schools · 2015-16 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page · latest results 2024-25 in part (fewer schools than the year before)",
     blurb:    "Leader in Me growth against state comparison schools, worded as descriptive throughout: 4 Leader in Me schools have results at both ends of the window, too few for a significance verdict. Same page, same filters, downloads and research pack."
   },
   NH: {
     folder:   "new-hampshire",
-    meta:     "456 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "456 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, worded as descriptive throughout: 5 Leader in Me schools have results at both ends of the window, too few for a significance verdict. Same page, same filters, downloads and research pack."
   },
   NJ: {
     folder:   "new-jersey",
-    meta:     "2,291 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "2,291 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   NM: {
     folder:   "new-mexico",
-    meta:     "886 schools · 2013-14 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "886 schools · 2013-14 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, worded as descriptive throughout: 9 Leader in Me schools have results at both ends of the window, too few for a significance verdict. Same page, same filters, downloads and research pack."
   },
   NV: {
     folder:   "nevada",
-    meta:     "672 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "672 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   NY: {
     folder:   "new-york",
-    meta:     "4,616 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies"], "missing": []},
+    meta:     "4,616 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   OH: {
     folder:   "ohio",
-    meta:     "3,320 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies"], "missing": []},
+    meta:     "3,320 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   OK: {
     folder:   "oklahoma",
-    meta:     "1,793 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies"], "missing": []},
+    meta:     "1,793 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   OR: {
     folder:   "oregon",
-    meta:     "1,261 schools · 2013-14 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "1,261 schools · 2013-14 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, worded as descriptive throughout: 3 Leader in Me schools have results at both ends of the window, too few for a significance verdict. Same page, same filters, downloads and research pack."
   },
   PA: {
     folder:   "pennsylvania",
-    meta:     "2,906 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "partial", "subjects": ["ELA", "Math", "Science"], "missing": ["Science"]},
+    meta:     "2,906 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25 in part (still waiting on science)",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   RI: {
     folder:   "rhode-island",
-    meta:     "311 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · territory page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "311 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · territory page · latest results 2024-25",
     blurb:    "The state's own numbers by district and school (proficiency, chronic absence, graduation), the single-grade filter, the school list and the research pack. 0 Leader in Me schools with results in the window, so no Leader in Me comparison is drawn yet."
   },
   SC: {
     folder:   "south-carolina",
-    meta:     "1,267 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies"], "missing": []},
+    meta:     "1,267 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   SD: {
     folder:   "south-dakota",
-    meta:     "659 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "659 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, worded as descriptive throughout: 5 Leader in Me schools have results at both ends of the window, too few for a significance verdict. Same page, same filters, downloads and research pack."
   },
   TN: {
     folder:   "tennessee",
-    meta:     "1,875 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies"], "missing": []},
+    meta:     "1,875 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   TX: {
     folder:   "texas",
-    meta:     "8,746 schools · 2015-16 through 2025-26 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2026, "label": "2025-26", "status": "partial", "subjects": ["ELA", "Math", "Science", "Social Studies"], "missing": ["Science"]},
+    meta:     "8,746 schools · 2015-16 through 2025-26 · rebuilt 8 Sep 2026 · latest results 2025-26 in part (still waiting on science)",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   UT: {
     folder:   "utah",
-    meta:     "928 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "partial", "subjects": ["ELA", "Math", "Science"], "missing": ["ELA"]},
+    meta:     "928 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25 in part (still waiting on ELA)",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   VA: {
     folder:   "virginia",
-    meta:     "1,827 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies", "Writing"], "missing": []},
+    meta:     "1,827 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   VT: {
     folder:   "vermont",
-    meta:     "447 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "447 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, worded as descriptive throughout: 4 Leader in Me schools have results at both ends of the window, too few for a significance verdict. Same page, same filters, downloads and research pack."
   },
   WA: {
     folder:   "washington",
-    meta:     "2,145 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "2,145 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   WI: {
     folder:   "wisconsin",
-    meta:     "2,065 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science", "Social Studies"], "missing": []},
+    meta:     "2,065 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, with DOMO subject test results, SchoolDigger measures, MRA surveys, exits dated from contract expiration, the single-grade filter, look-alike mode, the school list and the research pack."
   },
   WV: {
     folder:   "west-virginia",
-    meta:     "661 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "661 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, worded as descriptive throughout: 17 Leader in Me schools have results at both ends of the window, too few for a significance verdict. Same page, same filters, downloads and research pack."
   },
   WY: {
     folder:   "wyoming",
-    meta:     "315 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page",
+    latest:   {"year": 2025, "label": "2024-25", "status": "complete", "subjects": ["ELA", "Math", "Science"], "missing": []},
+    meta:     "315 schools · 2014-15 through 2024-25 · rebuilt 8 Sep 2026 · descriptive page · latest results 2024-25",
     blurb:    "Leader in Me growth against state comparison schools, worded as descriptive throughout: 14 Leader in Me schools have results at both ends of the window, too few for a significance verdict. Same page, same filters, downloads and research pack."
   }
 };
@@ -421,21 +479,40 @@ const map = document.getElementById("map");
 const cards = document.getElementById("cards");
 const index = document.getElementById("index");
 
+// The newest results year anywhere on the site sets the colors: green = that year in full,
+// yellow = that year in part, blue = the page still ends a year earlier (waiting on the new year).
+const NEWEST = Object.keys(BUILT).reduce(function(y, k){
+  const l = BUILT[k].latest; return (l && l.year > y) ? l.year : y; }, 0);
+function yearLabel(y){ return (y - 1) + "-" + String(y).slice(2); }
+function statusOf(entry){
+  const l = entry && entry.latest;
+  if (!l || !NEWEST) return "";
+  if (l.year < NEWEST) return "";
+  return l.status === "complete" ? "newest" : "partial";
+}
+function statusText(entry){
+  const l = entry && entry.latest;
+  if (!l) return "";
+  return "latest results " + l.label + (l.status === "partial" ? " in part" : "");
+}
+
 STATES.forEach(function(s){
   const code = s[0], name = s[1], row = s[2], col = s[3];
   const built = BUILT[code];
 
   // --- map tile ---
   const tile = document.createElement(built ? "a" : "div");
-  tile.className = "tile" + (built ? " live" : "");
+  const st = statusOf(built);
+  tile.className = "tile" + (built ? " live" : "") + (st ? " " + st : "");
   tile.textContent = code;
   tile.style.gridRow = row;
   tile.style.gridColumn = col;
   tile.setAttribute("role", "listitem");
   if (built) {
     tile.href = built.folder + "/";
-    tile.title = name + " — open dashboard";
-    tile.setAttribute("aria-label", name + ", dashboard ready");
+    const stText = statusText(built);
+    tile.title = name + (stText ? " — " + stText : " — open dashboard");
+    tile.setAttribute("aria-label", name + ", dashboard ready" + (stText ? ", " + stText : ""));
   } else {
     tile.title = name + " — no dashboard yet";
     tile.setAttribute("aria-label", name + ", no dashboard yet");
@@ -445,7 +522,7 @@ STATES.forEach(function(s){
   // --- alphabetical index row ---
   const li = document.createElement("li");
   const dot = document.createElement("i");
-  dot.className = "dot" + (built ? "" : " off");
+  dot.className = "dot" + (built ? "" : " off") + (statusOf(built) ? " " + statusOf(built) : "");
   li.appendChild(dot);
   if (built) {
     const a = document.createElement("a");
@@ -480,7 +557,10 @@ STATES.filter(function(s){ return BUILT[s[0]]; })
     '<div class="actions"><a class="btn">Open dashboard</a>' +
     (hasMethods ? '<a class="btn ghost">Methods</a>' : '') + '</div>';
   c.querySelector("h3").textContent = s[1];
-  c.querySelector(".meta").textContent = b.meta;
+  const sw = document.createElement("i");
+  sw.className = "lg-sw " + ({newest:"lg-new", partial:"lg-part"}[statusOf(b)] || "lg-live");
+  c.querySelector(".meta").appendChild(sw);
+  c.querySelector(".meta").appendChild(document.createTextNode(b.meta));
   c.querySelector(".blurb").textContent = b.blurb;
   c.querySelectorAll("a")[0].href = b.folder + "/";
   if (hasMethods) c.querySelectorAll("a")[1].href = b.folder + "/methods.html";
@@ -488,6 +568,32 @@ STATES.filter(function(s){ return BUILT[s[0]]; })
 });
 
 document.getElementById("countBuilt").textContent = Object.keys(BUILT).length;
+
+// legend, counter and hint, worded from the newest year on the site
+(function(){
+  const codes = Object.keys(BUILT);
+  const nNew = codes.filter(function(k){ return statusOf(BUILT[k]) === "newest"; }).length;
+  const nPart = codes.filter(function(k){ return statusOf(BUILT[k]) === "partial"; }).length;
+  const nOld = codes.length - nNew - nPart;
+  const unbuilt = STATES.length - codes.length;
+  const legend = document.getElementById("legend");
+  function item(cls, text){
+    const sp = document.createElement("span");
+    const i = document.createElement("i"); i.className = "lg-sw " + cls;
+    sp.appendChild(i); sp.appendChild(document.createTextNode(text)); legend.appendChild(sp);
+  }
+  if (!NEWEST) { item("lg-live", "Dashboard ready"); if (unbuilt) item("lg-none", "Not built yet"); return; }
+  const yNew = yearLabel(NEWEST), yOld = yearLabel(NEWEST - 1);
+  item("lg-new", yNew + " results in");
+  item("lg-part", yNew + " in part");
+  item("lg-live", yOld + " is the latest");
+  if (unbuilt) item("lg-none", "Not built yet");
+  const cn = document.getElementById("countNew");
+  if (cn) cn.textContent = " · " + (nNew + nPart) + " with " + yNew + " results" + (nPart ? " (" + nPart + " in part)" : "");
+  const hint = document.getElementById("maphint");
+  if (hint) hint.textContent = "Every state is clickable. Green and yellow states already carry " + yNew +
+    " results; the " + nOld + " blue states are waiting on them" + (unbuilt ? "; outlined states have no dashboard yet" : "") + ".";
+})();
 
 const btn = document.getElementById("themeBtn");
 btn.addEventListener("click", function(){

@@ -57,6 +57,20 @@
  "extras_module": null,
  "verified": true,
  "dashboard_bytes": 3280155,
+ "latest_results": {
+  "year": 2025,
+  "label": "2024-25",
+  "status": "partial",
+  "subjects": [
+   "ELA",
+   "Math"
+  ],
+  "missing": [
+   "Science"
+  ],
+  "rows_share_of_prior": 0.69,
+  "prior_year": 2024
+ },
  "audits": {
   "levels": {
    "rows": 112852,

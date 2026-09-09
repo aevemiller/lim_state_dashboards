@@ -63,6 +63,19 @@
  "extras_module": "ne_core_extras",
  "verified": true,
  "dashboard_bytes": 1446289,
+ "latest_results": {
+  "year": 2025,
+  "label": "2024-25",
+  "status": "partial",
+  "subjects": [
+   "ELA",
+   "Math",
+   "Science"
+  ],
+  "missing": [],
+  "rows_share_of_prior": 0.68,
+  "prior_year": 2024
+ },
  "audits": {
   "levels": {
    "rows": 40171,

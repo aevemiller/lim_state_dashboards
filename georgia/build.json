@@ -80,6 +80,21 @@
  "extras_module": "ga_core_extras",
  "verified": true,
  "dashboard_bytes": 7143935,
+ "latest_results": {
+  "year": 2026,
+  "label": "2025-26",
+  "status": "partial",
+  "subjects": [
+   "Math"
+  ],
+  "missing": [
+   "ELA",
+   "Science",
+   "Social Studies"
+  ],
+  "rows_share_of_prior": 0.22,
+  "prior_year": 2025
+ },
  "audits": {
   "levels": {
    "rows": 168886,

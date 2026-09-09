@@ -62,6 +62,22 @@
  "extras_module": "hi_core_extras",
  "verified": true,
  "dashboard_bytes": 558629,
+ "latest_results": {
+  "year": 2025,
+  "label": "2024-25",
+  "status": "partial",
+  "subjects": [
+   "ELA",
+   "Math",
+   "Science"
+  ],
+  "missing": [
+   "ELA",
+   "Math"
+  ],
+  "rows_share_of_prior": 0.46,
+  "prior_year": 2024
+ },
  "audits": {
   "levels": {
    "rows": 19185,

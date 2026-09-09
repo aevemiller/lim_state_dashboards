@@ -97,6 +97,20 @@
  "extras_module": "fl_core_extras",
  "verified": true,
  "dashboard_bytes": 4656163,
+ "latest_results": {
+  "year": 2026,
+  "label": "2025-26",
+  "status": "complete",
+  "subjects": [
+   "ELA",
+   "Math",
+   "Science",
+   "Social Studies"
+  ],
+  "missing": [],
+  "rows_share_of_prior": 0.99,
+  "prior_year": 2025
+ },
  "audits": {
   "levels": {
    "rows": 271360,
