@@ -62,7 +62,7 @@
  ],
  "extras_module": "de_core_extras",
  "verified": true,
- "dashboard_bytes": 777973,
+ "dashboard_bytes": 809807,
  "latest_results": {
   "year": 2025,
   "label": "2024-25",
@@ -441,5 +441,16 @@
   "subjects_excluded": [
    "Essay"
   ]
- }
+ },
+ "best_schools": {
+  "qualified": 3,
+  "in_the_process": 3,
+  "lapsed_on_the_list": 0,
+  "reviewed": 15,
+  "measures": 56,
+  "outcomes": 16,
+  "improved_every_year": 0,
+  "lapsed_longer_ago": 17
+ },
+ "best_schools_added": "2026-09-10"
 }

@@ -60,7 +60,7 @@
  ],
  "extras_module": "pa_core_extras",
  "verified": true,
- "dashboard_bytes": 8100249,
+ "dashboard_bytes": 8135783,
  "latest_results": {
   "year": 2025,
   "label": "2024-25",
@@ -398,5 +398,16 @@
   },
   "subjects_by_keyword": [],
   "subjects_excluded": []
- }
+ },
+ "best_schools": {
+  "qualified": 12,
+  "in_the_process": 11,
+  "lapsed_on_the_list": 1,
+  "reviewed": 93,
+  "measures": 65,
+  "outcomes": 19,
+  "improved_every_year": 1,
+  "lapsed_longer_ago": 33
+ },
+ "best_schools_added": "2026-09-10"
 }

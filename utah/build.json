@@ -61,7 +61,7 @@
  ],
  "extras_module": "ut_core_extras",
  "verified": true,
- "dashboard_bytes": 2203737,
+ "dashboard_bytes": 2237755,
  "latest_results": {
   "year": 2025,
   "label": "2024-25",
@@ -472,5 +472,16 @@
   },
   "subjects_by_keyword": [],
   "subjects_excluded": []
- }
+ },
+ "best_schools": {
+  "qualified": 7,
+  "in_the_process": 7,
+  "lapsed_on_the_list": 0,
+  "reviewed": 56,
+  "measures": 58,
+  "outcomes": 13,
+  "improved_every_year": 0,
+  "lapsed_longer_ago": 34
+ },
+ "best_schools_added": "2026-09-10"
 }

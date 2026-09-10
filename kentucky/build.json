@@ -65,7 +65,7 @@
  ],
  "extras_module": "ky_core_extras",
  "verified": true,
- "dashboard_bytes": 4061497,
+ "dashboard_bytes": 4102339,
  "latest_results": {
   "year": 2025,
   "label": "2024-25",
@@ -649,5 +649,16 @@
    "Editing and Mechanics",
    "Language Mechanics"
   ]
- }
+ },
+ "best_schools": {
+  "qualified": 16,
+  "in_the_process": 15,
+  "lapsed_on_the_list": 1,
+  "reviewed": 142,
+  "measures": 75,
+  "outcomes": 22,
+  "improved_every_year": 2,
+  "lapsed_longer_ago": 70
+ },
+ "best_schools_added": "2026-09-10"
 }

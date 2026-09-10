@@ -62,7 +62,7 @@
  ],
  "extras_module": "ca_core_extras",
  "verified": true,
- "dashboard_bytes": 20536577,
+ "dashboard_bytes": 20598101,
  "latest_results": {
   "year": 2025,
   "label": "2024-25",
@@ -428,5 +428,16 @@
    "Overall",
    "Speaking"
   ]
- }
+ },
+ "best_schools": {
+  "qualified": 86,
+  "in_the_process": 68,
+  "lapsed_on_the_list": 18,
+  "reviewed": 348,
+  "measures": 58,
+  "outcomes": 15,
+  "improved_every_year": 23,
+  "lapsed_longer_ago": 188
+ },
+ "best_schools_added": "2026-09-10"
 }

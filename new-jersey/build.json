@@ -61,7 +61,7 @@
  ],
  "extras_module": "nj_core_extras",
  "verified": true,
- "dashboard_bytes": 4084693,
+ "dashboard_bytes": 4118077,
  "latest_results": {
   "year": 2025,
   "label": "2024-25",
@@ -143,5 +143,16 @@
   },
   "subjects_by_keyword": [],
   "subjects_excluded": []
- }
+ },
+ "best_schools": {
+  "qualified": 5,
+  "in_the_process": 5,
+  "lapsed_on_the_list": 0,
+  "reviewed": 41,
+  "measures": 61,
+  "outcomes": 19,
+  "improved_every_year": 2,
+  "lapsed_longer_ago": 32
+ },
+ "best_schools_added": "2026-09-10"
 }

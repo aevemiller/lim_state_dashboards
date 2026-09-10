@@ -56,7 +56,7 @@
  "state_files": [],
  "extras_module": null,
  "verified": true,
- "dashboard_bytes": 775863,
+ "dashboard_bytes": 807792,
  "latest_results": {
   "year": 2025,
   "label": "2024-25",
@@ -392,5 +392,16 @@
   },
   "subjects_by_keyword": [],
   "subjects_excluded": []
- }
+ },
+ "best_schools": {
+  "qualified": 2,
+  "in_the_process": 2,
+  "lapsed_on_the_list": 0,
+  "reviewed": 13,
+  "measures": 48,
+  "outcomes": 8,
+  "improved_every_year": 0,
+  "lapsed_longer_ago": 1
+ },
+ "best_schools_added": "2026-09-10"
 }

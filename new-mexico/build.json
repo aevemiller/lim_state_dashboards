@@ -56,7 +56,7 @@
  "state_files": [],
  "extras_module": null,
  "verified": true,
- "dashboard_bytes": 964213,
+ "dashboard_bytes": 994237,
  "latest_results": {
   "year": 2025,
   "label": "2024-25",
@@ -165,5 +165,16 @@
   "subjects_excluded": [
    "Early Lit"
   ]
- }
+ },
+ "best_schools": {
+  "qualified": 0,
+  "in_the_process": 0,
+  "lapsed_on_the_list": 0,
+  "reviewed": 5,
+  "measures": 42,
+  "outcomes": 8,
+  "improved_every_year": 0,
+  "lapsed_longer_ago": 15
+ },
+ "best_schools_added": "2026-09-10"
 }

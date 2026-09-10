@@ -61,7 +61,7 @@
  ],
  "extras_module": "ny_core_extras",
  "verified": true,
- "dashboard_bytes": 11448301,
+ "dashboard_bytes": 11495407,
  "latest_results": {
   "year": 2025,
   "label": "2024-25",
@@ -763,5 +763,16 @@
   },
   "subjects_by_keyword": [],
   "subjects_excluded": []
- }
+ },
+ "best_schools": {
+  "qualified": 40,
+  "in_the_process": 35,
+  "lapsed_on_the_list": 5,
+  "reviewed": 162,
+  "measures": 60,
+  "outcomes": 14,
+  "improved_every_year": 4,
+  "lapsed_longer_ago": 113
+ },
+ "best_schools_added": "2026-09-10"
 }

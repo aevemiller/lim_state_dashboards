@@ -60,7 +60,7 @@
  ],
  "extras_module": "mo_core_extras",
  "verified": true,
- "dashboard_bytes": 2744209,
+ "dashboard_bytes": 2783751,
  "latest_results": {
   "year": 2025,
   "label": "2024-25",
@@ -742,5 +742,16 @@
   },
   "subjects_by_keyword": [],
   "subjects_excluded": []
- }
+ },
+ "best_schools": {
+  "qualified": 23,
+  "in_the_process": 23,
+  "lapsed_on_the_list": 0,
+  "reviewed": 160,
+  "measures": 58,
+  "outcomes": 15,
+  "improved_every_year": 0,
+  "lapsed_longer_ago": 67
+ },
+ "best_schools_added": "2026-09-10"
 }
